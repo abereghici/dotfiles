@@ -46,6 +46,9 @@ alias harryify="PS1=\"🧙‍\"$'\n'\"$ \"";
 # ripgrep config
 RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
+# allow substitution in PS1
+setopt promptsubst
+
 # history size
 HISTSIZE=5000
 HISTFILESIZE=10000
@@ -84,8 +87,14 @@ PATH="$HOME/.fly/bin:$PATH";
 CDPATH=.:$HOME:$HOME/Development:$HOME/Desktop
 
 # Custom Aliases
-alias code="\"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code\""
-function c { code ${@:-.} }
+
+if [ "$(uname)" == "Darwin" ]; then
+  alias code="\"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code\""
+  function c { code ${@:-.} }         
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # Do something under GNU/Linux platform
+fi
+
 alias ll="ls -1a";
 alias ..="cd ../";
 alias ..l="cd ../ && ll";
@@ -103,6 +112,7 @@ alias yarn-update="yarn upgrade-interactive --latest";
 alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 alias dont_index_node_modules='find . -type d -name "node_modules" -exec touch "{}/.metadata_never_index" \;';
 alias check-nodemon="ps aux | rg -i '.bin/nodemon'";
+alias open='gio open'
 
 ## git aliases
 function gc { git commit -m "$@"; }
@@ -157,5 +167,3 @@ function quit () {
 # zsh auto autocomplete
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-source ~/.zshrc

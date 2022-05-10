@@ -51,7 +51,7 @@ semantic-release-cli npm-check-updates
 
 echo "installing apps with brew --cask"
 brew install --cask google-chrome firefox itsycal visual-studio-code \
-vlc discord zoom spotify focus front slack docker another-redis-desktop-manager
+vlc discord zoom spotify slack docker another-redis-desktop-manager
 
 echo "Generating a new SSH key for GitHub"
 ssh-keygen -t ed25519 -C "alexandru.brg@gmail.com" -f ~/.ssh/id_ed25519
