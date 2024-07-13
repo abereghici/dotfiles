@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Copy my SSH public key to the clipboard.
+#
+# - Copy the key:
+#
+# `copy-ssh`
+#
+# ---
+
+file="$HOME/.ssh/id_ed25519.pub"
+if [ -f "$file" ]; then
+  pbcopy < "$file" | printf '=> Public SSH key copied to clipboard.\n'
+fi

@@ -1,0 +1,15 @@
+# Ignore case, unless the pattern includes capital letters
+--smart-case
+
+# Include hidden files (good for .eslinrc kind of files)
+--hidden
+
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Ignore npm/pnpm/Yarn lock files, etc.
+--glob=!package-lock.json
+--glob=!pnpm-lock.yaml
+--glob=!yarn.lock
+--glob=!.git

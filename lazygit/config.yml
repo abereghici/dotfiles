@@ -1,0 +1,4 @@
+gui:
+  sidePanelWidth: 0.25
+  expandFocusedSidePanel: true
+  nerdFontsVersion: '3'

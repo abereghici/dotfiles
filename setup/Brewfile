@@ -1,0 +1,46 @@
+# Taps
+tap "git-friendly/git-friendly"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "jesseduffield/lazydocker"
+tap "jesseduffield/lazygit"
+
+# CLI tools
+brew "python@3.11" # Required by awscli
+brew "awscli" # Official Amazon AWS command-line interface
+brew "bat" # Output highlighting (better `cat`)
+brew "eza" # Listing files with info (better `ls`)
+brew "fd" # Find entries in your filesystem (better `find`)
+brew "fnm" # Node.js version manager
+brew "fzf" # Fuzzy file finder and filtering
+brew "gh" # GitHub CLI: interact with GitHub PRs, issues, repos
+brew "git" # Version control
+brew "git-delta" # Diff pager for `git` and `grep` output (better `diff`)
+brew "htop" # Performance and resource monitoring tool (better `top`)
+brew "neovim" # Text editor for terminal
+brew "node" # Fallback Node.js version
+brew "pnpm" # Efficient Node.js package manager
+brew "ripgrep" # Searching within files (better `grep`)
+brew "starship" # Prompt manager
+brew "zoxide" # Convenient and majical navigation (better `cd`)
+brew "zellij" # Terminal multiplexer
+brew "direnv" # Load/unload environment variables based on $PWD
+brew "wget" # Internet file retriever
+brew "rustup-init" # Rust toolchain installer
+brew "zsh-autosuggestions" # Fish-like autosuggestions for Zsh
+brew "zsh-syntax-highlighting" # Fish-like syntax highlighting for Zsh
+brew "jesseduffield/lazydocker/lazydocker" # Full Docker management app
+brew "jesseduffield/lazygit/lazygit" # Full Git management app
+
+# GUI apps
+cask "ollama" # Get up and running with large language models locally
+cask "docker" # Running containerized applications
+cask "alacritty" # Better terminal emulator
+cask "slack" # Messaging social platform
+cask "discord" # Messaging social platform
+cask "spotify" # Audio streaming platform
+cask "vivaldi" # Browser with built-in privacy
+cask "telegram" # Messenger
+
+# Fonts
+cask "font-meslo-lg-nerd-font" # MesloLG Nerd Font
