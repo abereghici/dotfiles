@@ -1,22 +1,3 @@
-source $HOME/.config/zsh/path.zsh
-source $HOME/.config/zsh/env.zsh
-source $HOME/.config/zsh/aliases.zsh
-
-# Allow local (private) customizations (not checked in to version control)
-[ -f ~/.zsh.local ] && source ~/.zsh.local
-
-# ----- oh-my-zsh  -----
-# https://github.com/ohmyzsh/ohmyzsh
-# Activate Fish-like autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#homebrew
-[ -f $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# Enable Fish-like syntax highlighting: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-[ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-plugins=(git)
-
-# Load oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
 # ----- Direnv  -----
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
@@ -36,6 +17,26 @@ eval "$(zoxide init zsh)"
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
 ) >> $HOME/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
+source $HOME/.config/zsh/path.zsh
+source $HOME/.config/zsh/env.zsh
+source $HOME/.config/zsh/aliases.zsh
+
+# Allow local (private) customizations (not checked in to version control)
+[ -f ~/.zsh.local ] && source ~/.zsh.local
+
+# ----- oh-my-zsh  -----
+# https://github.com/ohmyzsh/ohmyzsh
+# Activate Fish-like autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#homebrew
+[ -f $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Enable Fish-like syntax highlighting: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+[ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+plugins=(git)
+
+# Load oh-my-zsh
+source $ZSH/oh-my-zsh.sh
 
 # Enable fzf: https://github.com/junegunn/fzf
 if [ $(command -v "fzf") ]; then

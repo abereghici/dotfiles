@@ -15,6 +15,8 @@ command_exists eza && alias ll="ls --long --no-user --header -g --git"
 # Display clickable directory tree
 command_exists eza && alias llt="ls --tree --git-ignore"
 
+# Zoxide: https://github.com/ajeetdsouza/zoxide
+# A smarter cd command.
 command_exists z && alias cd="z"
 
 # Lazydocker
