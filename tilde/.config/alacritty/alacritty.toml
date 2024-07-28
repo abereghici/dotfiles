@@ -8,6 +8,8 @@ padding = { x = 10, y = 10 }
 decorations = "Buttonless"
 startup_mode = "Maximized"
 option_as_alt = "Both"
+opacity = 0.75
+blur = true
 
 [font]
 normal.family = "MesloLGS Nerd Font"
