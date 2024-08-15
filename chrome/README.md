@@ -4,13 +4,9 @@
 
 ### Installation
 
-1. Install [Rose Pine theme](https://themes.vivaldi.net/themes/og57ajWplQE)
+- Install [Rose Pine theme](https://chromewebstore.google.com/detail/ros%C3%A9-pine/noimedcjdohhokijigpfcbjcfcaaahej)
 
 ### Customize application and context menus
-
-https://help.vivaldi.com/desktop/appearance-customization/customize-application-and-context-menus/
-
-1. Add `Inspect` at the end of the **Page** **Menu Customization**.
 
 ## Install extensions
 

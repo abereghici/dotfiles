@@ -4,9 +4,9 @@
 # ~/.macos — https://mths.be/macos
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  echo "Configuring macOS..."
+	echo "Configuring macOS..."
 else
-  exit 0
+	exit 0
 fi
 
 COMPUTERNAME='abereghici'
@@ -17,10 +17,10 @@ sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do
-  sudo -n true
-  sleep 60
-  kill -0 "$$" || exit
-done 2> /dev/null &
+	sudo -n true
+	sleep 60
+	kill -0 "$$" || exit
+done 2>/dev/null &
 
 ###############################################################################
 # General UI/UX                                                               #
@@ -141,7 +141,7 @@ defaults write -g AppleHighlightColor -string '0.709800 0.835300 1.000000'
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Enable access for assistive devices
-echo -n 'a' | sudo tee /private/var/db/.AccessibilityAPIEnabled > /dev/null 2>&1
+echo -n 'a' | sudo tee /private/var/db/.AccessibilityAPIEnabled >/dev/null 2>&1
 sudo chmod 444 /private/var/db/.AccessibilityAPIEnabled
 # TODO: avoid GUI password prompt somehow (http://apple.stackexchange.com/q/60476/4408)
 #sudo osascript -e 'tell application "System Events" to set UI elements enabled to true'
@@ -172,7 +172,7 @@ defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
 # Set the timezone; see `systemsetup -listtimezones` for other values
-systemsetup -settimezone "Europe/Bucharest" > /dev/null
+systemsetup -settimezone "Europe/Bucharest" >/dev/null
 
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -580,8 +580,8 @@ sudo pmset -c autorestart 1
 
 # Kill affected apps
 for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
-  "Mail" "Safari" "SystemUIServer" "Terminal" "iCal" "iTunes" "NotificationCenter"; do
-  killall "$app" > /dev/null 2>&1
+	"Mail" "Safari" "SystemUIServer" "Terminal" "iCal" "iTunes" "NotificationCenter"; do
+	killall "$app" >/dev/null 2>&1
 done
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."

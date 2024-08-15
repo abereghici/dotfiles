@@ -33,15 +33,17 @@ brew "jesseduffield/lazydocker/lazydocker" # Full Docker management app
 brew "jesseduffield/lazygit/lazygit" # Full Git management app
 brew "nmap" # Port scanning utility for large networks
 brew "yazi" # Blazing fast terminal file manager written in Rust, based on async I/O
+brew "jq" # Lightweight and flexible command-line JSON processor
 
 # GUI apps
+cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
 cask "ollama" # Get up and running with large language models locally
 cask "docker" # Running containerized applications
-cask "alacritty" # Better terminal emulator
+cask "wezterm" # Better terminal emulator
 cask "slack" # Messaging social platform
 cask "discord" # Messaging social platform
 cask "spotify" # Audio streaming platform
-cask "vivaldi" # Browser with built-in privacy
+cask "google-chrome" # Chrome browser
 cask "telegram" # Messenger
 
 # Fonts

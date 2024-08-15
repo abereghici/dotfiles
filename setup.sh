@@ -15,18 +15,18 @@ bold=$(tput bold)
 reset=$(tput sgr0)
 
 title() {
-  echo "${bold}==> $1${reset}"
-  echo
+	echo "${bold}==> $1${reset}"
+	echo
 }
 
 warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
+	tput setaf 1
+	echo "/!\\ $1 /!\\"
+	tput sgr0
 }
 
 command_exists() {
-  command -v "$@" &> /dev/null
+	command -v "$@" &>/dev/null
 }
 
 echo -e "
@@ -50,19 +50,19 @@ echo -e "${light_red}This script will delete all your configuration files!"
 echo -e "${light_red}Use it at your own risk."
 
 if [ $# -ne 1 ] || [ "$1" != "-y" ]; then
-  echo -e "${yellow}Press Enter key to continue...${reset}\n"
-  read key
+	echo -e "${yellow}Press Enter key to continue...${reset}\n"
+	read key
 fi
 
 # Backup existing zsh file
 if [[ -e "$HOME/.zshrc" ]]; then
-  mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
+	mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
 fi
 
 # Use Touch ID to authorize sudo
 if [ ! -f /etc/pam.d/sudo_local ]; then
-  title "🔒 Enabling Touch ID to authorize sudo commands..."
-  echo "auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local
+	title "🔒 Enabling Touch ID to authorize sudo commands..."
+	echo "auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local
 fi
 
 # Ask for the administrator password upfront
