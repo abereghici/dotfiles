@@ -18,14 +18,6 @@ eval "$(zoxide init zsh)"
 ) >> $HOME/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-
-source $HOME/.config/zsh/path.zsh
-source $HOME/.config/zsh/env.zsh
-source $HOME/.config/zsh/aliases.zsh
-
-# Allow local (private) customizations (not checked in to version control)
-[ -f ~/.zsh.local ] && source ~/.zsh.local
-
 # ----- oh-my-zsh  -----
 # https://github.com/ohmyzsh/ohmyzsh
 # Activate Fish-like autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#homebrew
@@ -37,6 +29,13 @@ plugins=(git)
 
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
+
+source $HOME/.config/zsh/path.zsh
+source $HOME/.config/zsh/env.zsh
+source $HOME/.config/zsh/aliases.zsh
+
+# Allow local (private) customizations (not checked in to version control)
+[ -f ~/.zsh.local ] && source ~/.zsh.local
 
 # Enable fzf: https://github.com/junegunn/fzf
 if [ $(command -v "fzf") ]; then

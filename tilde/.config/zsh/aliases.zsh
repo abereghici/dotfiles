@@ -40,8 +40,6 @@ alias grep="grep -i --color=auto"
 alias mkdir="mkdir -p"
 
 # Shortcuts
-alias ls="ls --color"
-alias l="ls -l"
 alias -- +x="chmod +x"
 alias o="open"
 alias oo="open ."
