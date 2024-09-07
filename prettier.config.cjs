@@ -12,8 +12,8 @@ const config = {
       files: '*.md',
       options: {
         arrowParens: 'avoid',
-        printWidth: 70,
-        proseWrap: 'never',
+        printWidth: 80,
+        proseWrap: 'always',
         trailingComma: 'none',
       },
     },
