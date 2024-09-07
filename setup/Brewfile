@@ -34,6 +34,8 @@ brew "jesseduffield/lazygit/lazygit" # Full Git management app
 brew "nmap" # Port scanning utility for large networks
 brew "yazi" # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "jq" # Lightweight and flexible command-line JSON processor
+brew "luarocks" # Package manager for the Lua programming language
+brew "ast-grep" # Code searching, linting, rewriting
 
 # GUI apps
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
