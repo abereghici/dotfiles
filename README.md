@@ -76,28 +76,19 @@ This will install all required dotfiles in your home directory as symlinks. Ever
 ./setup/macos.sh
 ```
 
-````
 ## Local customizations
 
-The dotfiles can be extended to suit additional local
-requirements by using the following files:
+The dotfiles can be extended to suit additional local requirements by using the following files:
 
 #### `~/.zsh.local`
 
-If this file exists, it will be automatically sourced
-after all the other shell related files allowing its
-content to add to or overwrite the existing aliases, settings, PATH,
-etc.
+If this file exists, it will be automatically sourced after all the other shell related files allowing its content to add to or overwrite the existing aliases, settings, PATH, etc.
 
 #### `~/.gitconfig.local`
 
-If this file exists, it will be automatically
-included after the configurations from `~/.gitconfig` allowing
-its content to overwrite or add to the existing `git` configurations.
+If this file exists, it will be automatically included after the configurations from `~/.gitconfig` allowing its content to overwrite or add to the existing `git` configurations.
 
-> [!TIP]
-> Use `~/.gitconfig.local` to store [sensitive information](git/) such
-as the `git` user credentials for individual repositories.
+> [!TIP] Use `~/.gitconfig.local` to store [sensitive information](git/) such as the `git` user credentials for individual repositories.
 
 ## Updating
 
@@ -107,7 +98,7 @@ To update an existing install:
 cd ~/dotfiles
 git pull
 ./setup.sh
-````
+```
 
 ## License
 
