@@ -29,6 +29,7 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 - [Neovim](tilde/.config/nvim/)
 - [Zellij](./tilde/.config/zellij/)
 - [Alacritty](./tilde/.config/alacritty/)
+- [Wezterm](./tilde/.config/wezterm/)
 - [macOS apps](setup/Brewfile) I use.
 
 ## Installation
