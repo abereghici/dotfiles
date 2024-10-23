@@ -42,7 +42,13 @@ if [ $(command -v "fzf") ]; then
   source $HOME/.config/zsh/fzf.zsh
 fi
 
+# Enable ngrok autocompletions
+if [ $(command -v "ngrok") ]; then
+  eval "$(ngrok completion)"
+fi
+
 # Starship prompt (needs to be at the end)
 if [ $(command -v "starship") ]; then
   source $HOME/.config/zsh/prompt.zsh
 fi
+
