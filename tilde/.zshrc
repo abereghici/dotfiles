@@ -1,3 +1,7 @@
+# ----- Homebrew -----
+# https://brew.sh
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # ----- Direnv  -----
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
@@ -10,13 +14,6 @@ eval "$(fnm env --use-on-cd)"
 # https://github.com/ajeetdsouza/zoxide
 eval "$(zoxide init zsh)"
 
-# ----- Homebrew -----
-# https://brew.sh
-(
-  echo
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
-) >> $HOME/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ----- oh-my-zsh  -----
 # https://github.com/ohmyzsh/ohmyzsh
@@ -25,10 +22,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Enable Fish-like syntax highlighting: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 [ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-plugins=(git)
-
 # Load oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 source $HOME/.config/zsh/path.zsh
 source $HOME/.config/zsh/env.zsh
