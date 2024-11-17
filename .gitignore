@@ -6,3 +6,4 @@ lazygit/state.yml
 private/
 tilde/.ssh/*
 node_modules
+tilde/.config/tmux/plugins/*
