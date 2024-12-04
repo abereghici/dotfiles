@@ -85,6 +85,10 @@ Everything is then configured via modifying files in `~/dotfiles`.
 ./setup/macos.sh
 ```
 
+#### Keyboard conflicts
+- Disable or remap the `Select next source in Input menu` because it conflicts with Alacritty vi mode.
+- Remap `Mission control` keys to `Ctrl` + `Option` + `Arrow Keys` because conflicts with Neovim.
+
 ## Local customizations
 
 The dotfiles can be extended to suit additional local requirements by using the
