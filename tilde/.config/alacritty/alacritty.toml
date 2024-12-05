@@ -2,13 +2,6 @@
 live_config_reload = true
 import = ["~/.config/alacritty/themes/rose-pine-moon.toml"]
 
-[terminal.shell]
-program = "/bin/zsh"
-args = [
-  "-c",
-  "/opt/homebrew/bin/zellij attach --index 0 || /opt/homebrew/bin/zellij",
-]
-
 [window]
 padding = { x = 10, y = 10 }
 decorations = "Buttonless"
