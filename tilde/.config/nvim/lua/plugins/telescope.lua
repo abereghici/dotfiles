@@ -1,6 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     dependencies = {
       {
         "nvim-telescope/telescope-live-grep-args.nvim",
