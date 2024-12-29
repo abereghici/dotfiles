@@ -112,26 +112,31 @@ open_session() {
 
 	if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
 		verbose "New Session 1"
-		tmux new-session -s "$name" -c "$dir" \
-			-e "TSX_PROJECT_DIR=\"$dir\"" -e "TSX_PROJECT_NAME=\"$name\"" -n "Editor"
+		tmux new-session -d -s "$name" -c "$dir" -n "Editor" \
+			-e "TSX_PROJECT_DIR=\"$dir\"" -e "TSX_PROJECT_NAME=\"$name\""
 
 		tmux new-window -t "$name" -n "Shell" -c "$dir"
+
+		tmux attach -t "$name":"Editor"
+
 		exit 0
 	fi
 
 	if ! tmux has-session -t="$name" 2>/dev/null; then
 		verbose "New Session 2"
-		tmux new-session -ds "$name" -c "$dir" \
-			-e "TSX_PROJECT_DIR=\"$dir\"" -e "TSX_PROJECT_NAME=\"$name\"" -n "Editor"
+		tmux new-session -ds "$name" -c "$dir" -n "Editor" \
+			-e "TSX_PROJECT_DIR=\"$dir\"" -e "TSX_PROJECT_NAME=\"$name\""
 
 		tmux new-window -t "$name" -n "Shell" -c "$dir"
+
+		tmux select-window -t "Editor"
 	fi
 
 	if [[ -z $TMUX ]]; then
-		verbose "Attatch Session"
-		tmux attach -t "$name"
+		verbose "Attach Session"
+		tmux attach -t "$name":"Editor"
 	else
-		tmux switch-client -t "$name"
+		tmux switch-client -t "$name":"Editor"
 	fi
 
 	exit 1
