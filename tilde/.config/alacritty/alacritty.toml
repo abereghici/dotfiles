@@ -1,13 +1,15 @@
-[general]
 live_config_reload = true
+
+[general]
 import = ["~/.config/alacritty/themes/rose-pine-moon.toml"]
+
 
 [window]
 padding = { x = 10, y = 10 }
 decorations = "Buttonless"
 startup_mode = "Maximized"
 option_as_alt = "Both"
-opacity = 0.75
+opacity = 0.95
 blur = true
 
 [font]
