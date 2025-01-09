@@ -37,6 +37,7 @@ brew "jq" # Lightweight and flexible command-line JSON processor
 brew "luarocks" # Package manager for the Lua programming language
 brew "ast-grep" # Code searching, linting, rewriting
 brew "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
+brew "bitwarden-cli" # Secure and free password manager for all of your devices
 
 # GUI apps
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
@@ -48,6 +49,8 @@ cask "discord" # Messaging social platform
 cask "spotify" # Audio streaming platform
 cask "google-chrome" # Chrome browser
 cask "telegram" # Messenger
+cask "karabiner-elements" # Keyboard customiser
+cask "raycast" # Control your tools with a few keystrokes
 
 # Fonts
 cask "font-meslo-lg-nerd-font" # MesloLG Nerd Font
