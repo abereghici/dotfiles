@@ -7,7 +7,7 @@ return {
     opts = {
       provider = "copilot",
     },
-    uild = "make",
+    build = "make",
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
