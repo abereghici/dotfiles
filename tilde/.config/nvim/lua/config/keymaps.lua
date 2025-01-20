@@ -1,8 +1,5 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
-local discipline = require("bereghicidev.discipline")
-discipline.cowboy()
-
 local map = vim.keymap.set
 -- Select all
 map("n", "<Leader>ya", "ggVGy<C-O>", { desc = "Select all" })
