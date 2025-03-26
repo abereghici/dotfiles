@@ -26,6 +26,7 @@ brew "zoxide" # Convenient and magical navigation (better `cd`)
 brew "zellij" # Terminal multiplexer
 brew "direnv" # Load/unload environment variables based on $PWD
 brew "wget" # Internet file retriever
+brew "uv" # Extremely fast Python package installer and resolver, written in Rust
 brew "rustup-init" # Rust toolchain installer
 brew "zsh-autosuggestions" # Fish-like autosuggestions for Zsh
 brew "zsh-syntax-highlighting" # Fish-like syntax highlighting for Zsh
