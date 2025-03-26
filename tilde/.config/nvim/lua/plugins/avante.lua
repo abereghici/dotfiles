@@ -6,6 +6,16 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
       provider = "copilot",
+      cursor_applying_provider = "copilot",
+      copilot = {
+        model = "claude-3.7-sonnet",
+      },
+      windows = {
+        width = 50,
+      },
+      behaviour = {
+        enable_cursor_planning_mode = true,
+      },
     },
     build = "make",
     dependencies = {

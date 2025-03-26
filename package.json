@@ -9,7 +9,7 @@
   "author": "Alexandru Bereghici",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "3.3.0",
+    "prettier": "3.4.2",
     "prettier-plugin-sh": "0.14.0"
   }
 }

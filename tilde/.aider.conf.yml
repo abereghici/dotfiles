@@ -1,0 +1,11 @@
+read: [CONVENTIONS.md]
+dark-mode: true
+auto-commits: false
+vim: false
+map-tokens: 2048
+code-theme: one-dark
+analytics: false
+alias:
+  - 'fast:github_copilot/gpt-4o'
+  - 'code:github_copilot/claude-3.7-sonnet'
+  - 'think:github_copilot/claude-3.7-sonnet-thought'
