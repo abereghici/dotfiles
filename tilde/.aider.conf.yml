@@ -1,11 +1,30 @@
-read: [CONVENTIONS.md]
-dark-mode: true
-auto-commits: false
-vim: false
-map-tokens: 2048
-code-theme: one-dark
-analytics: false
+# https://aider.chat/docs/config/aider_conf.html
+
+# Default model
+model: code
 alias:
   - 'fast:github_copilot/gpt-4o'
   - 'code:github_copilot/claude-3.7-sonnet'
   - 'think:github_copilot/claude-3.7-sonnet-thought'
+show-model-warnings: false
+
+# Behavior
+analytics: false
+
+# Git
+gitignore: false
+auto-commits: false
+dirty-commits: false
+
+read: [CONVENTIONS.md]
+
+# Theme - Rose Pine Moon
+code-theme: material
+user-input-color: '#9ccfd8' # Foam
+tool-output-color: '#3e8fb0' # Pine
+tool-error-color: '#eb6f92' # Love
+tool-warning-color: '#f6c177' # Gold
+assistant-output-color: '#c4a7e7' # Iris
+completion-menu-color: '#e0def4' # Text
+completion-menu-bg-color: '#232136' # Base
+completion-menu-current-color: '#393552' # Overlay
