@@ -41,24 +41,12 @@ const rules: KarabinerRules[] = [
     ],
   },
   ...createHyperSubLayers({
-    // b = "B"rowse
-    b: {},
-    // o = "Open" applications
-    o: {
-      f: app('Finder'),
-    },
-    // r = "Raycast"
-    r: {
-      b: open('raycast://extensions/Codely/google-chrome/search-bookmarks'),
-      c: open('raycast://extensions/thomas/color-picker/pick-color'),
-      e: open(
-        'raycast://extensions/raycast/emoji-symbols/search-emoji-symbols'
-      ),
-      h: open(
-        'raycast://extensions/raycast/clipboard-history/clipboard-history'
-      ),
-      d: open('raycast://extensions/djpowers/devdocs/search-docsets'),
-    },
+    f: app('Finder'),
+    h: open('raycast://extensions/raycast/clipboard-history/clipboard-history'),
+    b: open('raycast://extensions/Codely/google-chrome/search-bookmarks'),
+    e: open('raycast://extensions/raycast/emoji-symbols/search-emoji-symbols'),
+    c: open('raycast://extensions/thomas/color-picker/pick-color'),
+    d: open('raycast://extensions/djpowers/devdocs/search-docsets'),
   }),
 ]
 

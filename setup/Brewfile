@@ -39,6 +39,10 @@ brew "luarocks" # Package manager for the Lua programming language
 brew "ast-grep" # Code searching, linting, rewriting
 brew "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 brew "bitwarden-cli" # Secure and free password manager for all of your devices
+brew "aider" # AI pair programming in your terminal
+brew "imagemagick" #Tools and libraries to manipulate images in many formats
+brew "gs" # Interpreter for PostScript and PDF
+brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
 
 # GUI apps
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS

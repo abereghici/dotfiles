@@ -19,6 +19,9 @@ command_exists eza && alias llt="ls --tree --git-ignore"
 # A smarter cd command.
 command_exists z && alias cd="z"
 
+# Tmux sessionizer
+alias tmuxs="tmux-sessionizer -rp ~/Development/Freelance ~/Development/Learn ~/Development/OOS ~/Development/Work ~/Development/Personal"
+
 # Lazydocker
 alias ld="lazydocker"
 

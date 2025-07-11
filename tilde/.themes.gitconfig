@@ -1,0 +1,27 @@
+[delta "rosepine"]
+    commit-decoration-style = "#c4a7e7" box
+    dark = true
+    file-decoration-style = "#393552" overline
+    file-added-label = [●]
+    file-copied-label = [C]
+    file-modified-label = [+]
+    file-removed-label = [⛌]
+    file-renamed-label = [→]
+    file-style = "#232136" bold "#f6c177"
+    hunk-header-style = syntax bold italic "#59546d"
+    line-numbers = true
+    line-numbers-left-format = "{nm:>1}┊"
+    line-numbers-left-style = "#eb6f92"
+    line-numbers-minus-style = "#eb6f92" bold
+    line-numbers-plus-style = "#9ccfd8" bold
+    line-numbers-right-format = " {np:>1}┊"
+    line-numbers-right-style = "#9ccfd8"
+    line-numbers-zero-style = "#6e6a86" italic
+    minus-emph-style = normal "#8c3353"
+    minus-style = normal "#5f3a4c"
+    plus-emph-style = syntax bold "#3e8fb0"
+    plus-style = syntax "#2a4e5c"
+    syntax-theme = Nord
+    whitespace-error-style = "#8c3353" reverse
+    zero-style = syntax
+    blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "

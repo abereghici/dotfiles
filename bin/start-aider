@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONFIG_COPILOT_FILE="${HOME}/.config/github-copilot/apps.json"
+OAUTH_TOKEN=$(jq -r 'to_entries[0].value.oauth_token' "$CONFIG_COPILOT_FILE")
+
+export OPENAI_API_BASE=https://api.githubcopilot.com
+export OPENAI_API_KEY=$(curl -s -H "Authorization: Bearer $OAUTH_TOKEN" \
+	"https://api.github.com/copilot_internal/v2/token" | jq -r '.token')
+
+# Token type verification result (for security reason, i truncated result with previous grep command)
+# echo $OPENAI_API_KEY | grep -Eo tid=
+
+aider
