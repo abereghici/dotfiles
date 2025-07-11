@@ -25,7 +25,6 @@ return {
         "<leader>gn",
         function()
           local neogit = require("neogit")
-
           neogit.open()
         end,
         desc = "Neogit",

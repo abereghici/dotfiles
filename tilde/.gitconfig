@@ -249,11 +249,14 @@
 # include local/private config if relevant
 
 [delta]
+  features = rosepine
   navigate = true # Use n and N to move between diff sections
-  side-by-side = true # Enables the side-by-side view
+  side-by-side = false # Enables the side-by-side view
   true-color = always
   tabs = 2
+  hunk-header-style = omit
   hyperlinks = true
 
 [include]
+  path = ~/.themes.gitconfig
   path = ~/.gitconfig.local
