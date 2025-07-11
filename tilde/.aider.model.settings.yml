@@ -1,0 +1,11 @@
+- name: openai/claude-sonnet-4
+  extra_params:
+    extra_headers:
+      Editor-Version: Aider/0.83
+      Copilot-Integration-Id: vscode-chat
+
+- name: openai/gpt-4.1
+  extra_params:
+    extra_headers:
+      Editor-Version: Aider/0.83
+      Copilot-Integration-Id: vscode-chat
