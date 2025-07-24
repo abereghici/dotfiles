@@ -176,6 +176,10 @@ if.app-id = 'com.github.wez.wezterm'
 run = "move-node-to-workspace T"
 
 [[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = "move-node-to-workspace T"
+
+[[on-window-detected]]
 if.app-id = 'com.apple.mail'
 run = "move-node-to-workspace P"
 
