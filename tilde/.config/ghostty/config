@@ -1,0 +1,15 @@
+theme = rose-pine-moon
+background-opacity = .95
+
+font-family = MesloLGS Nerd Font
+font-size = 16.0
+
+macos-titlebar-style = hidden
+macos-option-as-alt = left
+
+cursor-style-blink = false
+mouse-hide-while-typing = true
+window-padding-balance = true
+
+window-inherit-font-size = true
+window-inherit-working-directory = true
