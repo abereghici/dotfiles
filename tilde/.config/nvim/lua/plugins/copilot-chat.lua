@@ -16,11 +16,11 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     keys = {
-      { "<leader>aC", "", desc = "+copilot-chat", mode = { "n", "v" } },
+      { "<leader>ac", "", desc = "+copilot-chat", mode = { "n", "v" } },
       { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       { "<leader>aa", false },
       {
-        "<leader>aCa",
+        "<leader>aca",
         function()
           return require("CopilotChat").toggle()
         end,
@@ -29,7 +29,7 @@ return {
       },
       { "<leader>ax", false },
       {
-        "<leader>aCx",
+        "<leader>acx",
         function()
           return require("CopilotChat").reset()
         end,
@@ -38,7 +38,7 @@ return {
       },
       { "<leader>aq", false },
       {
-        "<leader>aCq",
+        "<leader>acq",
         function()
           local input = vim.fn.input("Quick Chat: ")
           if input ~= "" then
@@ -51,7 +51,7 @@ return {
       -- Show prompts actions with telescope
       { "<leader>ap", false },
       {
-        "<leader>aCp",
+        "<leader>acp",
         pick("prompt"),
         desc = "Prompt Actions (CopilotChat)",
         mode = { "n", "v" },
