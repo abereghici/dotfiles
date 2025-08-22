@@ -6,14 +6,15 @@ return {
       "AiderHealth",
     },
     keys = {
-      { "<leader>a/", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
-      { "<leader>as", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
-      { "<leader>ac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
-      { "<leader>ab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
-      { "<leader>a+", "<cmd>Aider add<cr>", desc = "Add File" },
-      { "<leader>a-", "<cmd>Aider drop<cr>", desc = "Drop File" },
-      { "<leader>ar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
-      { "<leader>aR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
+      { "<leader>aa", "", desc = "+aider", mode = { "n", "v" } },
+      { "<leader>aa/", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
+      { "<leader>aas", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
+      { "<leader>aac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
+      { "<leader>aab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
+      { "<leader>aa+", "<cmd>Aider add<cr>", desc = "Add File" },
+      { "<leader>aa-", "<cmd>Aider drop<cr>", desc = "Drop File" },
+      { "<leader>aar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
+      { "<leader>aaR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
     },
     config = {
       -- Command that executes Aider

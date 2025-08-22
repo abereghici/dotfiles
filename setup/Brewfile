@@ -59,6 +59,7 @@ cask "google-chrome" # Chrome browser
 cask "telegram" # Messenger
 cask "karabiner-elements" # Keyboard customiser
 cask "raycast" # Control your tools with a few keystrokes
+cask "visual-studio-code" # Microsoft Visual Studio Code
 
 # Fonts
 cask "font-meslo-lg-nerd-font" # MesloLG Nerd Font

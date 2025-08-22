@@ -14,12 +14,13 @@
 usage="\
 --------------------------------------------------------------------------------
 TMUX Sessionizer
-tmux-sessionizer [-r][-v][-h][-p][-n {Name Arg}] {Directory Args...}
+tmux-sessionizer [-r][-v][-h][-p][-c][-n {Name Arg}] {Directory Args...}
 
 Options:
  -r: Use sub directories for selection (depth = 1)
  -v: Verbose logging
  -p: Enable preview in fzf
+ -c: Create new folder mode - select parent directory with fzf
  -h: Help
  -n: Specify the session name
 
@@ -43,6 +44,14 @@ Examples
  5.) Fuzzy Find a project folders in multiple directories
 
       tmux-sessionizer -r ~/My_Repos ~/My_Configs
+
+ 6.) Create new folder in selected parent directory
+
+      tmux-sessionizer -c ~/Development
+
+ 7.) Create new folder with specified name
+
+      tmux-sessionizer -c -n MyProject ~/Development
 --------------------------------------------------------------------------------
 "
 
@@ -59,13 +68,15 @@ name=''
 help='false'
 verbose='false'
 preview='false'
+create='false'
 
-while getopts 'rvphn:' flag; do
+while getopts 'rvphcn:' flag; do
 	case "${flag}" in
 	r) recursive="true" ;;
 	v) verbose="true" ;;
 	h) help="true" ;;
 	p) preview="true" ;;
+	c) create="true" ;;
 	n) name="${OPTARG}" ;;
 	*) help="true" ;;
 	esac
@@ -251,11 +262,107 @@ get_name() {
 	return 0
 }
 
+create_new_folder_session() {
+	local parent_dirs="$@"
+	local selected_parent=""
+	local folder_name=""
+	local new_dir=""
+
+	verbose "Create mode: selecting parent directory"
+
+	# If only one directory provided and it exists, use it directly
+	if [[ $# = 1 && -d "$1" ]]; then
+		selected_parent="$1"
+		verbose "Using single parent directory: $selected_parent"
+	else
+		# Use fzf to select parent directory
+		if ! test_directories $parent_dirs; then
+			return 1
+		fi
+
+		# For create mode, we just want to select from the provided directories
+		local dir_options=""
+		for dir in $parent_dirs; do
+			if [[ -d "$dir" ]]; then
+				dir_options="$dir_options$dir\n"
+			fi
+		done
+
+		if [[ "$dir_options" = "" ]]; then
+			log "${red}Error${clear}: No valid parent directories found"
+			return 1
+		fi
+
+		selected_parent=$(echo -e "$dir_options" | fzf \
+			--header="Select parent directory for new folder" \
+			--prompt="Parent> " \
+			--height=40% \
+			--border)
+
+		if [[ "$selected_parent" = "" ]]; then
+			log "${red}Error${clear}: No parent directory selected"
+			return 1
+		fi
+
+		verbose "Selected parent: $selected_parent"
+	fi
+
+	# Get folder name
+	if [[ "$name" != '' ]]; then
+		folder_name="$name"
+		verbose "Using provided name: $folder_name"
+	else
+		echo -n "Enter new folder name: "
+		read folder_name
+
+		if [[ "$folder_name" = "" ]]; then
+			log "${red}Error${clear}: No folder name provided"
+			return 1
+		fi
+
+		verbose "Entered folder name: $folder_name"
+	fi
+
+	# Create the new directory path
+	new_dir="$selected_parent/$folder_name"
+
+	# Check if directory already exists
+	if [[ -d "$new_dir" ]]; then
+		log "${red}Error${clear}: Directory $new_dir already exists"
+		return 1
+	fi
+
+	# Create the directory
+	verbose "Creating directory: $new_dir"
+	if ! mkdir -p "$new_dir"; then
+		log "${red}Error${clear}: Failed to create directory $new_dir"
+		return 1
+	fi
+
+	log "${green}Created${clear}: $new_dir"
+
+	# Get session name (clean folder name for tmux)
+	local session_name=$(echo "$folder_name" | tr . _)
+
+	# Open session in the new directory
+	open_session "$session_name" "$new_dir"
+
+	return 0
+}
+
 #---------------------------------Execution-------------------------------------
 
 if [[ $dirs = "" ]]; then
 	log "$usage"
 	exit 2
+fi
+
+# Handle create mode
+if [[ $create = true ]]; then
+	if ! create_new_folder_session $dirs; then
+		exit 1
+	fi
+	exit 0
 fi
 
 verbose "Directory Count: $#"

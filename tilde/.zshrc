@@ -48,3 +48,8 @@ if [ $(command -v "starship") ]; then
   source $HOME/.config/zsh/prompt.zsh
 fi
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/abereghici/.cache/lm-studio/bin"
+# End of LM Studio CLI section
+

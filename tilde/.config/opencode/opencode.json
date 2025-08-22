@@ -5,5 +5,17 @@
   "keybinds": {
     "messages_half_page_up": "ctrl+u",
     "messages_half_page_down": "ctrl+d"
+  },
+  "provider": {
+    "openrouter": {
+      "models": {
+        "google/gemini-2.0-flash-exp:free": {
+          "name": "Google Gemini 2.0 Flash Experimental (free)"
+        },
+        "qwen/qwen-2.5-coder-32b-instruct:free": {
+          "name": "Qwen2.5 Coder 32B Instruct (free)"
+        }
+      }
+    }
   }
 }
