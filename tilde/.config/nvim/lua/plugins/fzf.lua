@@ -4,6 +4,9 @@ return {
     opts = function(_, opts)
       opts.winopts.preview.layout = "vertical"
 
+      -- Make the window transparent
+      opts.winopts.backdrop = false -- Remove backdrop
+
       opts.files = {
         actions = {
           -- Open file dir using oil.nvim
@@ -11,10 +14,24 @@ return {
             local path = require("fzf-lua.path")
             local file = path.entry_to_file(sel[1], opt)
             local filename = file.bufname or file.path or file.uri
-            require("oil").toggle_float(path.parent(filename, true))
+            if filename then
+              require("oil").toggle_float(path.parent(filename, true))
+            end
           end,
         },
       }
+
+      -- Set transparent backgrounds for fzf-lua windows
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fzf",
+        callback = function()
+          vim.cmd([[
+            highlight FzfLuaNormal guibg=NONE
+            highlight FzfLuaBorder guibg=NONE
+            highlight FzfLuaTitle guibg=NONE
+          ]])
+        end,
+      })
     end,
     keys = {
       { "<leader><space>", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
