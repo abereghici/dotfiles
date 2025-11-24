@@ -19,6 +19,7 @@ brew "git-delta" # Diff pager for `git` and `grep` output (better `diff`)
 brew "htop" # Performance and resource monitoring tool (better `top`)
 brew "neovim" # Text editor for terminal
 brew "node" # Fallback Node.js version
+brew "openjdk@21" # Development kit for the Java programming language
 brew "pnpm" # Efficient Node.js package manager
 brew "ripgrep" # Searching within files (better `grep`)
 brew "starship" # Prompt manager

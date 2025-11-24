@@ -19,6 +19,9 @@ prepend "$HOME/.cargo/bin"
 # Add fnm
 prepend "$HOME/.local/share/fnm"
 
+# Add java
+prepend "/opt/homebrew/opt/openjdk@21/bin"
+
 # Prevent it from being used accidentally elsewhere in the script or by other scripts
 unset prepend
 
