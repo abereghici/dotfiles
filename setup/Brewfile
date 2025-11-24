@@ -24,7 +24,6 @@ brew "pnpm" # Efficient Node.js package manager
 brew "ripgrep" # Searching within files (better `grep`)
 brew "starship" # Prompt manager
 brew "zoxide" # Convenient and magical navigation (better `cd`)
-brew "zellij" # Terminal multiplexer
 brew "direnv" # Load/unload environment variables based on $PWD
 brew "wget" # Internet file retriever
 brew "uv" # Extremely fast Python package installer and resolver, written in Rust
@@ -40,7 +39,6 @@ brew "luarocks" # Package manager for the Lua programming language
 brew "ast-grep" # Code searching, linting, rewriting
 brew "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 brew "bitwarden-cli" # Secure and free password manager for all of your devices
-brew "aider" # AI pair programming in your terminal
 brew "sst/tap/opencode" # AI-powered coding assistant
 brew "imagemagick" #Tools and libraries to manipulate images in many formats
 brew "gs" # Interpreter for PostScript and PDF
@@ -51,7 +49,6 @@ brew "mermaid-cli" # CLI for Mermaid library
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
 cask "ollama" # Get up and running with large language models locally
 cask "docker" # Running containerized applications
-cask "wezterm" # Better terminal emulator
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "slack" # Messaging social platform
 cask "discord" # Messaging social platform

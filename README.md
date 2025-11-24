@@ -27,9 +27,6 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 - git / delta syntax-highlighting diff tool.
 - Sensible [macOS defaults](setup/macos.sh).
 - [Neovim](tilde/.config/nvim/)
-- [Zellij](./tilde/.config/zellij/)
-- [Alacritty](./tilde/.config/alacritty/)
-- [Wezterm](./tilde/.config/wezterm/)
 - [macOS apps](setup/Brewfile) I use.
 
 ## Installation
@@ -86,8 +83,9 @@ Everything is then configured via modifying files in `~/dotfiles`.
 ```
 
 #### Keyboard conflicts
-- Disable or remap the `Select next source in Input menu` because it conflicts with Alacritty vi mode.
-- Remap `Mission control` keys to `Ctrl` + `Option` + `Arrow Keys` because conflicts with Neovim.
+
+- Remap `Mission control` keys to `Ctrl` + `Option` + `Arrow Keys` because
+  conflicts with Neovim.
 
 ## Local customizations
 
