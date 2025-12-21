@@ -20,3 +20,9 @@ export BAT_THEME="base16"
 # forcing a 3 s curl on every single run.
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ANALYTICS=1
+
+# Load API keys from keychain
+# Keys are stored using the 'keychain' utility (see bin/keychain)
+if command -v keychain &> /dev/null; then
+  eval "$(keychain export CONTEXT7_API_KEY)"
+fi

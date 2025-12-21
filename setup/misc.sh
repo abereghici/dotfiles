@@ -62,7 +62,6 @@ if command_exists gh && ! gh auth status &>/dev/null; then
 fi
 
 # Node.js global config
-brew unlink node && brew link node # Prevent `npm not found` error
 npm config set loglevel warn
 npm config set save-exact true
 
@@ -71,5 +70,6 @@ packages=(
 	neovim
 	npm-upgrade
 	sort-package-json
+	repomix
 )
 npm install -g "${packages[@]}"
