@@ -21,15 +21,14 @@ return {
         },
       }
 
-      -- Set transparent backgrounds for fzf-lua windows
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fzf",
         callback = function()
-          vim.cmd([[
-            highlight FzfLuaNormal guibg=NONE
-            highlight FzfLuaBorder guibg=NONE
-            highlight FzfLuaTitle guibg=NONE
-          ]])
+          -- vim.cmd([[
+          --   highlight FzfLuaNormal guibg=NONE
+          --   highlight FzfLuaBorder guibg=NONE
+          --   highlight FzfLuaTitle guibg=NONE
+          -- ]])
         end,
       })
     end,

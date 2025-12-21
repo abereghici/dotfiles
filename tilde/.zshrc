@@ -6,14 +6,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
 
-# ----- Fnm (node manager) -----
-# https://github.com/Schniz/fnm
-eval "$(fnm env --use-on-cd)"
-
 # ---- Zoxide (better cd) ----
 # https://github.com/ajeetdsouza/zoxide
 eval "$(zoxide init zsh)"
 
+# ---- Mise (Polyglot runtime manager) ----
+eval "$(mise activate zsh --shims)"
 
 # ----- oh-my-zsh  -----
 # https://github.com/ohmyzsh/ohmyzsh
