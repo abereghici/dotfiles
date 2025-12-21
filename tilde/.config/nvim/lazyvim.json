@@ -1,6 +1,6 @@
 {
   "extras": [
-
+    "lazyvim.plugins.extras.lang.angular"
   ],
   "install_version": 7,
   "news": {

@@ -6,28 +6,23 @@ tap "jesseduffield/lazydocker"
 tap "jesseduffield/lazygit"
 
 # CLI tools
-brew "python@3.11" # Required by awscli
 brew "awscli" # Official Amazon AWS command-line interface
 brew "bat" # Output highlighting (better `cat`)
 brew "eza" # Listing files with info (better `ls`)
 brew "fd" # Find entries in your filesystem (better `find`)
-brew "fnm" # Node.js version manager
+brew "mise" # Polyglot runtime manager (asdf rust clone)
 brew "fzf" # Fuzzy file finder and filtering
 brew "gh" # GitHub CLI: interact with GitHub PRs, issues, repos
 brew "git" # Version control
 brew "git-delta" # Diff pager for `git` and `grep` output (better `diff`)
 brew "htop" # Performance and resource monitoring tool (better `top`)
 brew "neovim" # Text editor for terminal
-brew "node" # Fallback Node.js version
-brew "openjdk@21" # Development kit for the Java programming language
 brew "pnpm" # Efficient Node.js package manager
 brew "ripgrep" # Searching within files (better `grep`)
 brew "starship" # Prompt manager
 brew "zoxide" # Convenient and magical navigation (better `cd`)
 brew "direnv" # Load/unload environment variables based on $PWD
 brew "wget" # Internet file retriever
-brew "uv" # Extremely fast Python package installer and resolver, written in Rust
-brew "rustup-init" # Rust toolchain installer
 brew "zsh-autosuggestions" # Fish-like autosuggestions for Zsh
 brew "zsh-syntax-highlighting" # Fish-like syntax highlighting for Zsh
 brew "jesseduffield/lazydocker/lazydocker" # Full Docker management app
@@ -44,6 +39,9 @@ brew "imagemagick" #Tools and libraries to manipulate images in many formats
 brew "gs" # Interpreter for PostScript and PDF
 brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
 brew "mermaid-cli" # CLI for Mermaid library
+brew "tree-sitter" # Incremental parsing library
+brew "tree-sitter-cli" # Parser generator tool
+brew "serve" # Static http server anywhere you need one
 
 # GUI apps
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
