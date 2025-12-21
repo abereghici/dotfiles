@@ -1,0 +1,441 @@
+#!/bin/bash
+# keychain - Manage secrets in macOS Keychain
+#
+# Securely store and retrieve API keys, tokens, and passwords using macOS
+# Keychain. Keys are stored with 'dotfiles.' prefix to avoid conflicts.
+#
+# USAGE:  keychain <command> [args]
+#
+# COMMANDS:
+#   set <KEY> [value]    Store key (prompts if no value given)
+#   get <KEY>            Print key value
+#   del <KEY>            Delete key
+#   list                 List all keys
+#   copy <KEY>           Copy key to clipboard
+#   export <KEY>         Output shell export statement
+#   check <KEY>          Check if key exists (exit code only)
+#   help [command]       Show help
+#
+# EXAMPLES:
+#   keychain set OPENAI_API_KEY              # Secure prompt
+#   keychain get OPENAI_API_KEY              # Print value
+#   eval "$(keychain export OPENAI_API_KEY)" # Export to env
+#   keychain -q set API_KEY value            # Quiet mode
+#
+# Run 'keychain help' for more details.
+
+set -euo pipefail
+
+readonly SERVICE_PREFIX="dotfiles."
+readonly VERSION="1.0.0"
+QUIET=false
+
+# ============================================================================
+# Helpers
+# ============================================================================
+
+msg() {
+  [[ "$QUIET" == false ]] && echo "$1"
+}
+
+err() {
+  echo "Error: $1" >&2
+}
+
+get_service_name() {
+  echo "${SERVICE_PREFIX}${1}"
+}
+
+key_exists() {
+  local service=$(get_service_name "$1")
+  security find-generic-password -a "$USER" -s "$service" &>/dev/null
+}
+
+get_key_value() {
+  local service=$(get_service_name "$1")
+  security find-generic-password -a "$USER" -s "$service" -w 2>/dev/null
+}
+
+# ============================================================================
+# Help
+# ============================================================================
+
+show_help_general() {
+  cat << 'EOF'
+keychain - Manage secrets in macOS Keychain
+
+USAGE:
+    keychain [options] <command> [arguments]
+
+COMMANDS:
+    set <KEY> [value]    Store key (prompts if no value)
+    get <KEY>            Retrieve key value
+    del <KEY>            Delete key
+    list                 List all keys
+    copy <KEY>           Copy to clipboard
+    export <KEY>         Output shell export statement
+    check <KEY>          Check if exists (exit code)
+    help [command]       Show help
+
+OPTIONS:
+    -q, --quiet          Suppress output
+    -h, --help           Show help
+    -v, --version        Show version
+
+EXAMPLES:
+    keychain set OPENAI_API_KEY              # Secure prompt
+    keychain get OPENAI_API_KEY              # Print value
+    eval "$(keychain export OPENAI_API_KEY)" # Export to env
+    keychain -q set API_KEY value            # Quiet mode
+
+For command details: keychain help <command>
+EOF
+}
+
+show_help_set() {
+  cat << 'EOF'
+keychain set - Store or update a key
+
+USAGE:
+    keychain set <KEY> [value]
+
+ARGUMENTS:
+    KEY      Key name (e.g., OPENAI_API_KEY)
+    value    Value (optional - prompts securely if omitted)
+
+EXAMPLES:
+    keychain set OPENAI_API_KEY          # Secure prompt (recommended)
+    keychain set OPENAI_API_KEY sk-xxxx  # Direct value
+    keychain -q set API_KEY value        # Quiet mode
+
+SECURITY:
+    Prompting is more secure - hides input and keeps value out of shell history.
+EOF
+}
+
+show_help_get() {
+  cat << 'EOF'
+keychain get - Retrieve a key value
+
+USAGE:
+    keychain get <KEY>
+
+EXAMPLES:
+    keychain get OPENAI_API_KEY
+    export API_KEY="$(keychain get API_KEY)"
+    curl -H "Authorization: Bearer $(keychain get API_KEY)" https://api.example.com
+
+EXIT CODES:
+    0    Key found
+    1    Key not found
+EOF
+}
+
+show_help_del() {
+  cat << 'EOF'
+keychain del - Delete a key
+
+USAGE:
+    keychain del <KEY>
+
+EXAMPLES:
+    keychain del OLD_API_KEY
+    keychain -q del OLD_API_KEY  # Quiet mode
+
+CAUTION:
+    This permanently removes the key from macOS Keychain.
+EOF
+}
+
+show_help_list() {
+  cat << 'EOF'
+keychain list - List all stored keys
+
+USAGE:
+    keychain list
+
+EXAMPLE OUTPUT:
+    Stored keys (3):
+      OPENAI_API_KEY
+      CONTEXT7_API_KEY
+      GITHUB_TOKEN
+EOF
+}
+
+show_help_copy() {
+  cat << 'EOF'
+keychain copy - Copy key value to clipboard
+
+USAGE:
+    keychain copy <KEY>
+
+EXAMPLES:
+    keychain copy OPENAI_API_KEY
+    keychain -q copy API_KEY  # Quiet mode
+EOF
+}
+
+show_help_export() {
+  cat << 'EOF'
+keychain export - Output key as shell export statement
+
+USAGE:
+    keychain export <KEY>
+
+BEHAVIOR:
+    If key exists: prints export KEY="value"
+    If key doesn't exist: prints nothing (silent)
+
+EXAMPLES:
+    keychain export OPENAI_API_KEY
+    # Output: export OPENAI_API_KEY="sk-xxxx"
+
+    eval "$(keychain export OPENAI_API_KEY)"
+    echo $OPENAI_API_KEY  # sk-xxxx
+
+    # Safe to use even if key doesn't exist
+    eval "$(keychain export NONEXISTENT_KEY)"  # No error
+EOF
+}
+
+show_help_check() {
+  cat << 'EOF'
+keychain check - Check if a key exists
+
+USAGE:
+    keychain check <KEY>
+
+EXIT CODES:
+    0    Key exists
+    1    Key does not exist
+
+EXAMPLES:
+    if keychain check OPENAI_API_KEY; then
+        echo "API key configured"
+    fi
+
+    keychain check REQUIRED_KEY || exit 1
+EOF
+}
+
+# ============================================================================
+# Commands
+# ============================================================================
+
+cmd_set() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain set <KEY> [value]" >&2
+    echo "Run 'keychain help set' for more information" >&2
+    exit 1
+  fi
+
+  local key="$1"
+  local value="${2:-}"
+  local service=$(get_service_name "$key")
+
+  if [[ -z "$value" ]]; then
+    read -r -s -p "Password: " value
+    echo
+    if [[ -z "$value" ]]; then
+      err "Value cannot be empty"
+      exit 1
+    fi
+  fi
+
+  security delete-generic-password -a "$USER" -s "$service" &>/dev/null || true
+
+  if security add-generic-password -a "$USER" -s "$service" -w "$value" &>/dev/null; then
+    msg "=> $key stored in keychain"
+  else
+    err "Failed to store $key in keychain"
+    exit 1
+  fi
+}
+
+cmd_get() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain get <KEY>" >&2
+    echo "Run 'keychain help get' for more information" >&2
+    exit 1
+  fi
+
+  local key="$1"
+  local value
+
+  if ! key_exists "$key"; then
+    err "Key '$key' not found in keychain"
+    echo "Use 'keychain list' to see available keys" >&2
+    echo "Use 'keychain set $key' to store it" >&2
+    exit 1
+  fi
+
+  value=$(get_key_value "$key")
+  echo "$value"
+}
+
+cmd_del() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain del <KEY>" >&2
+    echo "Run 'keychain help del' for more information" >&2
+    exit 1
+  fi
+
+  local key="$1"
+  local service
+
+  service=$(get_service_name "$key")
+
+  if ! key_exists "$key"; then
+    err "Key '$key' not found in keychain"
+    exit 1
+  fi
+
+  if security delete-generic-password -a "$USER" -s "$service" &>/dev/null; then
+    msg "=> $key deleted from keychain"
+  else
+    err "Failed to delete $key from keychain"
+    exit 1
+  fi
+}
+
+cmd_list() {
+  local keys=()
+  local output
+
+  output=$(security dump-keychain 2>/dev/null | grep -o "\"svce\"<blob>=\"${SERVICE_PREFIX}[^\"]*\"" | sed "s/\"svce\"<blob>=\"${SERVICE_PREFIX}\([^\"]*\)\"/\1/" | sort -u) || true
+
+  if [[ -z "$output" ]]; then
+    echo "No keys stored"
+    echo "Use 'keychain set <KEY>' to store a key."
+    return 0
+  fi
+
+  while IFS= read -r line; do
+    keys+=("$line")
+  done <<< "$output"
+
+  echo "Stored keys (${#keys[@]}):"
+  for key in "${keys[@]}"; do
+    echo "  $key"
+  done
+}
+
+cmd_copy() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain copy <KEY>" >&2
+    echo "Run 'keychain help copy' for more information" >&2
+    exit 1
+  fi
+
+  local key="$1"
+  local value
+
+  if ! key_exists "$key"; then
+    err "Key '$key' not found in keychain"
+    exit 1
+  fi
+
+  value=$(get_key_value "$key")
+  echo -n "$value" | pbcopy
+  msg "=> $key copied to clipboard"
+}
+
+cmd_export() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain export <KEY>" >&2
+    echo "Run 'keychain help export' for more information" >&2
+    exit 1
+  fi
+
+  local key="$1"
+  local value
+
+  if ! key_exists "$key"; then
+    return 0
+  fi
+
+  value=$(get_key_value "$key")
+  echo "export $key=\"$value\""
+}
+
+cmd_check() {
+  if [[ $# -lt 1 ]]; then
+    err "Missing required argument: KEY"
+    echo "Usage: keychain check <KEY>" >&2
+    echo "Run 'keychain help check' for more information" >&2
+    exit 1
+  fi
+
+  key_exists "$1"
+}
+
+cmd_help() {
+  local subcommand="${1:-}"
+
+  if [[ -z "$subcommand" ]]; then
+    show_help_general
+    return 0
+  fi
+
+  case "$subcommand" in
+    set)    show_help_set ;;
+    get)    show_help_get ;;
+    del|delete) show_help_del ;;
+    list|ls)    show_help_list ;;
+    copy)   show_help_copy ;;
+    export) show_help_export ;;
+    check)  show_help_check ;;
+    *)
+      err "Unknown command: $subcommand"
+      echo "Run 'keychain help' for list of commands" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# ============================================================================
+# Main
+# ============================================================================
+
+main() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -q|--quiet) QUIET=true; shift ;;
+      -h|--help) show_help_general; exit 0 ;;
+      -v|--version) echo "keychain version $VERSION"; exit 0 ;;
+      -*) err "Unknown option: $1"; echo "Run 'keychain help' for usage" >&2; exit 1 ;;
+      *) break ;;
+    esac
+  done
+
+  if [[ $# -eq 0 ]]; then
+    show_help_general
+    exit 0
+  fi
+
+  local command="$1"
+  shift
+
+  case "$command" in
+    delete) command="del" ;;
+    ls) command="list" ;;
+  esac
+
+  case "$command" in
+    set|get|del|list|copy|export|check) cmd_"$command" "$@" ;;
+    help) cmd_help "$@" ;;
+    *)
+      err "Unknown command: $command"
+      echo "" >&2
+      echo "Run 'keychain help' for usage information" >&2
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
