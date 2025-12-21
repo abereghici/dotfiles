@@ -4,7 +4,7 @@
   "autoupdate": true,
   "keybinds": {
     "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d"
+    "messages_half_page_down": "ctrl+d",
   },
   "mcp": {
     "sequential-thinking": {
@@ -13,13 +13,14 @@
       "command": [
         "npx",
         "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
+        "@modelcontextprotocol/server-sequential-thinking",
+      ],
     },
+    // uv tool install basic-memory
     "basic-memory": {
       "enabled": true,
       "type": "local",
-      "command": ["uvx", "basic-memory", "mcp"]
+      "command": ["uvx", "basic-memory", "mcp"],
     },
     "context7": {
       "enabled": true,
@@ -29,8 +30,8 @@
         "-y",
         "@upstash/context7-mcp",
         "--api-key",
-        "{env:CONTEXT7_API_KEY}"
-      ]
-    }
-  }
+        "{env:CONTEXT7_API_KEY}",
+      ],
+    },
+  },
 }
