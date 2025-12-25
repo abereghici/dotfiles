@@ -1,63 +1,140 @@
 # Taps
 tap "git-friendly/git-friendly"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "jesseduffield/lazydocker"
 tap "jesseduffield/lazygit"
-tap "tw93/tap/mole"
+tap "nikitabobko/tap"
+tap "sst/tap"
+tap "tw93/tap"
 
-# CLI tools
-brew "awscli" # Official Amazon AWS command-line interface
-brew "bat" # Output highlighting (better `cat`)
-brew "eza" # Listing files with info (better `ls`)
-brew "fd" # Find entries in your filesystem (better `find`)
-brew "mise" # Polyglot runtime manager (asdf rust clone)
-brew "fzf" # Fuzzy file finder and filtering
-brew "gh" # GitHub CLI: interact with GitHub PRs, issues, repos
-brew "git" # Version control
-brew "git-delta" # Diff pager for `git` and `grep` output (better `diff`)
-brew "htop" # Performance and resource monitoring tool (better `top`)
-brew "neovim" # Text editor for terminal
-brew "pnpm" # Efficient Node.js package manager
-brew "ripgrep" # Searching within files (better `grep`)
-brew "starship" # Prompt manager
-brew "zoxide" # Convenient and magical navigation (better `cd`)
+# CLI Tools
+
+## Core System Utilities
+brew "bat" # Clone of cat with syntax highlighting and Git integration
+brew "curl" # Get a file from an HTTP, HTTPS or FTP server
 brew "direnv" # Load/unload environment variables based on $PWD
-brew "wget" # Internet file retriever
-brew "zsh-autosuggestions" # Fish-like autosuggestions for Zsh
-brew "zsh-syntax-highlighting" # Fish-like syntax highlighting for Zsh
-brew "jesseduffield/lazydocker/lazydocker" # Full Docker management app
-brew "jesseduffield/lazygit/lazygit" # Full Git management app
-brew "nmap" # Port scanning utility for large networks
-brew "yazi" # Blazing fast terminal file manager written in Rust, based on async I/O
+brew "eza" # Modern, maintained replacement for ls
+brew "fd" # Simple, fast and user-friendly alternative to find
+brew "fzf" # Command-line fuzzy finder written in Go
+brew "htop" # Improved top (interactive process viewer)
 brew "jq" # Lightweight and flexible command-line JSON processor
-brew "luarocks" # Package manager for the Lua programming language
+brew "ripgrep" # Search tool like grep and The Silver Searcher
+brew "tmux" # Terminal multiplexer
+brew "wget" # Internet file retriever
+brew "yazi" # Blazing fast terminal file manager written in Rust, based on async I/O
+brew "zoxide" # Shell extension to navigate your filesystem faster
+brew "zsh-autosuggestions" # Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-syntax-highlighting" # Fish shell like syntax highlighting for zsh
+
+## Development Tools
+brew "aider" # AI pair programming in your terminal
 brew "ast-grep" # Code searching, linting, rewriting
-brew "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
-brew "bitwarden-cli" # Secure and free password manager for all of your devices
-brew "sst/tap/opencode" # AI-powered coding assistant
-brew "imagemagick" #Tools and libraries to manipulate images in many formats
-brew "gs" # Interpreter for PostScript and PDF
-brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
+brew "gh" # GitHub command-line tool
+brew "git" # Distributed revision control system
+brew "git-delta" # Syntax-highlighting pager for git and diff output
+brew "jesseduffield/lazydocker/lazydocker" # Simple terminal UI for docker, written in Go
+brew "lazygit" # Simple terminal UI for git commands
+brew "mise" # Polyglot runtime manager (asdf rust clone)
+brew "neovim" # Ambitious Vim-fork focused on extensibility and agility
+brew "serve" # Static http server anywhere you need one
+brew "starship" # Cross-shell prompt for astronauts
+
+## Cloud & Infrastructure
+brew "awscli" # Official Amazon AWS command-line interface
+brew "flyctl" # Command-line tools for fly.io services
+
+## Programming Languages & Package Managers
+brew "luarocks" # Package manager for the Lua programming language
+brew "pnpm" # Fast, disk space efficient package manager
+brew "yarn" # JavaScript package manager
+
+## Build Tools & Dependencies
+brew "cmake" # Cross-platform make
+brew "gettext" # GNU internationalization (i18n) and localization (l10n) library
+brew "libgit2" # C library of Git core methods that is re-entrant and linkable
+brew "ninja" # Small build system for use with gyp or CMake
+brew "poppler" # PDF rendering library (based on the xpdf-3.0 code base)
+brew "wimlib" # Library to create, extract, and modify Windows Imaging files
+brew "xcodegen" # Generate your Xcode project from a spec file and your folder structure
+
+## Document & Media Processing
+brew "ghostscript" # Interpreter for PostScript and PDF
+brew "imagemagick" # Tools and libraries to manipulate images in many formats
 brew "mermaid-cli" # CLI for Mermaid library
+brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tree-sitter" # Incremental parsing library
 brew "tree-sitter-cli" # Parser generator tool
-brew "serve" # Static http server anywhere you need one
-brew "mole" # Deep clean and optimize your Mac
 
-# GUI apps
-cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
-cask "ollama" # Get up and running with large language models locally
-cask "docker" # Running containerized applications
+## Security & Networking
+brew "bitwarden-cli" # Secure and free password manager for all of your devices
+brew "cryptography" # Cryptographic recipes and primitives for Python
+brew "nmap" # Port scanning utility for large networks
+
+## System Maintenance
+brew "tw93/tap/mole" # Comprehensive macOS cleanup and application uninstall tool
+
+## AI & LLM Tools
+brew "ollama" # Create, run, and share large language models (LLMs)
+brew "sst/tap/opencode" # The AI coding agent built for the terminal
+
+# GUI Applications
+
+## Development Tools
+cask "docker-desktop" # App to build and share containerized applications and microservices
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "slack" # Messaging social platform
-cask "discord" # Messaging social platform
-cask "spotify" # Audio streaming platform
-cask "google-chrome" # Chrome browser
-cask "telegram" # Messenger
-cask "karabiner-elements" # Keyboard customiser
+cask "karabiner-elements" # Keyboard customizer
+cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
+cask "ollama-app" # Get up and running with large language models locally
 cask "raycast" # Control your tools with a few keystrokes
-cask "visual-studio-code" # Microsoft Visual Studio Code
+cask "visual-studio-code" # Open-source code editor
+
+## Window Management
+cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
+
+## Communication
+cask "discord" # Voice and text chat software
+cask "slack" # Team communication and collaboration software
+cask "telegram" # Messaging app with a focus on speed and security
+
+## Browsers
+cask "google-chrome" # Web browser
+
+## Media & Entertainment
+cask "spotify" # Music streaming service
 
 # Fonts
-cask "font-meslo-lg-nerd-font" # MesloLG Nerd Font
+cask "font-meslo-lg-nerd-font" # Developer font with icons
+
+# VSCode Extensions
+vscode "aaron-bond.better-comments"
+vscode "asvetliakov.vscode-neovim"
+vscode "catppuccin.catppuccin-vsc"
+vscode "csstools.postcss"
+vscode "dbaeumer.vscode-eslint"
+vscode "dracula-theme.theme-dracula"
+vscode "eamodio.gitlens"
+vscode "esbenp.prettier-vscode"
+vscode "formulahendry.auto-rename-tag"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "golang.go"
+vscode "graphql.vscode-graphql"
+vscode "graphql.vscode-graphql-syntax"
+vscode "htmlhint.vscode-htmlhint"
+vscode "mgmcdermott.vscode-language-babel"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.remote-explorer"
+vscode "mvllow.rose-pine"
+vscode "saoudrizwan.claude-dev"
+vscode "stylelint.vscode-stylelint"
+vscode "vscode-icons-team.vscode-icons"
+
+# Go Packages
+go "cmd/go"
+go "cmd/gofmt"
+go "github.com/lotusirous/gostdsym/stdsym"
