@@ -4,6 +4,7 @@ tap "homebrew/bundle"
 tap "homebrew/services"
 tap "jesseduffield/lazydocker"
 tap "jesseduffield/lazygit"
+tap "tw93/tap/mole"
 
 # CLI tools
 brew "awscli" # Official Amazon AWS command-line interface
@@ -42,6 +43,7 @@ brew "mermaid-cli" # CLI for Mermaid library
 brew "tree-sitter" # Incremental parsing library
 brew "tree-sitter-cli" # Parser generator tool
 brew "serve" # Static http server anywhere you need one
+brew "mole" # Deep clean and optimize your Mac
 
 # GUI apps
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
