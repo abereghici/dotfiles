@@ -26,7 +26,6 @@ brew "zsh-autosuggestions" # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-syntax-highlighting" # Fish shell like syntax highlighting for zsh
 
 ## Development Tools
-brew "aider" # AI pair programming in your terminal
 brew "ast-grep" # Code searching, linting, rewriting
 brew "gh" # GitHub command-line tool
 brew "git" # Distributed revision control system

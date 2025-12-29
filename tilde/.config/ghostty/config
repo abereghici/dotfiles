@@ -13,3 +13,4 @@ window-padding-balance = true
 
 window-inherit-font-size = true
 window-inherit-working-directory = true
+keybind = shift+enter=text:\x1b\r
