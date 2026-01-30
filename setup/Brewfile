@@ -39,7 +39,6 @@ brew "starship" # Cross-shell prompt for astronauts
 
 ## Cloud & Infrastructure
 brew "awscli" # Official Amazon AWS command-line interface
-brew "flyctl" # Command-line tools for fly.io services
 
 ## Programming Languages & Package Managers
 brew "luarocks" # Package manager for the Lua programming language
@@ -84,7 +83,11 @@ cask "karabiner-elements" # Keyboard customizer
 cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 cask "ollama-app" # Get up and running with large language models locally
 cask "raycast" # Control your tools with a few keystrokes
+cask "utm" # Virtualization tool for macOS to run Windows, Linux, and more
 cask "visual-studio-code" # Open-source code editor
+
+## Security & Networking
+cask "wireshark-app" # Network protocol analyzer
 
 ## Window Management
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
