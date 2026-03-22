@@ -24,6 +24,7 @@ brew "yazi" # Blazing fast terminal file manager written in Rust, based on async
 brew "zoxide" # Shell extension to navigate your filesystem faster
 brew "zsh-autosuggestions" # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-syntax-highlighting" # Fish shell like syntax highlighting for zsh
+# zsh-defer: no Homebrew formula available — installed via git clone in setup/misc.sh
 
 ## Development Tools
 brew "ast-grep" # Code searching, linting, rewriting
