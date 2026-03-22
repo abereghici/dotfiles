@@ -2,13 +2,18 @@
   "name": "dotfiles",
   "version": "0.0.1",
   "description": "My personal dotfiles for configuring macOS with Zsh and Homebrew.",
-  "private": "true",
+  "private": true,
   "engines": {
     "node": ">=20"
   },
   "author": "Alexandru Bereghici",
   "license": "MIT",
+  "scripts": {
+    "format": "prettier --write \"**/*.{sh,zsh,bash}\"",
+    "format:check": "prettier --check \"**/*.{sh,zsh,bash}\""
+  },
   "devDependencies": {
+    "husky": "9.1.7",
     "prettier": "3.4.2",
     "prettier-plugin-sh": "0.14.0"
   }
