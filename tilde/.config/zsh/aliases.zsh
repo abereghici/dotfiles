@@ -25,7 +25,7 @@ if command_exists yazi; then
     yazi "$@" --cwd-file="$tmp"
     if [ -f "$tmp" ]; then
       local cwd
-      cwd="$(<"$tmp")"
+      cwd="$(< "$tmp")"
       rm -f "$tmp"
       if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         cd "$cwd"
