@@ -39,7 +39,7 @@ alias brwe="brew"
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
-alias grep="grep -i --color=auto"
+alias grep="grep --color=auto"
 alias mkdir="mkdir -p"
 
 # Shortcuts

@@ -164,7 +164,7 @@
   #
 
   # Undo a `git push`
-  undopush     = push -f origin HEAD^:master
+  undopush     = "!git push -f origin HEAD^:$(git branchname)"
   # Unstage all staged changes but leave them in the working tree (mixed reset)
   unstage      = reset HEAD
   # Undo last commit but don't throw away the changes (affects HEAD only)
@@ -227,7 +227,7 @@
   mmmn         = !git fetch origin main && git merge origin/main --no-edit
 
   # Push up the branch and set upstream for the current branch
-  publish      = "!git push --set-upstream origin $(git branch-name)"
+  publish      = "!git push --set-upstream origin $(git branchname)"
   sha          = log -n 1 --pretty=format:'%H'
 
 # git-delta
