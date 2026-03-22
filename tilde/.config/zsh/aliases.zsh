@@ -15,6 +15,23 @@ command_exists eza && alias ll="ls --long --no-user --header -g --git"
 # Display clickable directory tree
 command_exists eza && alias llt="ls --tree --git-ignore"
 
+# Yazi: TUI file manager with shell cd-on-exit
+# https://yazi-rs.github.io/docs/quick-start#shell-wrapper
+# Usage: y [path]  — opens yazi, cds to directory on exit
+y() {
+  local tmp
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if [ -f "$tmp" ]; then
+    local cwd
+    cwd="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      cd "$cwd"
+    fi
+  fi
+}
+
 # Zoxide: https://github.com/ajeetdsouza/zoxide
 # A smarter cd command.
 command_exists z && alias cd="z"
