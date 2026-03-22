@@ -18,19 +18,21 @@ command_exists eza && alias llt="ls --tree --git-ignore"
 # Yazi: TUI file manager with shell cd-on-exit
 # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
 # Usage: y [path]  — opens yazi, cds to directory on exit
-y() {
-  local tmp
-  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-  yazi "$@" --cwd-file="$tmp"
-  if [ -f "$tmp" ]; then
-    local cwd
-    cwd="$(cat "$tmp")"
-    rm -f "$tmp"
-    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-      cd "$cwd"
+if command_exists yazi; then
+  y() {
+    local tmp
+    tmp="$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if [ -f "$tmp" ]; then
+      local cwd
+      cwd="$(<"$tmp")"
+      rm -f "$tmp"
+      if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd "$cwd"
+      fi
     fi
-  fi
-}
+  }
+fi
 
 # Zoxide: https://github.com/ajeetdsouza/zoxide
 # A smarter cd command.
