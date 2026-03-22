@@ -4,13 +4,12 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
     },
     event = "VeryLazy",
     config = true,
     opts = {
       integrations = {
-        telescope = true,
+        telescope = nil,
         diffview = true,
       },
       signs = {
