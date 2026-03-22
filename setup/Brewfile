@@ -28,6 +28,7 @@ brew "zsh-syntax-highlighting" # Fish shell like syntax highlighting for zsh
 
 ## Development Tools
 brew "ast-grep" # Code searching, linting, rewriting
+brew "bats-core" # Bash Automated Testing System
 brew "gh" # GitHub command-line tool
 brew "git" # Distributed revision control system
 brew "git-delta" # Syntax-highlighting pager for git and diff output
