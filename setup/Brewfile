@@ -77,6 +77,7 @@ brew "sst/tap/opencode" # The AI coding agent built for the terminal
 # GUI Applications
 
 ## Development Tools
+cask "claude-code" # AI coding tool from Anthropic
 cask "docker-desktop" # App to build and share containerized applications and microservices
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "karabiner-elements" # Keyboard customizer
