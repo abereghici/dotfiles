@@ -11,7 +11,8 @@
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write \"**/*.{sh,zsh,bash}\"",
-    "format:check": "prettier --check \"**/*.{sh,zsh,bash}\""
+    "format:check": "prettier --check \"**/*.{sh,zsh,bash}\"",
+    "test": "bats tests/"
   },
   "devDependencies": {
     "husky": "9.1.7",
