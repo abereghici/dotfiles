@@ -61,6 +61,13 @@ if command_exists gh && ! gh auth status &>/dev/null; then
 	echo "[GitHub CLI] You are not logged into any GitHub hosts. To log in, run: ${BOLD}gh auth login${RESET}"
 fi
 
+# zsh-defer: fast zsh plugin deferred loading (no Homebrew formula available)
+if [ ! -d "$HOME/.local/share/zsh-defer" ]; then
+  info 'Installing zsh-defer...'
+  git clone --depth 1 https://github.com/romkatv/zsh-defer.git "$HOME/.local/share/zsh-defer"
+  echo 'Done!' | indent
+fi
+
 # Node.js global config
 npm config set loglevel warn
 npm config set save-exact true
