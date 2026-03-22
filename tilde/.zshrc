@@ -54,9 +54,9 @@ if [ -f "$ZSH_DEFER_PLUGIN" ]; then
     zsh-defer _init_ng
   fi
 
-  # Starship prompt (must be last)
+  # Starship prompt: must run synchronously (sets PROMPT_SUBST + hooks before first prompt)
   if command -v starship &>/dev/null; then
-    zsh-defer source $HOME/.config/zsh/prompt.zsh
+    source $HOME/.config/zsh/prompt.zsh
   fi
 else
   # Slow path fallback: synchronous loading (zsh-defer not installed)
