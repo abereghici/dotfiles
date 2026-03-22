@@ -19,12 +19,6 @@ map("n", "<Leader>O", "mpO<Esc>`p", { desc = "Add new line above" })
 map("n", "<c-/>", "<leader>fT", { desc = "Terminal (cwd)", remap = true })
 map("n", "<c-_>", "<leader>fT", { desc = "Terminal (cwd)", remap = true })
 
--- Open definition fullscreen
-map("n", "gldf", function()
-  vim.cmd.vsplit()
-  vim.lsp.buf.definition()
-end, { desc = "Goto Definition (vertical)" })
-
 -- Open definition in a new vertical split
 map("n", "gldv", function()
   vim.cmd.vsplit()
