@@ -1,11 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
-  "theme": "rosepine-transparent",
-  "keybinds": {
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d"
-  },
   "mcp": {
     "sequential-thinking": {
       "enabled": false,
