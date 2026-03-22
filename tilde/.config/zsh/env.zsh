@@ -9,9 +9,6 @@ export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 
-# Path to oh-my-zsh installation
-export ZSH="$HOME/.oh-my-zsh"
-
 # ----- Bat (better cat) -----
 # https://github.com/sharkdp/bat
 export BAT_THEME="base16"

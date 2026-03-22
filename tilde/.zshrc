@@ -1,6 +1,7 @@
-# ----- Homebrew -----
-# https://brew.sh
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Initialize zsh completion system (was previously handled by oh-my-zsh)
+autoload -Uz compinit && compinit -C
 
 # ----- Direnv  -----
 # https://github.com/direnv/direnv
@@ -13,15 +14,10 @@ eval "$(zoxide init zsh)"
 # ---- Mise (Polyglot runtime manager) ----
 eval "$(mise activate zsh --shims)"
 
-# ----- oh-my-zsh  -----
-# https://github.com/ohmyzsh/ohmyzsh
-# Activate Fish-like autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#homebrew
-[ -f $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# Enable Fish-like syntax highlighting: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-[ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Load oh-my-zsh
-source $HOME/.oh-my-zsh/oh-my-zsh.sh
+# Fish-like autosuggestions (from Homebrew)
+[ -f "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# Fish-like syntax highlighting (from Homebrew)
+[ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source $HOME/.config/zsh/path.zsh
 source $HOME/.config/zsh/env.zsh
