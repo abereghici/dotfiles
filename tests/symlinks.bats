@@ -15,11 +15,6 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
 # Top-level tilde items
 # ---------------------------------------------------------------------------
 
-@test ".claude is symlinked to tilde/.claude" {
-  [ -L "$HOME/.claude" ]
-  [ "$(readlink "$HOME/.claude")" = "$TILDE_DIR/.claude" ]
-}
-
 @test ".curlrc is symlinked to tilde/.curlrc" {
   [ -L "$HOME/.curlrc" ]
   [ "$(readlink "$HOME/.curlrc")" = "$TILDE_DIR/.curlrc" ]

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Syntax-check shell scripts
+        run: |
+          set -e
+          scripts=(setup.sh setup/brew.sh setup/misc.sh setup/macos.sh setup/symlinks.sh)
+          for f in bin/*; do
+            head -1 "$f" | grep -qE '^#!.*(bash|sh)' && scripts+=("$f")
+          done
+          for f in "${scripts[@]}"; do
+            echo "checking $f"
+            bash -n "$f"
+          done
+
+      - name: Validate Brewfile parses as Ruby
+        run: ruby -c setup/Brewfile

@@ -64,5 +64,12 @@ return {
 
     vim.keymap.set("n", "<leader>e", "<leader>fe", { desc = "Explorer Oil (Root Dir)", remap = true })
     vim.keymap.set("n", "<leader>E", "<leader>fE", { desc = "Explorer Oil (cwd)", remap = true })
+
+    vim.keymap.set("n", "<leader>gx", function()
+      local dir = oil.get_current_dir() or vim.fn.expand("%:p:h")
+      vim.ui.open(dir)
+    end, {
+      desc = "Open current folder in Finder",
+    })
   end,
 }

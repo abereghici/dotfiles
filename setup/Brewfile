@@ -79,7 +79,9 @@ brew "sst/tap/opencode" # The AI coding agent built for the terminal
 # GUI Applications
 
 ## Development Tools
+cask "claude" # Anthropic's official Claude AI desktop app
 cask "claude-code" # AI coding tool from Anthropic
+cask "figma" # Collaborative design tool
 cask "docker-desktop" # App to build and share containerized applications and microservices
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "karabiner-elements" # Keyboard customizer
@@ -119,8 +121,6 @@ vscode "dracula-theme.theme-dracula"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "formulahendry.auto-rename-tag"
-vscode "github.copilot"
-vscode "github.copilot-chat"
 vscode "golang.go"
 vscode "graphql.vscode-graphql"
 vscode "graphql.vscode-graphql-syntax"
@@ -140,6 +140,4 @@ vscode "stylelint.vscode-stylelint"
 vscode "vscode-icons-team.vscode-icons"
 
 # Go Packages
-go "cmd/go"
-go "cmd/gofmt"
 go "github.com/lotusirous/gostdsym/stdsym"
