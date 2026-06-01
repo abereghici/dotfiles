@@ -70,7 +70,6 @@ fi
 
 # Node.js global config
 npm config set loglevel warn
-npm config set save-exact true
 
 # Npm packages
 packages=(

@@ -7,9 +7,6 @@ cd "$(dirname "$0")/.."
 DOTFILES_DIR="$(pwd)"
 TILDE_DIR="$DOTFILES_DIR/tilde"
 
-echo "Tilde dir"
-echo $TILDE_DIR
-
 EXCLUDE_FILES=(".DS_Store" "Brewfile.lock.json" "README.md")
 
 indent() {

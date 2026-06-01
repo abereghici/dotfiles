@@ -10,5 +10,5 @@
 
 file="$HOME/.ssh/id_ed25519.pub"
 if [ -f "$file" ]; then
-  pbcopy < "$file" | printf '=> Public SSH key copied to clipboard.\n'
+  pbcopy < "$file" && printf '=> Public SSH key copied to clipboard.\n'
 fi
