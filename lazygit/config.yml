@@ -2,3 +2,10 @@ gui:
   sidePanelWidth: 0.25
   expandFocusedSidePanel: true
   nerdFontsVersion: '3'
+customCommands:
+  # Preview the selected file in nvim (snacks.image renders images); quit with :q
+  - key: 'V'
+    context: 'files'
+    description: 'View file (image preview)'
+    command: 'nvim "{{.SelectedFile.Name}}"'
+    output: terminal
