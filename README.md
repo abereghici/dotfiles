@@ -5,7 +5,7 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 > [!IMPORTANT] Please only open pull requests that fix bugs or add improvements
 > without any breaking changes.
 
-![abereghici terminal](screenshot.png)
+![abereghici terminal](screenshot.webp)
 
 > [!WARNING] I recommend forking this repository to create your own set of
 > dotfiles.
