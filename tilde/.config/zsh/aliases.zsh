@@ -35,8 +35,9 @@ if command_exists yazi; then
 fi
 
 # Zoxide: https://github.com/ajeetdsouza/zoxide
-# A smarter cd command.
-command_exists z && alias cd="z"
+# A smarter cd command. Guard on the binary (not the `z` function, which is
+# created by the deferred `zoxide init` and doesn't exist yet at source time).
+command_exists zoxide && alias cd="z"
 
 # Tmux sessionizer
 alias tmuxs="tmux-sessionizer -rp ~/Development/Freelance ~/Development/Learn ~/Development/OOS ~/Development/Work ~/Development/Personal"
@@ -67,7 +68,7 @@ alias o="open"
 alias oo="open ."
 alias g="git"
 alias d="docker"
-alias dc="docker-compose"
+alias dc="docker compose"
 alias v="nvim"
 alias vim="nvim"
 alias where="which"

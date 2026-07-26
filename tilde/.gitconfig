@@ -29,6 +29,11 @@
   # Make `git rebase` safer on macOS
   # More info: https://www.git-tower.com/blog/make-git-rebase-safe-on-osx/
   trustctime = false
+  # Route diffs through delta (styling in [delta] + ~/.themes.gitconfig)
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
 
 [help]
   # Correct typos
@@ -169,8 +174,6 @@
   unstage      = reset HEAD
   # Undo last commit but don't throw away the changes (affects HEAD only)
   undo         = reset --soft HEAD~1
-  # Remove last commit (from HEAD, Index and Working Dir)
-  reset        = reset --hard HEAD~1
 
   #
   # Helpers
@@ -229,11 +232,6 @@
   # Push up the branch and set upstream for the current branch
   publish      = "!git push --set-upstream origin $(git branchname)"
   sha          = log -n 1 --pretty=format:'%H'
-
-# git-delta
-
-[add.interactive]
-  useBuiltin = false
 
 [merge]
   conflictStyle = zdiff3

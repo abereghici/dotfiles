@@ -2,7 +2,6 @@ format = """
 $username \
 $directory \
 $git_branch \
-$git_status \
 $fill \
 $c \
 $elixir \
