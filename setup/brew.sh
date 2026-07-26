@@ -32,13 +32,6 @@ brew upgrade
 title "Installing software..."
 brew bundle --file="$(pwd)/setup/Brewfile" | indent
 
-# Extra CLI apps (non brew)
-
-# Oh-my-zsh
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
 # Extra apps
 # echo ""
 # title "☕️ Install more apps if you need them:"

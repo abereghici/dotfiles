@@ -68,6 +68,13 @@ if [ ! -d "$HOME/.local/share/zsh-defer" ]; then
   echo 'Done!' | indent
 fi
 
+# TPM: tmux plugin manager (loaded from ~/.tmux/plugins/tpm by tmux.conf)
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  info 'Installing tmux plugin manager (tpm)...'
+  git clone --depth 1 https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
+  echo 'Done!' | indent
+fi
+
 # Node.js global config
 npm config set loglevel warn
 
