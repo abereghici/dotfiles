@@ -9,7 +9,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = false,
   },
-  -- Disable telescope in favor of fzf-lua
+  -- Disable telescope in favor of snacks.picker
   {
     "nvim-telescope/telescope.nvim",
     enabled = false,

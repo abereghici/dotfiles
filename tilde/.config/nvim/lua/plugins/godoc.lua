@@ -9,8 +9,8 @@ return {
         type = "vsplit", -- split | vsplit
       },
       picker = {
-        type = "fzf_lua", -- native (vim.ui.select) | telescope | snacks | mini | fzf_lua
-        fzf_lua = {},
+        type = "snacks", -- native (vim.ui.select) | telescope | snacks | mini | fzf_lua
+        snacks = {},
       },
     },
   },
