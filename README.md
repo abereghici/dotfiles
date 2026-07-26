@@ -1,4 +1,4 @@
-# ~abereghici 🌶️
+# ~abereghici 💻
 
 My personal dotfiles for configuring macOS with Zsh and Homebrew.
 
@@ -14,16 +14,16 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 
 - macOS
 - Homebrew (the install script will install Homebrew)
-- Zsh (the install script will install Zsh via Homebrew)
+- Zsh (the default shell on modern macOS)
 
 ## What's in there?
 
 - Handy [binary scripts](bin/).
-- [Custom zsh theme](tilde/.starship.toml) with Git status, etc. using
+- [Custom zsh theme](tilde/.starship.toml) with Git branch, etc. using
   [Starship](https://starship.rs/).
 - [Git aliases](tilde/.gitconfig).
-- [Shell aliases](zsh/aliases.zsh).
-- zsh / [fzf](zsh/fzf.zsh).
+- [Shell aliases](tilde/.config/zsh/aliases.zsh).
+- zsh / [fzf](tilde/.config/zsh/fzf.zsh).
 - git / delta syntax-highlighting diff tool.
 - Sensible [macOS defaults](setup/macos.sh).
 - [Neovim](tilde/.config/nvim/)
@@ -104,8 +104,8 @@ If this file exists, it will be automatically included after the configurations
 from `~/.gitconfig` allowing its content to overwrite or add to the existing
 `git` configurations.
 
-> [!TIP] Use `~/.gitconfig.local` to store [sensitive information](git/) such as
-> the `git` user credentials for individual repositories.
+> [!TIP] Use `~/.gitconfig.local` to store sensitive information such as the
+> `git` user credentials for individual repositories.
 
 ## Updating
 
