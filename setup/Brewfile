@@ -32,6 +32,8 @@ brew "bats-core" # Bash Automated Testing System
 brew "gh" # GitHub command-line tool
 brew "git" # Distributed revision control system
 brew "git-delta" # Syntax-highlighting pager for git and diff output
+brew "glab" # Open-source GitLab command-line tool
+brew "ipatool" # Command-line tool to search for and download iOS apps
 brew "jesseduffield/lazydocker/lazydocker" # Simple terminal UI for docker, written in Go
 brew "lazygit" # Simple terminal UI for git commands
 brew "mise" # Polyglot runtime manager (asdf rust clone)
@@ -57,9 +59,12 @@ brew "wimlib" # Library to create, extract, and modify Windows Imaging files
 brew "xcodegen" # Generate your Xcode project from a spec file and your folder structure
 
 ## Document & Media Processing
+brew "ffmpeg" # Play, record, convert, and stream audio and video
 brew "ghostscript" # Interpreter for PostScript and PDF
 brew "imagemagick" # Tools and libraries to manipulate images in many formats
 brew "mermaid-cli" # CLI for Mermaid library
+brew "pandoc" # Swiss-army knife of markup format conversion
+brew "pngquant" # PNG image optimizing utility
 brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tree-sitter" # Incremental parsing library
 brew "tree-sitter-cli" # Parser generator tool
@@ -67,12 +72,14 @@ brew "tree-sitter-cli" # Parser generator tool
 ## Security & Networking
 brew "bitwarden-cli" # Secure and free password manager for all of your devices
 brew "cryptography" # Cryptographic recipes and primitives for Python
+brew "ghidra" # Software reverse engineering (SRE) suite of tools
 brew "nmap" # Port scanning utility for large networks
 
 ## System Maintenance
 brew "tw93/tap/mole" # Comprehensive macOS cleanup and application uninstall tool
 
 ## AI & LLM Tools
+brew "gemini-cli" # Interact with Google Gemini models from the terminal
 brew "ollama" # Create, run, and share large language models (LLMs)
 brew "sst/tap/opencode" # The AI coding agent built for the terminal
 
@@ -106,6 +113,7 @@ cask "telegram" # Messaging app with a focus on speed and security
 cask "google-chrome" # Web browser
 
 ## Media & Entertainment
+cask "calibre" # E-book management application
 cask "spotify" # Music streaming service
 
 # Fonts
@@ -114,10 +122,8 @@ cask "font-meslo-lg-nerd-font" # Developer font with icons
 # VSCode Extensions
 vscode "aaron-bond.better-comments"
 vscode "asvetliakov.vscode-neovim"
-vscode "catppuccin.catppuccin-vsc"
 vscode "csstools.postcss"
 vscode "dbaeumer.vscode-eslint"
-vscode "dracula-theme.theme-dracula"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "formulahendry.auto-rename-tag"
@@ -135,7 +141,6 @@ vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.remote-explorer"
 vscode "mvllow.rose-pine"
-vscode "saoudrizwan.claude-dev"
 vscode "stylelint.vscode-stylelint"
 vscode "vscode-icons-team.vscode-icons"
 
