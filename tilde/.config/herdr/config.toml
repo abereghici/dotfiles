@@ -79,11 +79,12 @@ type = "plugin_action"
 command = "dotfiles.last-workspace.switch"
 description = "Last (other) workspace"
 
-# lazygit over the current tab, in the repo of the pane underneath; q closes it
+# lazygit over the current tab; popups start in the directory of the pane underneath, so it
+# opens that pane's repo. q closes it
 [[keys.command]]
 key = "ctrl+alt+g"
 type = "popup"
-command = 'zsh -l -c "herdr-lazygit"'
+command = 'zsh -l -c lazygit'
 description = "lazygit"
 width = "95%"
 height = "95%"
