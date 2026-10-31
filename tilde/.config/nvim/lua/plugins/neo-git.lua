@@ -3,7 +3,8 @@ return {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
+      -- Maintained fork of sindrets/diffview.nvim (no upstream release since 2024), same module
+      "dlyongemallo/diffview-plus.nvim",
     },
     cmd = "Neogit",
     opts = {
