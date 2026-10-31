@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Display supported terminal color palette and available text effects.
+# Display the 256-color palette and the text effects, as escape sequences and tput commands.
 #
 # - Display the palette:
 #
@@ -27,7 +27,7 @@ for row in {0..15}; do
     color=$((row * 16 + col))
     color_code=$(printf "%03d" $color)
 
-    echo -en "\033[48;5;${color}m\033[1m $color_code \033[0m\033[38;5;${color}m\033[0m"
+    echo -en "\033[48;5;${color}m\033[1m $color_code \033[0m"
   done
   echo
 done
@@ -61,6 +61,6 @@ echo "rev:   $(tput rev)Inverted$RESET"
 echo "invis: $(tput invis)Invisible$RESET"
 echo
 echo "Examples:"
-echo "\$(tput setaf 3)\$(tput setab 4)\$(tput bold) $(tput setaf 3)$(tput setab 4)$(tput bold)$(tput)yellow on blue, bold$RESET \$(tput sgr0)"
+echo "\$(tput setaf 3)\$(tput setab 4)\$(tput bold) $(tput setaf 3)$(tput setab 4)$(tput bold)yellow on blue, bold$RESET \$(tput sgr0)"
 echo "\$(tput setaf 153)                          $(tput setaf 153)256-color foreground$RESET \$(tput sgr0)"
 echo "\$(tput setab 128)                          $(tput setab 128)256-color background$RESET \$(tput sgr0)"

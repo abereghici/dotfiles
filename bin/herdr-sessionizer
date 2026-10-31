@@ -1,0 +1,65 @@
+#!/bin/bash
+#
+# herdr counterpart of tmux-sessionizer: one workspace per project directory,
+# with Editor, Shell and Agents tabs.
+#
+#   herdr-sessionizer DIR...     pick a subdirectory of any DIR
+#   herdr-sessionizer -c DIR...  pick a parent DIR and create a new folder in it
+
+set -euo pipefail
+
+create=false
+if [[ ${1:-} == -c ]]; then
+  create=true
+  shift
+fi
+
+if (($# == 0)); then
+  echo "usage: herdr-sessionizer [-c] DIR..." >&2
+  exit 2
+fi
+
+workspaces=$(herdr workspace list)
+
+if $create; then
+  parent=$(printf '%s\n' "$@" | fzf --prompt 'Parent> ') || exit 0
+  read -rp 'New folder name: ' folder
+  [[ -n $folder ]] || exit 1
+  dir="$parent/$folder"
+  mkdir "$dir"
+  name=$folder
+else
+  # Label each project by its folder name, or parent/name when two roots share a name
+  # (~/Code/api and ~/Code/Work/api); ● marks projects that already have a workspace.
+  # The list is built before fzf runs, so only fzf's own exit status counts as a cancel.
+  open=$(jq -r '.result.workspaces[].label' <<< "$workspaces")
+  rows=$(find "$@" -mindepth 1 -maxdepth 1 -type d 2> /dev/null | sort \
+    | OPEN="$open" awk -F/ '
+      BEGIN { split(ENVIRON["OPEN"], o, "\n"); for (i in o) isopen[o[i]] = 1 }
+      { path[NR] = $0; name[NR] = $NF; parent[NR] = $(NF - 1); count[$NF]++ }
+      END {
+        for (i = 1; i <= NR; i++) {
+          label = count[name[i]] > 1 ? parent[i] "/" name[i] : name[i]
+          printf "%s\t%s\t%s\n", (label in isopen ? "●" : " "), label, path[i]
+        }
+      }') || true
+  choice=$(fzf --prompt 'Project> ' --delimiter '\t' --with-nth 1,2 <<< "$rows") || exit 0
+  name=$(cut -f 2 <<< "$choice")
+  dir=$(cut -f 3 <<< "$choice")
+fi
+
+id=$(jq -r --arg name "$name" \
+  'first(.result.workspaces[] | select(.label == $name) | .workspace_id) // empty' <<< "$workspaces")
+
+if [[ -n $id ]]; then
+  herdr workspace focus "$id" > /dev/null
+  exit 0
+fi
+
+created=$(herdr workspace create --cwd "$dir" --label "$name" --focus)
+workspace_id=$(jq -r '.result.workspace.workspace_id' <<< "$created")
+editor_tab=$(jq -r '.result.tab.tab_id' <<< "$created")
+
+herdr tab rename "$editor_tab" Editor > /dev/null
+herdr tab create --workspace "$workspace_id" --cwd "$dir" --label Shell --no-focus > /dev/null
+herdr tab create --workspace "$workspace_id" --cwd "$dir" --label Agents --no-focus > /dev/null

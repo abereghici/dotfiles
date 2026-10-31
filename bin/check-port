@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# List processes running on a provided port.
+# List the processes listening on a provided TCP port.
 #
 # - Check the port usage:
 #
@@ -15,4 +15,4 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
-lsof -ni4TCP:"$1"
+lsof -nP -iTCP:"$1" -sTCP:LISTEN

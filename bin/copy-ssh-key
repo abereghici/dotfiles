@@ -4,11 +4,14 @@
 #
 # - Copy the key:
 #
-# `copy-ssh`
+# `copy-ssh-key`
 #
 # ---
 
 file="$HOME/.ssh/id_ed25519.pub"
 if [ -f "$file" ]; then
   pbcopy < "$file" && printf '=> Public SSH key copied to clipboard.\n'
+else
+  echo "No public key at $file" >&2
+  exit 1
 fi

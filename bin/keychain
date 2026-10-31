@@ -35,7 +35,7 @@ QUIET=false
 # ============================================================================
 
 msg() {
-  [[ "$QUIET" == false ]] && echo "$1"
+  [[ "$QUIET" == true ]] || echo "$1"
 }
 
 err() {
@@ -48,12 +48,12 @@ get_service_name() {
 
 key_exists() {
   local service=$(get_service_name "$1")
-  security find-generic-password -a "$USER" -s "$service" &>/dev/null
+  security find-generic-password -a "$USER" -s "$service" &> /dev/null
 }
 
 get_key_value() {
   local service=$(get_service_name "$1")
-  security find-generic-password -a "$USER" -s "$service" -w 2>/dev/null
+  security find-generic-password -a "$USER" -s "$service" -w 2> /dev/null
 }
 
 # ============================================================================
@@ -157,7 +157,7 @@ USAGE:
 EXAMPLE OUTPUT:
     Stored keys (3):
       OPENAI_API_KEY
-      CONTEXT7_API_KEY
+      FIGMA_ACCESS_TOKEN
       GITHUB_TOKEN
 EOF
 }
@@ -243,9 +243,8 @@ cmd_set() {
     fi
   fi
 
-  security delete-generic-password -a "$USER" -s "$service" &>/dev/null || true
-
-  if security add-generic-password -a "$USER" -s "$service" -w "$value" &>/dev/null; then
+  # -U updates an existing item in place, so a failed write never loses the old value
+  if security add-generic-password -U -a "$USER" -s "$service" -w "$value" &> /dev/null; then
     msg "=> $key stored in keychain"
   else
     err "Failed to store $key in keychain"
@@ -293,7 +292,7 @@ cmd_del() {
     exit 1
   fi
 
-  if security delete-generic-password -a "$USER" -s "$service" &>/dev/null; then
+  if security delete-generic-password -a "$USER" -s "$service" &> /dev/null; then
     msg "=> $key deleted from keychain"
   else
     err "Failed to delete $key from keychain"
@@ -305,7 +304,7 @@ cmd_list() {
   local keys=()
   local output
 
-  output=$(security dump-keychain 2>/dev/null | grep -o "\"svce\"<blob>=\"${SERVICE_PREFIX}[^\"]*\"" | sed "s/\"svce\"<blob>=\"${SERVICE_PREFIX}\([^\"]*\)\"/\1/" | sort -u) || true
+  output=$(security dump-keychain 2> /dev/null | grep -o "\"svce\"<blob>=\"${SERVICE_PREFIX}[^\"]*\"" | sed "s/\"svce\"<blob>=\"${SERVICE_PREFIX}\([^\"]*\)\"/\1/" | sort -u) || true
 
   if [[ -z "$output" ]]; then
     echo "No keys stored"
@@ -360,7 +359,7 @@ cmd_export() {
   fi
 
   value=$(get_key_value "$key")
-  echo "export $key=\"$value\""
+  printf 'export %s=%q\n' "$key" "$value"
 }
 
 cmd_check() {
@@ -371,7 +370,7 @@ cmd_check() {
     exit 1
   fi
 
-  key_exists "$1"
+  key_exists "$1" || exit 1
 }
 
 cmd_help() {
@@ -383,13 +382,13 @@ cmd_help() {
   fi
 
   case "$subcommand" in
-    set)    show_help_set ;;
-    get)    show_help_get ;;
-    del|delete) show_help_del ;;
-    list|ls)    show_help_list ;;
-    copy)   show_help_copy ;;
+    set) show_help_set ;;
+    get) show_help_get ;;
+    del | delete) show_help_del ;;
+    list | ls) show_help_list ;;
+    copy) show_help_copy ;;
     export) show_help_export ;;
-    check)  show_help_check ;;
+    check) show_help_check ;;
     *)
       err "Unknown command: $subcommand"
       echo "Run 'keychain help' for list of commands" >&2
@@ -405,10 +404,23 @@ cmd_help() {
 main() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -q|--quiet) QUIET=true; shift ;;
-      -h|--help) show_help_general; exit 0 ;;
-      -v|--version) echo "keychain version $VERSION"; exit 0 ;;
-      -*) err "Unknown option: $1"; echo "Run 'keychain help' for usage" >&2; exit 1 ;;
+      -q | --quiet)
+        QUIET=true
+        shift
+        ;;
+      -h | --help)
+        show_help_general
+        exit 0
+        ;;
+      -v | --version)
+        echo "keychain version $VERSION"
+        exit 0
+        ;;
+      -*)
+        err "Unknown option: $1"
+        echo "Run 'keychain help' for usage" >&2
+        exit 1
+        ;;
       *) break ;;
     esac
   done
@@ -427,7 +439,7 @@ main() {
   esac
 
   case "$command" in
-    set|get|del|list|copy|export|check) cmd_"$command" "$@" ;;
+    set | get | del | list | copy | export | check) cmd_"$command" "$@" ;;
     help) cmd_help "$@" ;;
     *)
       err "Unknown command: $command"

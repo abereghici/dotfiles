@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Pick a project and open it as a tmux session or a herdr workspace. The project roots are
+# the folders inside ~/Development and ~/Code, plus those inside their Work/ folder (one per
+# client), so the same pickers work on machines whose folders differ.
+#
+# - Open or switch to a project:
+#
+# `projects tmux` or `projects herdr`
+#
+# - Create a project folder in one of the roots, then open it:
+#
+# `projects tmux -c` or `projects herdr -c`
+#
+# - List the project roots:
+#
+# `projects`
+#
+# ---
+
+set -euo pipefail
+
+roots=()
+for base in "$HOME/Development" "$HOME/Code"; do
+  for dir in "$base"/*/ "$base"/Work/*/; do
+    # Unmatched globs stay literal; -d drops them
+    [ -d "$dir" ] && roots+=("${dir%/}")
+  done
+done
+
+if [ "${#roots[@]}" -eq 0 ]; then
+  echo "No project folders in ~/Development or ~/Code" >&2
+  exit 1
+fi
+
+case "${1:-}" in
+  "")
+    printf '%s\n' "${roots[@]}"
+    ;;
+  tmux)
+    if [ "${2:-}" = "-c" ]; then
+      exec tmux-sessionizer -c "${roots[@]}"
+    fi
+    exec tmux-sessionizer -rp "${roots[@]}"
+    ;;
+  herdr)
+    exec herdr-sessionizer ${2:+"$2"} "${roots[@]}"
+    ;;
+  *)
+    echo "Usage: $(basename "$0") [tmux|herdr] [-c]" >&2
+    exit 2
+    ;;
+esac

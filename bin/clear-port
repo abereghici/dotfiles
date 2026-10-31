@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Kill the process running on the provided port.
+# Kill the processes listening on the provided TCP port.
 #
 # - Release the port:
 #
@@ -15,7 +15,9 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
-port_num="$(lsof -ti4TCP:"$1")"
-if [ $? -eq 0 ]; then
-  kill "$port_num"
-fi
+pids="$(lsof -nti TCP:"$1" -sTCP:LISTEN)" || {
+  echo "Nothing listening on port $1" >&2
+  exit 1
+}
+# word-split on purpose: one PID per line
+kill $pids
