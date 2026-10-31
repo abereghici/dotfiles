@@ -3,17 +3,17 @@
 local map = vim.keymap.set
 
 -- Yank file contents
-map("n", "<Leader>yc", "ggVGy<C-O>", { desc = "Copy file contents" })
+map("n", "<leader>yc", "ggVGy<c-o>", { desc = "Copy file contents" })
 -- Copy current buffer path to clipboard
-map("n", "<Leader>yp", function()
+map("n", "<leader>yp", function()
   local path = vim.fn.expand("%:p")
   vim.fn.setreg("+", path)
   vim.notify("Path copied to clipboard: " .. path)
 end, { desc = "Copy file path" })
 
 -- Add new lines
-map("n", "<Leader>o", "mpo<Esc>`p", { desc = "Add new line below" })
-map("n", "<Leader>O", "mpO<Esc>`p", { desc = "Add new line above" })
+map("n", "<leader>o", "mpo<esc>`p", { desc = "Add new line below" })
+map("n", "<leader>O", "mpO<esc>`p", { desc = "Add new line above" })
 
 -- Most terminals don't correctly map C-/, and sometimes you need to use C-_ for that key instead
 map("n", "<c-/>", "<leader>fT", { desc = "Terminal (cwd)", remap = true })

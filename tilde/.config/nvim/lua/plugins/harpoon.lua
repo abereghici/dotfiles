@@ -2,11 +2,6 @@ return {
   {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-    },
     keys = function()
       local keys = {
         {
@@ -37,15 +32,16 @@ return {
       end
       return keys
     end,
-    config = function()
+    config = function(_, opts)
       local harpoon = require("harpoon")
+      harpoon:setup(opts)
       harpoon:extend({
         UI_CREATE = function(cx)
-          vim.keymap.set("n", "<C-v>", function()
+          vim.keymap.set("n", "<c-v>", function()
             harpoon.ui:select_menu_item({ vsplit = true })
           end, { buffer = cx.bufnr })
 
-          vim.keymap.set("n", "<C-h>", function()
+          vim.keymap.set("n", "<c-h>", function()
             harpoon.ui:select_menu_item({ split = true })
           end, { buffer = cx.bufnr })
         end,

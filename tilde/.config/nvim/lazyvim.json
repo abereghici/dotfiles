@@ -1,7 +1,5 @@
 {
-  "extras": [
-    "lazyvim.plugins.extras.lang.angular"
-  ],
+  "extras": [],
   "install_version": 7,
   "news": {
     "NEWS.md": "11866"

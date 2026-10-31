@@ -4,7 +4,7 @@ return {
     "folke/tokyonight.nvim",
     enabled = false,
   },
-  -- Disable nvim-tree in favor of nvim-oil
+  -- Disable neo-tree in favor of oil.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = false,

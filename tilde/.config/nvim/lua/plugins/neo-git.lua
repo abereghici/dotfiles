@@ -5,11 +5,9 @@ return {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
     },
-    event = "VeryLazy",
-    config = true,
+    cmd = "Neogit",
     opts = {
       integrations = {
-        telescope = nil,
         diffview = true,
       },
       signs = {

@@ -1,6 +1,7 @@
 return {
   {
     "fredrikaverpil/godoc.nvim",
+    enabled = false,
     version = "*",
     build = "go install github.com/lotusirous/gostdsym/stdsym@latest",
     cmd = { "GoDoc" },
