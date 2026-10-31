@@ -79,19 +79,14 @@ type = "plugin_action"
 command = "dotfiles.last-workspace.switch"
 description = "Last (other) workspace"
 
-# Review the agent's diff beside it and send line comments back: herdr-reviewr, installed
-# by setup/misc.sh, configured in reviewr.toml (and the untracked reviewr.local.toml)
+# lazygit over the current tab, in the repo of the pane underneath; q closes it
 [[keys.command]]
-key = "ctrl+alt+r"
-type = "plugin_action"
-command = "persiyanov.reviewr.toggle"
-description = "Review changes"
-
-[[keys.command]]
-key = "prefix+shift+v"
-type = "plugin_action"
-command = "persiyanov.reviewr.toggle"
-description = "Review changes"
+key = "ctrl+alt+g"
+type = "popup"
+command = 'zsh -l -c "herdr-lazygit"'
+description = "lazygit"
+width = "95%"
+height = "95%"
 
 [ui]
 # tmux-style splits: one divider between panes, no outer frame, gaps or scrollbars

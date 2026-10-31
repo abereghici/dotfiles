@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# lazygit for herdr's popup (ctrl+alt+g). A popup starts where the herdr server started, so
+# change to the directory of the pane underneath first: the shell's after a `cd`, nvim's for
+# the Editor tab. lazygit then finds the repo root from there.
+#
+# ---
+
+set -euo pipefail
+
+if [[ -n ${HERDR_ACTIVE_PANE_ID:-} ]]; then
+  dir=$(herdr pane get "$HERDR_ACTIVE_PANE_ID" | jq -r '.result.pane | .foreground_cwd // .cwd // empty')
+  if [[ -d $dir ]]; then
+    cd "$dir"
+  fi
+fi
+
+exec lazygit "$@"

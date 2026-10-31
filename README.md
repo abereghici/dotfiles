@@ -161,22 +161,13 @@ Run `projects` on its own to list the roots it found.
 (tmux sessions are herdr workspaces, windows are tabs) and the same Rosé Pine
 look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
 [last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
-On top of tmux, `prefix` `a` jumps to the agent that needs attention and
-`prefix` `/` searches every pane. New projects open with nvim already running in
-their Editor tab, and after a restart herdr brings back every workspace, tab and
-directory, with the [editor-restore plugin](herdr/plugins/editor-restore/)
-starting nvim again in Editor tabs (tmux-resurrect's job in tmux).
-
-### Reviewing agent changes
-
-- In herdr, `⌃⌥R` (or `prefix` `V`) toggles
-  [reviewr](https://github.com/persiyanov/herdr-reviewr) beside the agent:
-  `u`/`b`/`t` for uncommitted, branch or the agent's last turn, `v` and `c` to
-  comment on lines, `s` to send the comments to the agent, `?` for every key.
-- In Neovim, [CodeDiff](tilde/.config/nvim/lua/plugins/codediff.lua) is a VS
-  Code-style live diff where hunks can be staged or discarded: `<leader>gd` for
-  uncommitted changes, `<leader>gD` for the branch against the default branch,
-  `<leader>gH` for history.
+On top of tmux, `prefix` `a` jumps to the agent that needs attention, `prefix`
+`/` searches every pane, and `⌃⌥G` opens [lazygit](lazygit/config.yml) over the
+current tab, in the repo of the pane underneath (`q` closes it; in Neovim it's
+`<leader>gg`). New projects open with nvim already running in their Editor tab,
+and after a restart herdr brings back every workspace, tab and directory, with
+the [editor-restore plugin](herdr/plugins/editor-restore/) starting nvim again
+in Editor tabs (tmux-resurrect's job in tmux).
 
 ## Local customizations
 
@@ -232,18 +223,6 @@ git-ignored.
 ```toml
 [tools]
 terraform = "latest"
-```
-
-### `~/.config/herdr/reviewr.local.toml`
-
-Extra [reviewr](tilde/.config/herdr/reviewr.toml) settings for this machine,
-such as a work GitLab host for the PR tab. reviewr reads a single `config.toml`,
-so run `herdr-reviewr-config` after editing it to write that file from
-`reviewr.toml` and this one. Like the mise file, it lives in
-`tilde/.config/herdr` and is git-ignored.
-
-```toml
-gitlab_host = "git.example.com"
 ```
 
 ### `~/.macos.local`
