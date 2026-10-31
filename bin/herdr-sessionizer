@@ -33,28 +33,37 @@ if $create; then
   if jq -e --arg name "$name" 'any(.result.workspaces[]; .label == $name)' <<< "$workspaces" > /dev/null; then
     name="$(basename "$parent")/$folder"
   fi
+  id=
 else
   # Label each project by its folder name, or parent/name when two roots share a name
   # (~/Code/api and ~/Code/Work/api); ● marks projects that already have a workspace.
+  # A workspace opened before the second api appeared is still labelled api: it matches the
+  # project whose folder one of its panes is in. herdr doesn't record a workspace's folder.
   # The list is built before fzf runs, so only fzf's own exit status counts as a cancel.
-  open=$(jq -r '.result.workspaces[].label' <<< "$workspaces")
   rows=$(find "$@" -mindepth 1 -maxdepth 1 -type d 2> /dev/null | sort \
-    | OPEN="$open" awk -F/ '
-      BEGIN { split(ENVIRON["OPEN"], o, "\n"); for (i in o) isopen[o[i]] = 1 }
+    | awk -F/ '
       { path[NR] = $0; name[NR] = $NF; parent[NR] = $(NF - 1); count[$NF]++ }
       END {
         for (i = 1; i <= NR; i++) {
           label = count[name[i]] > 1 ? parent[i] "/" name[i] : name[i]
-          printf "%s\t%s\t%s\n", (label in isopen ? "●" : " "), label, path[i]
+          printf "%s\t%s\t%s\n", label, name[i], path[i]
         }
-      }') || true
+      }' \
+    | jq -Rr --argjson ws "$workspaces" --argjson panes "$(herdr pane list)" '
+      split("\t") as [$label, $name, $path]
+      | ($ws.result.workspaces) as $all
+      | (first(
+          ($all[] | select(.label == $label) | .workspace_id),
+          ($all[] | select(.label == $name) | .workspace_id as $id
+            | select(any($panes.result.panes[]; .workspace_id == $id
+                and ((.cwd // "") | . == $path or startswith($path + "/")))) | $id)
+        ) // "") as $id
+      | [(if $id == "" then " " else "●" end), $label, $path, $id] | @tsv') || true
   choice=$(fzf --prompt 'Project> ' --delimiter '\t' --with-nth 1,2 <<< "$rows") || exit 0
   name=$(cut -f 2 <<< "$choice")
   dir=$(cut -f 3 <<< "$choice")
+  id=$(cut -f 4 <<< "$choice")
 fi
-
-id=$(jq -r --arg name "$name" \
-  'first(.result.workspaces[] | select(.label == $name) | .workspace_id) // empty' <<< "$workspaces")
 
 if [[ -n $id ]]; then
   herdr workspace focus "$id" > /dev/null

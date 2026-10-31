@@ -1,2 +1,3 @@
-# Run the same format checks as CI
-npm run format:check && npm run lint:lua:check
+# CI's format checks, on the staged content only: lint-staged hides unstaged edits while
+# they run, so partly staged files are checked as they will be committed
+npx lint-staged

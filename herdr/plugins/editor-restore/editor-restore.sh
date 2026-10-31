@@ -9,12 +9,14 @@
 set -euo pipefail
 
 herdr=${HERDR_BIN_PATH:-herdr}
+socket=${HERDR_SOCKET_PATH:-}
 
-# Panes of this server that already run nvim
+# Panes of this server that already run nvim. Without the socket path, any herdr nvim's pane
+# counts: at worst an Editor tab is left without nvim, never given a second one.
 busy=$(
   for pid in $(pgrep -x nvim); do
     env=" $(ps -E -ww -o command= -p "$pid") "
-    if [[ $env == *" HERDR_SOCKET_PATH=$HERDR_SOCKET_PATH "* ]]; then
+    if [[ -z $socket || $env == *" HERDR_SOCKET_PATH=$socket "* ]]; then
       grep -o 'HERDR_PANE_ID=[^ ]*' <<< "$env" | cut -d = -f 2
     fi
   done | sort -u

@@ -19,7 +19,13 @@
   "devDependencies": {
     "@johnnymorganz/stylua-bin": "2.6.0",
     "husky": "9.1.7",
+    "lint-staged": "17.6.0",
     "prettier": "3.9.10",
     "prettier-plugin-sh": "0.20.2"
+  },
+  "lint-staged": {
+    "*.{sh,zsh,bash}": "prettier --check",
+    "{tilde/.zshrc,tilde/.zprofile,bin/*}": "prettier --check",
+    "tilde/.config/nvim/**/*.lua": "stylua --check"
   }
 }

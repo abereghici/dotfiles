@@ -17,12 +17,16 @@ case "${1:-}" in
   record)
     focused=$(jq -r '.data.workspace_id // empty' <<< "${HERDR_PLUGIN_EVENT_JSON:-}")
     if [[ -n $focused && $focused != "$current" ]]; then
-      printf '%s\n%s\n' "$focused" "$current" > "$history"
+      # Replace the file in one step, so a concurrent read never sees it half written
+      printf '%s\n%s\n' "$focused" "$current" > "$history.$$"
+      mv -f "$history.$$" "$history"
     fi
     ;;
   switch)
-    # The previous workspace may have been closed since; then there is nothing to do
-    [[ -n $previous ]] && "$herdr" workspace focus "$previous" > /dev/null 2>&1 || true
+    # If the previous workspace was closed since, forget it rather than retry it every time
+    if [[ -n $previous ]] && ! "$herdr" workspace focus "$previous" > /dev/null 2>&1; then
+      printf '%s\n' "$current" > "$history"
+    fi
     ;;
   *)
     echo "usage: last-workspace.sh record|switch" >&2
