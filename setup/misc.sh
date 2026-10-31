@@ -35,14 +35,6 @@ for plugin in herdr/plugins/*/; do
   herdr plugin link "$PWD/$plugin" > /dev/null && echo "linked ${plugin%/}" | indent
 done
 
-# Community herdr plugins (reviewr: review the agent's diff and send comments back)
-if ! herdr plugin list | grep -q '^- persiyanov.reviewr '; then
-  info 'Installing herdr-reviewr...'
-  herdr plugin install persiyanov/herdr-reviewr --yes | tail -1 | indent
-fi
-# Its config.toml, from ~/.config/herdr/reviewr.toml and the untracked reviewr.local.toml
-bin/herdr-reviewr-config | indent
-
 # Runtimes and global npm packages from ~/.config/mise/config.toml
 info 'Installing mise tools...'
 mise install

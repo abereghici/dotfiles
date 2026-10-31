@@ -36,10 +36,6 @@
   done
 }
 
-@test "herdr has the reviewr plugin" {
-  herdr plugin list | grep -q '^- persiyanov.reviewr (reviewr) enabled'
-}
-
 @test "bat is available" { command -v bat; }
 @test "herdr is available" { command -v herdr; }
 @test "curl is available" { command -v curl; }
