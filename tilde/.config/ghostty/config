@@ -1,5 +1,6 @@
 theme = Rose Pine
 background-opacity = .85
+background-opacity-cells = true
 
 font-family = MesloLGS Nerd Font
 font-size = 16.0
@@ -14,3 +15,15 @@ window-padding-balance = true
 window-inherit-font-size = true
 window-inherit-working-directory = true
 keybind = shift+enter=text:\x1b\r
+
+# Left Option is Alt here, so type the ABC – Romanian layout's letters directly
+keybind = alt+a=text:ă
+keybind = alt+q=text:â
+keybind = alt+i=text:î
+keybind = alt+s=text:ș
+keybind = alt+t=text:ț
+keybind = alt+shift+a=text:Ă
+keybind = alt+shift+q=text:Â
+keybind = alt+shift+i=text:Î
+keybind = alt+shift+s=text:Ș
+keybind = alt+shift+t=text:Ț

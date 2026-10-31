@@ -1,0 +1,60 @@
+# herdr, set up like tmux.conf: same prefix, same keys, same theme.
+# Only differences from `herdr --default-config` are listed here.
+
+onboarding = false
+
+[theme]
+name = "rose-pine"
+
+[keys]
+prefix = "alt+space"
+
+# tmux defaults
+detach = "prefix+d"
+settings = "prefix+colon"
+rename_tab = "prefix+comma"
+close_tab = "prefix+ampersand"
+rename_workspace = "prefix+$"
+previous_workspace = "prefix+("
+next_workspace = "prefix+)"
+last_pane = "prefix+semicolon"
+
+# tmux.conf bindings
+workspace_picker = ["prefix+w", "prefix+shift+s"]
+split_horizontal = "prefix+s"
+# prefix+g is "New project" below; / is search, as in vi and copy mode
+goto = "prefix+slash"
+
+# Direct chords, no prefix: Ctrl+Alt is the multiplexer's modifier family.
+focus_pane_left = ["prefix+h", "ctrl+alt+h"]
+focus_pane_down = ["prefix+j", "ctrl+alt+j"]
+focus_pane_up = ["prefix+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = 'zsh -l -c "projects herdr"'
+description = "Project picker"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "ctrl+alt+p"
+type = "popup"
+command = 'zsh -l -c "projects herdr"'
+description = "Project picker"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = 'zsh -l -c "projects herdr -c"'
+description = "New project"
+width = "80%"
+height = "80%"
+
+[ui]
+# The tmux theme shows the host on the status bar
+tab_bar_right = [{ type = "hostname" }]
