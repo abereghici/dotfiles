@@ -186,7 +186,6 @@ install_extras() {
   # VS Code (extensions are the vscode entries in setup/Brewfile)
   local vscode_user="$HOME/Library/Application Support/Code/User"
   symlink_file "$DOTFILES_DIR/vscode/settings.json" "$vscode_user/settings.json"
-  symlink_file "$DOTFILES_DIR/vscode/keybindings.json" "$vscode_user/keybindings.json"
   symlink_file "$DOTFILES_DIR/vscode/snippets" "$vscode_user/snippets"
 
   # Keyboard layout

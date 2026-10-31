@@ -32,8 +32,7 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 - Language runtimes via [mise](tilde/.config/mise/config.toml).
 - Sensible [macOS defaults](setup/macos.sh).
 - [Neovim](tilde/.config/nvim/)
-- [VS Code](vscode/) settings, keybindings and snippets, with Neovim inside it
-  ([vscode-neovim](https://github.com/vscode-neovim/vscode-neovim)); extensions
+- [VS Code](vscode/) settings and snippets (default keybindings); extensions
   are the `vscode` entries in the [Brewfile](setup/Brewfile).
 - [macOS apps](setup/Brewfile) I use.
 

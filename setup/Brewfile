@@ -114,7 +114,6 @@ cask "font-meslo-lg-nerd-font" # Developer font with icons
 
 # VSCode Extensions
 vscode "aaron-bond.better-comments"
-vscode "asvetliakov.vscode-neovim"
 vscode "bradlc.vscode-tailwindcss"
 vscode "csstools.postcss"
 vscode "dbaeumer.vscode-eslint"

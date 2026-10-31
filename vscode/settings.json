@@ -23,9 +23,6 @@
   "editor.fontSize": 14,
   "editor.fontFamily": "MesloLGS Nerd Font, Menlo, monospace",
 
-  "editor.lineNumbers": "relative",
-  // LazyVim's scrolloff
-  "editor.cursorSurroundingLines": 4,
   "editor.rulers": [80],
   "editor.tabSize": 2,
   "editor.glyphMargin": false,
@@ -63,21 +60,7 @@
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
-  // Let <C-h/j/k/l> and <C-/> leave the terminal instead of reaching the shell
-  "terminal.integrated.commandsToSkipShell": [
-    "workbench.action.navigateLeft",
-    "workbench.action.navigateDown",
-    "workbench.action.navigateUp",
-    "workbench.action.navigateRight",
-    "workbench.action.terminal.toggleTerminal",
-  ],
 
-  // Neovim (vscode-neovim runs the LazyVim config; see lua/config/vscode.lua)
-  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
-  // Run the extension in its own host so typing doesn't lag
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1,
-  },
 
   // AI
   "github.copilot.nextEditSuggestions.enabled": true,

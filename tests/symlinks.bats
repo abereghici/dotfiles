@@ -120,9 +120,9 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
   [ "$(readlink "$f")" = "$DOTFILES_DIR/lazydocker/config.yml" ]
 }
 
-@test "VS Code settings, keybindings and snippets are symlinked to vscode/" {
+@test "VS Code settings and snippets are symlinked to vscode/" {
   dir="$HOME/Library/Application Support/Code/User"
-  for f in settings.json keybindings.json snippets; do
+  for f in settings.json snippets; do
     [ -L "$dir/$f" ]
     [ "$(readlink "$dir/$f")" = "$DOTFILES_DIR/vscode/$f" ]
   done
