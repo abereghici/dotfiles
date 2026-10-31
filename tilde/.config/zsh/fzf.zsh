@@ -1,7 +1,7 @@
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 
-# -- Use fd instead of fzf --
+# Use fd instead of fzf's built-in file walker
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
@@ -38,10 +38,12 @@ _fzf_comprun() {
   esac
 }
 
-# Rose-pine theme
+# Rosé Pine (main) theme
 export FZF_DEFAULT_OPTS="
 	--color=fg:#908caa,bg:-1,hl:#ebbcba
 	--color=fg+:#e0def4,bg+:-1,hl+:#ebbcba
 	--color=border:#403d52,header:#31748f,gutter:-1
 	--color=spinner:#f6c177,info:#9ccfd8
-	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
+	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa
+	--color=label:#908caa
+	--gutter=' '" # gutter:-1 would draw its ▌ bar in the default text color on every row

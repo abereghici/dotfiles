@@ -1,73 +1,44 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Load path, env, aliases synchronously (always needed)
+# Load path, env, aliases and keybindings
 source $HOME/.config/zsh/path.zsh
 source $HOME/.config/zsh/env.zsh
 source $HOME/.config/zsh/aliases.zsh
 source $HOME/.config/zsh/keybindings.zsh
 
-# Initialize zsh completion system AFTER fpath is fully set
-autoload -Uz compinit && compinit -C
+# Initialize zsh completion system AFTER fpath is fully set. Rebuild the dump when it is
+# over a day old so newly installed completions load; otherwise skip the check (-C).
+autoload -Uz compinit
+if [[ -n "$(find ~/.zcompdump -mtime +0 2> /dev/null)" ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # Allow local (private) customizations (not checked in to version control)
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
 # ----- Plugin loading -----
-ZSH_DEFER_PLUGIN="$HOME/.local/share/zsh-defer/zsh-defer.plugin.zsh"
 
-if [ -f "$ZSH_DEFER_PLUGIN" ]; then
-  # Fast path: defer slow evals until after first prompt
-  source "$ZSH_DEFER_PLUGIN"
+# Direnv: https://github.com/direnv/direnv
+command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
-  # Direnv: https://github.com/direnv/direnv
-  _init_direnv() { eval "$(direnv hook zsh)" }
-  zsh-defer _init_direnv
+# Zoxide (better cd): https://github.com/ajeetdsouza/zoxide
+command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
 
-  # Zoxide (better cd): https://github.com/ajeetdsouza/zoxide
-  _init_zoxide() { eval "$(zoxide init zsh)" }
-  zsh-defer _init_zoxide
+# Mise (Polyglot runtime manager)
+command -v mise &> /dev/null && eval "$(mise activate zsh --shims)"
 
-  # Mise (Polyglot runtime manager)
-  _init_mise() { eval "$(mise activate zsh --shims)" }
-  zsh-defer _init_mise
+# Fish-like autosuggestions
+[ -f "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-  # Fish-like autosuggestions
-  zsh-defer source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# fzf key bindings and fuzzy completion
+command -v fzf &> /dev/null && source $HOME/.config/zsh/fzf.zsh
 
-  # Fish-like syntax highlighting (must be last of the plugin sources)
-  zsh-defer source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# Starship prompt (wraps any existing zle-keymap-select)
+command -v starship &> /dev/null && source $HOME/.config/zsh/prompt.zsh
 
-  # fzf key bindings and fuzzy completion
-  if command -v fzf &>/dev/null; then
-    zsh-defer source $HOME/.config/zsh/fzf.zsh
-  fi
+# Fish-like syntax highlighting (last: it must load after every widget is created)
+[ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-  # ngrok autocompletions
-  if command -v ngrok &>/dev/null; then
-    _init_ngrok() { eval "$(ngrok completion)" }
-    zsh-defer _init_ngrok
-  fi
-
-  # Angular CLI autocompletion
-  if command -v ng &>/dev/null; then
-    _init_ng() { eval "$(ng completion script)" }
-    zsh-defer _init_ng
-  fi
-
-  # Starship prompt: must run synchronously (sets PROMPT_SUBST + hooks before first prompt)
-  if command -v starship &>/dev/null; then
-    source $HOME/.config/zsh/prompt.zsh
-  fi
-else
-  # Slow path fallback: synchronous loading (zsh-defer not installed)
-  echo "⚠ zsh-defer not found — run setup/misc.sh to install it" >&2
-  eval "$(direnv hook zsh)"
-  eval "$(zoxide init zsh)"
-  eval "$(mise activate zsh --shims)"
-  [ -f "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  [ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  command -v fzf &>/dev/null && source $HOME/.config/zsh/fzf.zsh
-  command -v ngrok &>/dev/null && eval "$(ngrok completion)"
-  command -v ng &>/dev/null && eval "$(ng completion script)"
-  command -v starship &>/dev/null && source $HOME/.config/zsh/prompt.zsh
-fi
+# installers append PATH lines here; move them to ~/.config/zsh/path.zsh

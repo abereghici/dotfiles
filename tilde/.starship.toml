@@ -15,7 +15,7 @@ $nim \
 $rust \
 $scala \
 $python \
-$docker_context\
+$docker_context \
 $time\n  \
 [󱞪 ](fg:iris)
 """
@@ -23,13 +23,13 @@ $time\n  \
 palette = "rose-pine"
 
 [palettes.rose-pine]
-overlay = '#26233a'
-love = '#eb6f92'
-gold = '#f6c177'
-rose = '#ebbcba'
-pine = '#31748f'
-foam = '#9ccfd8'
-iris = '#c4a7e7'
+overlay = "#26233a"
+love = "#eb6f92"
+gold = "#f6c177"
+rose = "#ebbcba"
+pine = "#31748f"
+foam = "#9ccfd8"
+iris = "#c4a7e7"
 
 [directory]
 format = "[](fg:overlay)[ $path ]($style)[](fg:overlay)"
@@ -52,17 +52,11 @@ format = "[](fg:overlay)[ $symbol $branch ]($style)[](fg:overlay)"
 style = "bg:overlay fg:foam"
 symbol = ""
 
-[git_status]
-style = "bg:overlay fg:love"
-format = '[](fg:overlay)[$all_status$ahead_behind]($style)[](fg:overlay)'
-disabled = true
-
 [time]
 disabled = false
 format = "[](fg:overlay)[ $time 󰴈 ]($style)[](fg:overlay)"
 style = "bg:overlay fg:rose"
 time_format = "%I:%M%P"
-use_12hr = true
 
 [username]
 disabled = false
@@ -143,9 +137,9 @@ symbol = " "
 style = "bg:overlay fg:pine"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
-symbol = ' '
+symbol = " "
 
 [docker_context]
 symbol = ""
 style = "bg:overlay fg:pine"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+format = "[](fg:overlay)[$symbol$context]($style)[](fg:overlay) "

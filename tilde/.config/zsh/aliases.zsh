@@ -1,24 +1,18 @@
-#!/usr/bin/env zsh
-
-command_exists() {
-  command -v "$@" &> /dev/null
-}
-
 # Fd: https://github.com/sharkdp/fd
-command_exists fd && alias find="fd"
+command -v fd &> /dev/null && alias find="fd"
 
 # Eza: https://eza.rocks/
 # Display all clickable entries (incl. hidden files) as a grid with icons
-command_exists eza && alias ls="eza -a --hyperlink --icons=auto --group-directories-first --color-scale=age"
+command -v eza &> /dev/null && alias ls="eza -a --hyperlink --icons=auto --group-directories-first --color-scale=age"
 # Display a detailed list of clickable entries (incl. hidden files) with a Git status
-command_exists eza && alias ll="ls --long --no-user --header -g --git"
+command -v eza &> /dev/null && alias ll="ls --long --no-user --header -g --git"
 # Display clickable directory tree
-command_exists eza && alias llt="ls --tree --git-ignore"
+command -v eza &> /dev/null && alias llt="ls --tree --git-ignore"
 
 # Yazi: TUI file manager with shell cd-on-exit
 # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
 # Usage: y [path]  — opens yazi, cds to directory on exit
-if command_exists yazi; then
+if command -v yazi &> /dev/null; then
   y() {
     local tmp
     tmp="$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXX")"
@@ -34,13 +28,9 @@ if command_exists yazi; then
   }
 fi
 
-# Zoxide: https://github.com/ajeetdsouza/zoxide
-# A smarter cd command. Guard on the binary (not the `z` function, which is
-# created by the deferred `zoxide init` and doesn't exist yet at source time).
-command_exists zoxide && alias cd="z"
-
-# Tmux sessionizer
-alias tmuxs="tmux-sessionizer -rp ~/Development/Freelance ~/Development/Learn ~/Development/OOS ~/Development/Work ~/Development/Personal"
+# Project pickers over ~/Development and ~/Code, as in tmux.conf (prefix f, C-M-p) and herdr
+alias tmuxs="projects tmux"
+alias herdrs="projects herdr"
 
 # Lazydocker
 alias ld="lazydocker"

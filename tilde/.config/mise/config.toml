@@ -1,0 +1,16 @@
+[tools]
+bun = "latest"
+go = "latest"
+java = "temurin-21"
+maven = "latest"
+node = "lts"
+"npm:agent-browser" = "latest"
+"npm:neovim" = "latest"
+"npm:npm-upgrade" = "latest"
+"npm:sort-package-json" = "latest"
+python = "latest"
+rust = "latest"
+uv = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
