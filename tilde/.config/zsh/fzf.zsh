@@ -1,5 +1,5 @@
 # Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
+cached_init fzf fzf --zsh
 
 # Use fd instead of fzf's built-in file walker (FZF_DEFAULT_COMMAND and the theme are in
 # env.zsh, so the project pickers in tmux and herdr popups get them too)

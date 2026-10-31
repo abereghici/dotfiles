@@ -1,4 +1,4 @@
 # ----- starship -----
 # https://starship.rs/config/
 export STARSHIP_CONFIG=~/.starship.toml
-eval "$(starship init zsh)"
+cached_init starship starship init zsh
