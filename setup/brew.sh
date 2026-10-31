@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+cd "$(dirname "$0")/.."
+
 bold=$(tput bold)
 reset=$(tput sgr0)
 
@@ -28,19 +30,13 @@ brew update
 # Upgrade outdated already-installed formulae
 brew upgrade
 
-# Install fonts, tools, apps & vscode extensions
+# Install the taps, formulae, casks and fonts in the Brewfile. One failed cask (a download
+# error, an app that is already installed outside Homebrew) shouldn't stop the rest of setup;
+# rerun `brew bundle --file=setup/Brewfile` once it's sorted out.
 title "Installing software..."
-brew bundle --file="$(pwd)/setup/Brewfile" | indent
-
-# Extra apps
-# echo ""
-# title "☕️ Install more apps if you need them:"
-# echo "brew install --cask tradingview"
-
-# App Store apps
-# echo ""
-# title "🍏 Install additional apps from App Store:"
-# echo "https://apps.apple.com/us/app/ia-writer/id775737590?mt=12"
+if ! brew bundle --file=setup/Brewfile | indent; then
+  echo "${bold}Some Brewfile entries failed to install (see above); continuing.${reset}"
+fi
 
 # Remove outdated versions of formulae and casks from the cellar
 # Besides, this will run `brew autoremove` to remove all the hanging, no longer needed packages

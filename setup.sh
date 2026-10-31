@@ -25,10 +25,6 @@ warning() {
   tput sgr0
 }
 
-command_exists() {
-  command -v "$@" &> /dev/null
-}
-
 echo -e "
 ${yellow}
           _ ._  _ , _ ._
@@ -46,7 +42,8 @@ ${yellow}
 "
 echo
 echo -e "${yellow}!!! ${red}WARNING${yellow} !!!"
-echo -e "${light_red}This script will delete all your configuration files!"
+echo -e "${light_red}This script moves ~/.zshrc to ~/.zshrc.backup and links your dotfiles"
+echo -e "${light_red}(symlinks.sh asks before replacing any other existing file)."
 echo -e "${light_red}Use it at your own risk."
 
 if [ $# -ne 1 ] || [ "$1" != "-y" ]; then
@@ -54,12 +51,12 @@ if [ $# -ne 1 ] || [ "$1" != "-y" ]; then
   read key
 fi
 
-# Backup existing zsh file
-if [[ -e "$HOME/.zshrc" ]]; then
+# Backup an existing zsh file (not our symlink, so re-runs keep the first backup)
+if [[ -e "$HOME/.zshrc" && ! -L "$HOME/.zshrc" ]]; then
   mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
 fi
 
-# Use Touch ID to authorize sudo
+# Use Touch ID to authorize sudo (the line /etc/pam.d/sudo_local.template ships commented out)
 if [ ! -f /etc/pam.d/sudo_local ]; then
   title "🔒 Enabling Touch ID to authorize sudo commands..."
   echo "auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local
@@ -73,16 +70,18 @@ echo
 # Install Homebrew and packages/apps
 title "🫖 Setting up Homebrew..."
 ./setup/brew.sh
+# brew.sh runs in its own process, so a fresh Homebrew install isn't on this PATH yet
+eval "$(/opt/homebrew/bin/brew shellenv)"
 echo
 
-# Install Xcode, GitHub CLI & Node.js packages etc.
-title "🚀 Setting up extra tools..."
-./setup/misc.sh
-echo
-
-# Install dotfiles symlinks
+# Install dotfiles symlinks (misc.sh reads the linked mise, bat and tmux configs)
 title "🍤 Setting up symlinks..."
 ./setup/symlinks.sh
+echo
+
+# Install tpm, mise runtimes and global npm packages, and the bat theme cache
+title "🚀 Setting up extra tools..."
+./setup/misc.sh
 
 echo
 echo "🦏 ${green}All done! Open a new terminal for the changes to take effect.${reset}"

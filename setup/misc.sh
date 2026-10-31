@@ -4,10 +4,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-DOTFILES_DIR="$(pwd)"
-
 BLUE=$(tput setaf 4)
-BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 indent() {
@@ -19,70 +16,23 @@ info() {
   echo "[ ${BLUE}..${RESET} ] $1" | indent
 }
 
-warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
-}
+# Runs after symlinks.sh, so ~/.config/mise, ~/.config/bat and ~/.config/tmux point into this repo
 
-command_exists() {
-  command -v "$@" &> /dev/null
-}
-
-# Ask for the administrator password upfront
-warning "Activate sudo"
-sudo echo "Sudo activated!"
-echo
-
-# Install Xcode Command Line Tools and accept its license
-if ! xcode-select -p &> /dev/null; then
-  xcode-select --install &> /dev/null
-
-  # Wait until the Xcode Command Line Tools are installed
-  until xcode-select -p &> /dev/null; do
-    sleep 5
-  done
-
-  xcodebuild -license
-fi
-
-# Verify Xcode Command Line Tools successful installation
-xcode-select -p
-
-# Make custom binary scripts executable
-info 'Changing access permissions for binary scripts...'
-find "$DOTFILES_DIR/bin" -type f -not -name '.DS_Store' -not -name 'README.md' -exec chmod +x {} \; -exec bash -c 'printf "\r\033[2K  [ \033[00;32m✔\033[0m ] set for %s\n" "${0##*/}"' {} \;
-echo
-echo 'Done!' | indent
-echo
-
-# GitHub CLI: Authenticate with your GitHub account if the user is not logged in
-if command_exists gh && ! gh auth status &> /dev/null; then
-  echo "[GitHub CLI] You are not logged into any GitHub hosts. To log in, run: ${BOLD}gh auth login${RESET}"
-fi
-
-# zsh-defer: fast zsh plugin deferred loading (no Homebrew formula available)
-if [ ! -d "$HOME/.local/share/zsh-defer" ]; then
-  info 'Installing zsh-defer...'
-  git clone --depth 1 https://github.com/romkatv/zsh-defer.git "$HOME/.local/share/zsh-defer"
-  echo 'Done!' | indent
-fi
-
-# TPM: tmux plugin manager (loaded from ~/.tmux/plugins/tpm by tmux.conf)
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+# TPM: tmux plugin manager (loaded from ~/.config/tmux/plugins/tpm by tmux.conf)
+if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
   info 'Installing tmux plugin manager (tpm)...'
-  git clone --depth 1 https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
+  git clone --depth 1 https://github.com/tmux-plugins/tpm.git "$HOME/.config/tmux/plugins/tpm"
   echo 'Done!' | indent
 fi
 
-# Node.js global config
-npm config set loglevel warn
+# The plugins listed in tmux.conf (what `prefix` `I` does inside tmux)
+info 'Installing tmux plugins...'
+"$HOME/.config/tmux/plugins/tpm/bin/install_plugins" | indent || echo 'Failed: press prefix I inside tmux to retry' | indent
 
-# Npm packages
-packages=(
-  neovim
-  npm-upgrade
-  sort-package-json
-  repomix
-)
-npm install -g "${packages[@]}"
+# Runtimes and global npm packages from ~/.config/mise/config.toml
+info 'Installing mise tools...'
+mise install
+
+# bat loads custom themes (rose-pine) only from its cache
+info 'Building bat theme cache...'
+bat cache --build | indent

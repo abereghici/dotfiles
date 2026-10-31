@@ -7,7 +7,12 @@ cd "$(dirname "$0")/.."
 DOTFILES_DIR="$(pwd)"
 TILDE_DIR="$DOTFILES_DIR/tilde"
 
-EXCLUDE_FILES=(".DS_Store" "Brewfile.lock.json" "README.md")
+EXCLUDE_FILES=(".DS_Store")
+
+# Shared by every symlink_file call; set by the [O]verwrite/[B]ackup/[S]kip all answers
+overwrite_all=false
+backup_all=false
+skip_all=false
 
 indent() {
   sed 's/^/  /'
@@ -26,19 +31,11 @@ success() {
   printf "\r\033[2K  [ \033[00;32m✔\033[0m ] $1\n"
 }
 
-fail() {
-  printf "\r\033[2K  [\033[0;31m✖\033[0m] $1\n"
-  echo ''
-  exit
-}
-
 symlink_file() {
   local src=$1 dst=$2
 
-  local overwrite
-  local backup
-  local skip
-  local action
+  # Set by handle_existing_file; empty (not unset) so `set -u` allows reading them
+  local overwrite="" backup="" skip="" action=""
 
   if [ ! -d "$(dirname "$dst")" ]; then
     mkdir -p "$(dirname "$dst")"
@@ -73,7 +70,7 @@ symlink_file() {
 
   # "false" or empty
   if [ "$skip" != "true" ]; then
-    ln -sf "$1" "$2"
+    ln -sfn "$1" "$2"
     success "linked $1 to $2"
   else
     success "skipped $src"
@@ -125,15 +122,19 @@ handle_existing_file() {
   fi
 }
 
+# Delete the links in each directory that point into this repo but whose target is gone
+remove_dangling_links() {
+  find "$@" -maxdepth 1 -type l -lname "$DOTFILES_DIR/*" ! -exec test -e {} \; -print -delete 2> /dev/null | sed 's/^/removed dangling link /' | indent || true
+}
+
 install_dotfiles() {
   info 'Installing dotfiles...'
 
-  local overwrite_all=false
-  local backup_all=false
-  local skip_all=false
-
   # Create .config directory if it doesn't exist
   mkdir -p ~/.config
+
+  # Remove links to dotfiles that no longer exist in tilde/
+  remove_dangling_links "$HOME" "$HOME/.config"
 
   cd "$TILDE_DIR"
 
@@ -181,12 +182,25 @@ install_extras() {
 
   # Lazygit
   symlink_file "$DOTFILES_DIR/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
-  symlink_file "$DOTFILES_DIR/lazygit/state.yml" "$HOME/Library/Application Support/lazygit/state.yml"
+
+  # VS Code (extensions are the vscode entries in setup/Brewfile)
+  local vscode_user="$HOME/Library/Application Support/Code/User"
+  symlink_file "$DOTFILES_DIR/vscode/settings.json" "$vscode_user/settings.json"
+  symlink_file "$DOTFILES_DIR/vscode/keybindings.json" "$vscode_user/keybindings.json"
+  symlink_file "$DOTFILES_DIR/vscode/snippets" "$vscode_user/snippets"
+
+  # Keyboard layout
+  symlink_file "$DOTFILES_DIR/keyboard/ABC-Romanian.keylayout" "$HOME/Library/Keyboard Layouts/ABC-Romanian.keylayout"
+  # Make it the only keyboard layout (replaces the System Settings → Text Input steps)
+  swift "$DOTFILES_DIR/setup/input-source.swift" 2>&1 | indent || true
 }
 
 install_custom_bin() {
 
   cd "$DOTFILES_DIR/bin"
+
+  # Remove links to scripts that no longer exist in bin/
+  remove_dangling_links "$HOME/.local/bin"
 
   # Loop through all items in the `bin` directory
   for item in *; do

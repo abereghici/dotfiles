@@ -10,14 +10,23 @@
   command -v mise
 }
 
-@test "bat uses rose-pine-moon theme (no BAT_THEME in dotfiles)" {
+@test "bat has the rose-pine theme from its cache" {
+  bat --list-themes --color=never | grep -qx "rose-pine"
+}
+
+@test "dotfiles do not set BAT_THEME (bat's config file picks the theme)" {
   # dotfiles must not set BAT_THEME so the bat config file is used instead
-  run grep -r "BAT_THEME" \
+  # -s: $HOME/.zshenv is optional, and bats' `run` captures grep's stderr into $output
+  run grep -rs "BAT_THEME" \
     "$HOME/.config/zsh" \
     "$HOME/.zshrc" \
-    "$HOME/.zshenv" \
-    2>/dev/null
+    "$HOME/.zshenv"
   [ "$output" = "" ]
+}
+
+@test "node and python3 resolve to mise shims in a login shell" {
+  [ "$(zsh -l -c 'whence -p node')" = "$HOME/.local/share/mise/shims/node" ]
+  [ "$(zsh -l -c 'whence -p python3')" = "$HOME/.local/share/mise/shims/python3" ]
 }
 
 @test "bat is available" { command -v bat; }

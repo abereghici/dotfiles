@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Sane macOS defaults — based on https://mths.be/macos, trimmed to keys that
-# still take effect on modern macOS (26 Tahoe).
+# Sane macOS defaults, based on https://mths.be/macos. Most keys below are undocumented
+# preferences; check them again after a major macOS upgrade.
+
+# No -e: each setting is independent, so one refused write must not skip the rest
+set -uo pipefail
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   echo "Configuring macOS..."
@@ -9,8 +12,16 @@ else
   exit 0
 fi
 
-COMPUTERNAME='abereghici'
-LOCALHOSTNAME='bereghicidev'
+# Personal settings live in ~/.macos.local (not checked in); each one is skipped when unset:
+#   COMPUTERNAME='my-mac'
+#   LOCALHOSTNAME='my-mac'
+#   LANGUAGES=(en)
+#   LOCALE='en_US'
+#   TIMEZONE='Europe/London' # list: sudo systemsetup -listtimezones
+if [ -f "$HOME/.macos.local" ]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.macos.local"
+fi
 
 # Cache sudo and keep it alive until the script finishes
 sudo -v
@@ -23,10 +34,14 @@ done 2> /dev/null &
 # --- General UI/UX ---
 
 # Computer / host names
-sudo scutil --set ComputerName $COMPUTERNAME
-sudo scutil --set HostName $COMPUTERNAME
-sudo scutil --set LocalHostName $LOCALHOSTNAME
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $LOCALHOSTNAME
+if [ -n "${COMPUTERNAME:-}" ]; then
+  sudo scutil --set ComputerName "$COMPUTERNAME"
+  sudo scutil --set HostName "$COMPUTERNAME"
+fi
+if [ -n "${LOCALHOSTNAME:-}" ]; then
+  sudo scutil --set LocalHostName "$LOCALHOSTNAME"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$LOCALHOSTNAME"
+fi
 
 # Faster window resizing
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
@@ -40,7 +55,7 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 # Check for software updates daily
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
-# Graphite appearance, blue highlight
+# AppleAquaColorVariant 6 (graphite) and a light blue text highlight
 defaults write -g AppleAquaColorVariant -int 6
 defaults write -g AppleHighlightColor -string '0.709800 0.835300 1.000000'
 
@@ -50,13 +65,19 @@ defaults write -g AppleHighlightColor -string '0.709800 0.835300 1.000000'
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Language and formats
-defaults write NSGlobalDomain AppleLanguages -array "en" "ro" "ru"
-defaults write NSGlobalDomain AppleLocale -string "ro-MD@currency=EUR"
+if [ -n "${LANGUAGES:-}" ]; then
+  defaults write NSGlobalDomain AppleLanguages -array "${LANGUAGES[@]}"
+fi
+if [ -n "${LOCALE:-}" ]; then
+  defaults write NSGlobalDomain AppleLocale -string "$LOCALE"
+fi
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
-# Timezone (list: sudo systemsetup -listtimezones)
-sudo systemsetup -settimezone "Europe/Bucharest" > /dev/null
+# Timezone
+if [ -n "${TIMEZONE:-}" ]; then
+  sudo systemsetup -settimezone "$TIMEZONE" > /dev/null
+fi
 
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -71,12 +92,12 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 defaults write com.apple.screencapture location -string "$HOME/Desktop"
 defaults write com.apple.screencapture type -string "png"
 
-# Enable HiDPI display modes (requires restart)
+# Enable HiDPI display modes
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
 # --- Finder ---
 
-# Allow quitting via ⌘Q (also hides desktop icons)
+# Allow quitting via ⌘Q
 defaults write com.apple.finder QuitMenuItem -bool true
 
 # Show hidden files and all extensions
@@ -106,10 +127,10 @@ defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
 defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
-# Snap icons to a grid
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+# Snap icons to a grid (Set fails when Finder has not saved that view yet; skip it then)
+for view in DesktopViewSettings FK_StandardViewSettings StandardViewSettings; do
+  /usr/libexec/PlistBuddy -c "Set :$view:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist || true
+done
 
 # List view by default (other modes: icnv, clmv, Flwv)
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
@@ -164,21 +185,21 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 sudo pmset -b sleep 10       # sleep after 10 min
 sudo pmset -b displaysleep 5 # display off after 5 min
 sudo pmset -b disksleep 10   # disk sleep after 10 min
-sudo pmset -b lessbright 1   # dim on battery
-sudo pmset -b halfdim 1      # dim before display sleep
+sudo pmset -b lessbright 1   # slightly lower brightness on battery
+sudo pmset -b halfdim 1      # half-brightness step before display sleep
 
 sudo pmset -c sleep 30        # sleep after 30 min
 sudo pmset -c displaysleep 10 # display off after 10 min
 sudo pmset -c disksleep 10    # disk sleep after 10 min
 sudo pmset -c womp 0          # don't wake for network access
-sudo pmset -c halfdim 1       # dim before display sleep
+sudo pmset -c halfdim 1       # half-brightness step before display sleep
 sudo pmset -c autorestart 1   # restart after a power failure
 
 # --- Restart affected apps ---
 
 for app in "Contacts" "Calendar" "Dock" "Finder" \
   "Mail" "Safari" "SystemUIServer" "Terminal" "NotificationCenter"; do
-  killall "$app" > /dev/null 2>&1
+  killall "$app" > /dev/null 2>&1 || true
 done
 
 echo "Done. Some changes require a logout/restart to take effect."

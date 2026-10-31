@@ -55,6 +55,11 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
   [ "$(readlink "$HOME/.zshrc")" = "$TILDE_DIR/.zshrc" ]
 }
 
+@test ".zprofile is symlinked to tilde/.zprofile" {
+  [ -L "$HOME/.zprofile" ]
+  [ "$(readlink "$HOME/.zprofile")" = "$TILDE_DIR/.zprofile" ]
+}
+
 # ---------------------------------------------------------------------------
 # .config subdirectories
 # ---------------------------------------------------------------------------
@@ -74,9 +79,9 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
   [ "$(readlink "$HOME/.config/ghostty")" = "$TILDE_DIR/.config/ghostty" ]
 }
 
-@test ".config/karabiner is symlinked to tilde/.config/karabiner" {
-  [ -L "$HOME/.config/karabiner" ]
-  [ "$(readlink "$HOME/.config/karabiner")" = "$TILDE_DIR/.config/karabiner" ]
+@test ".config/herdr is symlinked to tilde/.config/herdr" {
+  [ -L "$HOME/.config/herdr" ]
+  [ "$(readlink "$HOME/.config/herdr")" = "$TILDE_DIR/.config/herdr" ]
 }
 
 @test ".config/nvim is symlinked to tilde/.config/nvim" {
@@ -84,9 +89,9 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
   [ "$(readlink "$HOME/.config/nvim")" = "$TILDE_DIR/.config/nvim" ]
 }
 
-@test ".config/opencode is symlinked to tilde/.config/opencode" {
-  [ -L "$HOME/.config/opencode" ]
-  [ "$(readlink "$HOME/.config/opencode")" = "$TILDE_DIR/.config/opencode" ]
+@test ".config/mise is symlinked to tilde/.config/mise" {
+  [ -L "$HOME/.config/mise" ]
+  [ "$(readlink "$HOME/.config/mise")" = "$TILDE_DIR/.config/mise" ]
 }
 
 @test ".config/tmux is symlinked to tilde/.config/tmux" {
@@ -97,4 +102,45 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
 @test ".config/zsh is symlinked to tilde/.config/zsh" {
   [ -L "$HOME/.config/zsh" ]
   [ "$(readlink "$HOME/.config/zsh")" = "$TILDE_DIR/.config/zsh" ]
+}
+
+# ---------------------------------------------------------------------------
+# Extras and custom binaries
+# ---------------------------------------------------------------------------
+
+@test "lazygit config is symlinked to lazygit/config.yml" {
+  f="$HOME/Library/Application Support/lazygit/config.yml"
+  [ -L "$f" ]
+  [ "$(readlink "$f")" = "$DOTFILES_DIR/lazygit/config.yml" ]
+}
+
+@test "lazydocker config is symlinked to lazydocker/config.yml" {
+  f="$HOME/Library/Application Support/lazydocker/config.yml"
+  [ -L "$f" ]
+  [ "$(readlink "$f")" = "$DOTFILES_DIR/lazydocker/config.yml" ]
+}
+
+@test "VS Code settings, keybindings and snippets are symlinked to vscode/" {
+  dir="$HOME/Library/Application Support/Code/User"
+  for f in settings.json keybindings.json snippets; do
+    [ -L "$dir/$f" ]
+    [ "$(readlink "$dir/$f")" = "$DOTFILES_DIR/vscode/$f" ]
+  done
+}
+
+@test "ABC – Romanian keyboard layout is symlinked to keyboard/ABC-Romanian.keylayout" {
+  f="$HOME/Library/Keyboard Layouts/ABC-Romanian.keylayout"
+  [ -L "$f" ]
+  [ "$(readlink "$f")" = "$DOTFILES_DIR/keyboard/ABC-Romanian.keylayout" ]
+}
+
+@test "every bin/ script is symlinked into ~/.local/bin" {
+  for f in "$DOTFILES_DIR"/bin/*; do
+    [ "$(readlink "$HOME/.local/bin/$(basename "$f")")" = "$f" ]
+  done
+}
+
+@test "~/.local/bin has no dangling links into the dotfiles" {
+  run find "$HOME/.local/bin" -maxdepth 1 -type l -lname "$DOTFILES_DIR/*" ! -exec test -e {} \; -print
+  [ "$output" = "" ]
 }

@@ -1,16 +1,12 @@
-# Taps
-tap "git-friendly/git-friendly"
-tap "jesseduffield/lazydocker"
-tap "jesseduffield/lazygit"
-tap "nikitabobko/tap"
-tap "sst/tap"
-tap "tw93/tap"
+# Taps (Homebrew refuses formulae, casks and commands from third-party taps until they are trusted)
+tap "jesseduffield/lazydocker", trusted: true
+tap "nikitabobko/tap", trusted: true
 
 # CLI Tools
 
 ## Core System Utilities
-brew "bat" # Clone of cat with syntax highlighting and Git integration
-brew "curl" # Get a file from an HTTP, HTTPS or FTP server
+brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
+brew "curl" # Get a file from an HTTP, HTTPS or FTP server (keg-only: /usr/bin/curl stays first on PATH)
 brew "direnv" # Load/unload environment variables based on $PWD
 brew "eza" # Modern, maintained replacement for ls
 brew "fd" # Simple, fast and user-friendly alternative to find
@@ -24,46 +20,44 @@ brew "yazi" # Blazing fast terminal file manager written in Rust, based on async
 brew "zoxide" # Shell extension to navigate your filesystem faster
 brew "zsh-autosuggestions" # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-syntax-highlighting" # Fish shell like syntax highlighting for zsh
-# zsh-defer: no Homebrew formula available — installed via git clone in setup/misc.sh
 
 ## Development Tools
 brew "ast-grep" # Code searching, linting, rewriting
+brew "awscli" # Official Amazon AWS command-line interface
 brew "bats-core" # Bash Automated Testing System
 brew "gh" # GitHub command-line tool
 brew "git" # Distributed revision control system
 brew "git-delta" # Syntax-highlighting pager for git and diff output
+brew "git-lfs" # Git extension for versioning large files
 brew "glab" # Open-source GitLab command-line tool
-brew "ipatool" # Command-line tool to search for and download iOS apps
-brew "jesseduffield/lazydocker/lazydocker" # Simple terminal UI for docker, written in Go
+brew "jesseduffield/lazydocker/lazydocker" # A simple terminal UI for docker, written in Go
 brew "lazygit" # Simple terminal UI for git commands
 brew "mise" # Polyglot runtime manager (asdf rust clone)
+brew "mkcert" # Simple tool to make locally trusted development certificates
 brew "neovim" # Ambitious Vim-fork focused on extensibility and agility
 brew "serve" # Static http server anywhere you need one
 brew "starship" # Cross-shell prompt for astronauts
 
-## Cloud & Infrastructure
-brew "awscli" # Official Amazon AWS command-line interface
-
 ## Programming Languages & Package Managers
+# Runtimes (bun, go, java, maven, node, python, rust) come from mise, not Homebrew.
+# node and python@3.x still arrive as dependencies of mermaid-cli and nmap and are linked into
+# /opt/homebrew/bin; ~/.zprofile and .zshrc put the mise shims ahead of them in zsh.
 brew "luarocks" # Package manager for the Lua programming language
 brew "pnpm" # Fast, disk space efficient package manager
-brew "yarn" # JavaScript package manager
 
 ## Build Tools & Dependencies
 brew "cmake" # Cross-platform make
-brew "gettext" # GNU internationalization (i18n) and localization (l10n) library
-brew "libgit2" # C library of Git core methods that is re-entrant and linkable
 brew "ninja" # Small build system for use with gyp or CMake
 brew "poppler" # PDF rendering library (based on the xpdf-3.0 code base)
 brew "wimlib" # Library to create, extract, and modify Windows Imaging files
 brew "xcodegen" # Generate your Xcode project from a spec file and your folder structure
 
 ## Document & Media Processing
-brew "ffmpeg" # Play, record, convert, and stream audio and video
+brew "chafa" # Versatile and fast Unicode/ASCII/ANSI graphics renderer
+brew "ffmpeg" # Play, record, convert, and stream select audio and video codecs
 brew "ghostscript" # Interpreter for PostScript and PDF
-brew "imagemagick" # Tools and libraries to manipulate images in many formats
+brew "imagemagick" # Tools and libraries to manipulate images in select formats
 brew "mermaid-cli" # CLI for Mermaid library
-brew "pandoc" # Swiss-army knife of markup format conversion
 brew "pngquant" # PNG image optimizing utility
 brew "tectonic" # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tree-sitter" # Incremental parsing library
@@ -72,37 +66,37 @@ brew "tree-sitter-cli" # Parser generator tool
 ## Security & Networking
 brew "bitwarden-cli" # Secure and free password manager for all of your devices
 brew "cryptography" # Cryptographic recipes and primitives for Python
-brew "ghidra" # Software reverse engineering (SRE) suite of tools
 brew "nmap" # Port scanning utility for large networks
 
 ## System Maintenance
-brew "tw93/tap/mole" # Comprehensive macOS cleanup and application uninstall tool
+brew "mole" # Deep clean and optimize your Mac
 
 ## AI & LLM Tools
-brew "gemini-cli" # Interact with Google Gemini models from the terminal
+brew "herdr" # Agent multiplexer that lives in your terminal
 brew "ollama" # Create, run, and share large language models (LLMs)
-brew "sst/tap/opencode" # The AI coding agent built for the terminal
 
 # GUI Applications
 
 ## Development Tools
 cask "claude" # Anthropic's official Claude AI desktop app
-cask "claude-code" # AI coding tool from Anthropic
-cask "figma" # Collaborative design tool
-cask "docker-desktop" # App to build and share containerized applications and microservices
+cask "claude-code@latest" # Terminal-based AI coding assistant (latest release channel)
+cask "codex" # OpenAI's coding agent that runs in your terminal
+cask "docker-desktop" # App to build and share containerised applications and microservices
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "karabiner-elements" # Keyboard customizer
-cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 cask "ollama-app" # Get up and running with large language models locally
 cask "raycast" # Control your tools with a few keystrokes
-cask "utm" # Virtualization tool for macOS to run Windows, Linux, and more
+cask "utm" # Virtual machines UI using QEMU
 cask "visual-studio-code" # Open-source code editor
-
-## Security & Networking
-cask "wireshark-app" # Network protocol analyzer
 
 ## Window Management
 cask "nikitabobko/tap/aerospace" # AeroSpace is an i3-like tiling window manager for macOS
+
+## Design
+cask "figma" # Collaborative team software
+
+## Productivity
+cask "calibre" # E-books management software
+cask "obsidian" # Knowledge base that works on top of a local folder of plain text Markdown files
 
 ## Communication
 cask "discord" # Voice and text chat software
@@ -113,7 +107,6 @@ cask "telegram" # Messaging app with a focus on speed and security
 cask "google-chrome" # Web browser
 
 ## Media & Entertainment
-cask "calibre" # E-book management application
 cask "spotify" # Music streaming service
 
 # Fonts
@@ -122,16 +115,15 @@ cask "font-meslo-lg-nerd-font" # Developer font with icons
 # VSCode Extensions
 vscode "aaron-bond.better-comments"
 vscode "asvetliakov.vscode-neovim"
+vscode "bradlc.vscode-tailwindcss"
 vscode "csstools.postcss"
 vscode "dbaeumer.vscode-eslint"
 vscode "eamodio.gitlens"
+vscode "editorconfig.editorconfig"
 vscode "esbenp.prettier-vscode"
-vscode "formulahendry.auto-rename-tag"
 vscode "golang.go"
-vscode "graphql.vscode-graphql"
-vscode "graphql.vscode-graphql-syntax"
-vscode "htmlhint.vscode-htmlhint"
-vscode "mgmcdermott.vscode-language-babel"
+vscode "mhutchie.git-graph"
+vscode "ms-azuretools.vscode-containers"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
@@ -141,8 +133,11 @@ vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.remote-explorer"
 vscode "mvllow.rose-pine"
+vscode "oxc.oxc-vscode"
+vscode "redhat.java"
 vscode "stylelint.vscode-stylelint"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-test"
 vscode "vscode-icons-team.vscode-icons"
 
-# Go Packages
-go "github.com/lotusirous/gostdsym/stdsym"
