@@ -1,10 +1,15 @@
-# herdr, set up like tmux.conf: same prefix, same keys, same theme.
+# herdr as a drop-in for tmux.conf: same prefix, same keys, same look.
+# tmux session = herdr workspace, tmux window = herdr tab, pane = pane.
 # Only differences from `herdr --default-config` are listed here.
 
 onboarding = false
 
 [theme]
 name = "rose-pine"
+
+[theme.custom]
+# Let Ghostty's translucent background through, as tmux does (@rose_pine_bar_bg_disable)
+panel_bg = "reset"
 
 [keys]
 prefix = "alt+space"
@@ -18,6 +23,9 @@ rename_workspace = "prefix+$"
 previous_workspace = "prefix+("
 next_workspace = "prefix+)"
 last_pane = "prefix+semicolon"
+cycle_pane_next = "prefix+o"
+# prefix+o is tmux's next pane; a = jump to the agent asking for attention
+open_notification_target = "prefix+a"
 
 # tmux.conf bindings
 workspace_picker = ["prefix+w", "prefix+shift+s"]
@@ -30,6 +38,9 @@ focus_pane_left = ["prefix+h", "ctrl+alt+h"]
 focus_pane_down = ["prefix+j", "ctrl+alt+j"]
 focus_pane_up = ["prefix+k", "ctrl+alt+k"]
 focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+
+# Already herdr's defaults, matching tmux.conf: c new named tab, v split right, r resize
+# mode, H/J/K/L swap panes, z zoom, x close pane, n/p tabs, 1..9 tab, [ copy mode (v, y)
 
 [[keys.command]]
 key = "prefix+f"
@@ -55,6 +66,23 @@ description = "New project"
 width = "80%"
 height = "80%"
 
+# tmux's `switch-client -l`, from the plugin in herdr/plugins/last-workspace
+[[keys.command]]
+key = "prefix+tab"
+type = "plugin_action"
+command = "dotfiles.last-workspace.switch"
+description = "Last workspace"
+
+[[keys.command]]
+key = "ctrl+alt+o"
+type = "plugin_action"
+command = "dotfiles.last-workspace.switch"
+description = "Last (other) workspace"
+
 [ui]
+# tmux-style splits: one divider between panes, no outer frame, gaps or scrollbars
+pane_outer_borders = false
+pane_gaps = false
+pane_scrollbars = false
 # The tmux theme shows the host on the status bar
 tab_bar_right = [{ type = "hostname" }]

@@ -155,6 +155,16 @@ workspace, from tmux (`prefix` `f`, `⌃⌥P`), herdr (the same keys) or the she
 different folders need no config. `prefix` `g` creates a project folder first.
 Run `projects` on its own to list the roots it found.
 
+### tmux or herdr
+
+[herdr](tilde/.config/herdr/config.toml) is set up as a drop-in for
+[tmux](tilde/.config/tmux/tmux.conf): the same `⌥Space` prefix, the same keys
+(tmux sessions are herdr workspaces, windows are tabs) and the same Rosé Pine
+look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
+[last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
+On top of tmux, `prefix` `a` jumps to the agent that needs attention and
+`prefix` `/` searches every pane.
+
 ## Local customizations
 
 The dotfiles can be extended to suit additional local requirements by using the

@@ -29,6 +29,12 @@ fi
 info 'Installing tmux plugins...'
 "$HOME/.config/tmux/plugins/tpm/bin/install_plugins" | indent || echo 'Failed: press prefix I inside tmux to retry' | indent
 
+# herdr plugins kept in this repo (prefix Tab: last workspace, as in tmux)
+info 'Linking herdr plugins...'
+for plugin in herdr/plugins/*/; do
+  herdr plugin link "$PWD/$plugin" > /dev/null && echo "linked ${plugin%/}" | indent
+done
+
 # Runtimes and global npm packages from ~/.config/mise/config.toml
 info 'Installing mise tools...'
 mise install

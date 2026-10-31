@@ -29,7 +29,13 @@
   [ "$(zsh -l -c 'whence -p python3')" = "$HOME/.local/share/mise/shims/python3" ]
 }
 
+@test "herdr links the last-workspace plugin from this repo" {
+  plugin_dir="$(cd "$BATS_TEST_DIRNAME/.." && pwd)/herdr/plugins/last-workspace"
+  herdr plugin list | grep -qF "dotfiles.last-workspace (Last workspace) enabled [local:$plugin_dir]"
+}
+
 @test "bat is available" { command -v bat; }
+@test "herdr is available" { command -v herdr; }
 @test "curl is available" { command -v curl; }
 @test "direnv is available" { command -v direnv; }
 @test "eza is available" { command -v eza; }
