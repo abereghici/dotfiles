@@ -30,3 +30,8 @@ map("n", "gldh", function()
   vim.cmd.split()
   vim.lsp.buf.definition()
 end, { desc = "Goto Definition (horizontal)" })
+
+-- Inside VS Code (vscode-neovim): map the LazyVim keys to VS Code commands
+if vim.g.vscode then
+  require("config.vscode")
+end

@@ -3,75 +3,103 @@
    * __________________________________________________________________________
    * Editor
    * __________________________________________________________________________
+   *
+   * In the editor, keys go to Neovim (vscode-neovim) and LazyVim's maps apply:
+   * <C-h/j/k/l>, <C-w>v/s/q, <leader>-/| splits, H/L editors and the
+   * <leader> maps in tilde/.config/nvim/lua/config/vscode.lua. The bindings
+   * below cover what Neovim can't see.
    */
 
-  // Split vertically
-  {
-    "key": "ctrl+w+v",
-    "command": "workbench.action.splitEditor"
-  },
-  // Split horizontally
-  {
-    "key": "ctrl+w+h",
-    "command": "workbench.action.splitEditorOrthogonal"
-  },
-  // Close
-  {
-    "key": "ctrl+w+q",
-    "command": "workbench.action.closeActiveEditor"
-  },
-  // Navigate up
-  {
-    "key": "ctrl+k",
-    "command": "workbench.action.navigateUp"
-  },
-  // Navigate down
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.navigateDown"
-  },
-  // Navigate left
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft"
-  },
-  // Navigate right
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.navigateRight"
-  },
-  // Next buffer
-  {
-    "key": "ctrl+]",
-    "command": "workbench.action.nextEditor"
-  },
-  // Previous buffer
-  {
-    "key": "ctrl+[",
-    "command": "workbench.action.previousEditor"
-  },
   // Save files
   {
     "key": "ctrl+s",
     "command": "workbench.action.files.save"
   },
-
+  // Move the line (LazyVim <A-j>/<A-k>)
   {
     "key": "alt+j",
-    // Move the line
-    "command": "editor.action.moveLinesDownAction"
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus"
   },
   {
     "key": "alt+k",
-    "command": "editor.action.moveLinesUpAction"
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus"
   },
+  // Accept a completion (blink.cmp <C-y>)
+  {
+    "key": "ctrl+y",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+
+  /*
+   * __________________________________________________________________________
+   * Windows
+   * __________________________________________________________________________
+   */
+
+  // <C-h/j/k/l> from the explorer, panels and terminal (LazyVim terminal nav),
+  // so you can always get back to the editor
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "terminalFocus || !inputFocus && !editorTextFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "terminalFocus || !inputFocus && !editorTextFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp",
+    "when": "terminalFocus || !inputFocus && !editorTextFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "terminalFocus || !inputFocus && !editorTextFocus"
+  },
+
+  /*
+   * __________________________________________________________________________
+   * Quick open (pickers)
+   * __________________________________________________________________________
+   */
+
+  // <C-j>/<C-k> move through results, as in the snacks picker
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen && neovim.mode != cmdline"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "when": "inQuickOpen && neovim.mode != cmdline"
+  },
+
   /*
    * __________________________________________________________________________
    * Explorer
    * __________________________________________________________________________
+   *
+   * vscode-neovim already maps j/k/h/l, a/A, r, d, y/x/p and v in the explorer.
    */
 
-  //Show remote explorer
+  // <leader>e toggles the explorer like oil; q closes it, as in oil
+  {
+    "key": "space e",
+    "command": "workbench.action.closeSidebar",
+    "when": "filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "q",
+    "command": "workbench.action.closeSidebar",
+    "when": "filesExplorerFocus && !inputFocus"
+  },
+  // Show remote explorer
   {
     "key": "ctrl+shift+s",
     "command": "workbench.view.remote"
@@ -88,23 +116,17 @@
    * __________________________________________________________________________
    */
 
+  // <C-/> hides the terminal again (LazyVim's extra opens it from the editor)
+  {
+    "key": "ctrl+/",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminalFocus && !terminalEditorFocus"
+  },
   // Kill
   {
     "key": "ctrl+shift+q",
     "command": "workbench.action.terminal.kill",
     "when": "terminalFocus"
-  },
-  // Navigate down (terminal)
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.terminal.focusNext",
-    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
-  },
-  // Navigate up (terminal)
-  {
-    "key": "ctrl+k",
-    "command": "workbench.action.terminal.focusPrevious",
-    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   },
 
   /*
