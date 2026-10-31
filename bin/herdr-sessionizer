@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 # herdr counterpart of tmux-sessionizer: one workspace per project directory,
-# with Editor, Shell and Agents tabs.
+# with Editor (running nvim), Shell and Agents tabs. The editor-restore plugin starts nvim
+# in Editor tabs again after a server restart.
 #
 #   herdr-sessionizer DIR...     pick a subdirectory of any DIR
 #   herdr-sessionizer -c DIR...  pick a parent DIR and create a new folder in it
@@ -59,7 +60,9 @@ fi
 created=$(herdr workspace create --cwd "$dir" --label "$name" --focus)
 workspace_id=$(jq -r '.result.workspace.workspace_id' <<< "$created")
 editor_tab=$(jq -r '.result.tab.tab_id' <<< "$created")
+editor_pane=$(jq -r '.result.root_pane.pane_id' <<< "$created")
 
 herdr tab rename "$editor_tab" Editor > /dev/null
+herdr pane run "$editor_pane" nvim > /dev/null
 herdr tab create --workspace "$workspace_id" --cwd "$dir" --label Shell --no-focus > /dev/null
 herdr tab create --workspace "$workspace_id" --cwd "$dir" --label Agents --no-focus > /dev/null

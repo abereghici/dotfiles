@@ -29,9 +29,11 @@
   [ "$(zsh -l -c 'whence -p python3')" = "$HOME/.local/share/mise/shims/python3" ]
 }
 
-@test "herdr links the last-workspace plugin from this repo" {
-  plugin_dir="$(cd "$BATS_TEST_DIRNAME/.." && pwd)/herdr/plugins/last-workspace"
-  herdr plugin list | grep -qF "dotfiles.last-workspace (Last workspace) enabled [local:$plugin_dir]"
+@test "herdr links every plugin in herdr/plugins" {
+  list=$(herdr plugin list)
+  for dir in "$(cd "$BATS_TEST_DIRNAME/.." && pwd)"/herdr/plugins/*; do
+    grep -qF "enabled [local:$dir]" <<< "$list"
+  done
 }
 
 @test "herdr has the reviewr plugin" {

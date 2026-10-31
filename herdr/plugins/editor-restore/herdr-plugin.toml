@@ -1,0 +1,13 @@
+# tmux-resurrect's process restore for herdr: after a server restart, herdr brings back
+# workspaces, tabs and directories but runs plain shells, so this starts nvim again in every
+# Editor tab (the layout herdr-sessionizer creates). Linked by setup/misc.sh.
+id = "dotfiles.editor-restore"
+name = "Editor restore"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Start nvim in Editor tabs after a server restart"
+# ps -E (process environments) is the macOS spelling
+platforms = ["macos"]
+
+[[startup]]
+command = ["bash", "editor-restore.sh"]

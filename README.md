@@ -162,7 +162,10 @@ Run `projects` on its own to list the roots it found.
 look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
 [last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
 On top of tmux, `prefix` `a` jumps to the agent that needs attention and
-`prefix` `/` searches every pane.
+`prefix` `/` searches every pane. New projects open with nvim already running in
+their Editor tab, and after a restart herdr brings back every workspace, tab and
+directory, with the [editor-restore plugin](herdr/plugins/editor-restore/)
+starting nvim again in Editor tabs (tmux-resurrect's job in tmux).
 
 ### Reviewing agent changes
 
