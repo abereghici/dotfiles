@@ -80,7 +80,7 @@ command = "dotfiles.last-workspace.switch"
 description = "Last (other) workspace"
 
 # Review the agent's diff beside it and send line comments back: herdr-reviewr, installed
-# by setup/misc.sh, configured in plugins/config/persiyanov.reviewr/config.toml
+# by setup/misc.sh, configured in reviewr.toml (and the untracked reviewr.local.toml)
 [[keys.command]]
 key = "ctrl+alt+r"
 type = "plugin_action"

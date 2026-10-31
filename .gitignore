@@ -9,9 +9,4 @@ tilde/.config/tmux/plugins/*
 tilde/.config/mise/config.local.toml
 tilde/.config/herdr/*
 !tilde/.config/herdr/config.toml
-# herdr plugin config (plugin state and installs stay local)
-!tilde/.config/herdr/plugins/
-tilde/.config/herdr/plugins/*
-!tilde/.config/herdr/plugins/config/
-tilde/.config/herdr/plugins/config/*
-!tilde/.config/herdr/plugins/config/persiyanov.reviewr/
+!tilde/.config/herdr/reviewr.toml

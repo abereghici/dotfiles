@@ -231,6 +231,18 @@ git-ignored.
 terraform = "latest"
 ```
 
+### `~/.config/herdr/reviewr.local.toml`
+
+Extra [reviewr](tilde/.config/herdr/reviewr.toml) settings for this machine,
+such as a work GitLab host for the PR tab. reviewr reads a single `config.toml`,
+so run `herdr-reviewr-config` after editing it to write that file from
+`reviewr.toml` and this one. Like the mise file, it lives in
+`tilde/.config/herdr` and is git-ignored.
+
+```toml
+gitlab_host = "git.example.com"
+```
+
 ### `~/.macos.local`
 
 [`setup/macos.sh`](setup/macos.sh) sources it for personal settings; each one is
