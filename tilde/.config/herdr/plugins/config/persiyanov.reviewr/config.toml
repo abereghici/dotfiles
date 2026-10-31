@@ -1,0 +1,6 @@
+# herdr-reviewr (https://github.com/persiyanov/herdr-reviewr), installed by setup/misc.sh.
+# ctrl+alt+r or prefix V toggles it beside the agent (herdr config.toml).
+# Work GitLab hosts for the PR tab (gitlab_host) don't belong in this public repo.
+theme = "rose-pine"
+# Prefixed to every send, so the agent knows what the comments are
+review_prefix = "Code review comments on your changes. Address each one, then run the checks."

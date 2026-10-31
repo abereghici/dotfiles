@@ -79,6 +79,20 @@ type = "plugin_action"
 command = "dotfiles.last-workspace.switch"
 description = "Last (other) workspace"
 
+# Review the agent's diff beside it and send line comments back: herdr-reviewr, installed
+# by setup/misc.sh, configured in plugins/config/persiyanov.reviewr/config.toml
+[[keys.command]]
+key = "ctrl+alt+r"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "Review changes"
+
+[[keys.command]]
+key = "prefix+shift+v"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "Review changes"
+
 [ui]
 # tmux-style splits: one divider between panes, no outer frame, gaps or scrollbars
 pane_outer_borders = false

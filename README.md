@@ -32,8 +32,8 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
 - Language runtimes via [mise](tilde/.config/mise/config.toml).
 - Sensible [macOS defaults](setup/macos.sh).
 - [Neovim](tilde/.config/nvim/)
-- [VS Code](vscode/) settings and snippets (default keybindings); extensions
-  are the `vscode` entries in the [Brewfile](setup/Brewfile).
+- [VS Code](vscode/) settings and snippets (default keybindings); extensions are
+  the `vscode` entries in the [Brewfile](setup/Brewfile).
 - [macOS apps](setup/Brewfile) I use.
 
 ## Installation
@@ -163,6 +163,17 @@ look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
 [last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
 On top of tmux, `prefix` `a` jumps to the agent that needs attention and
 `prefix` `/` searches every pane.
+
+### Reviewing agent changes
+
+- In herdr, `⌃⌥R` (or `prefix` `V`) toggles
+  [reviewr](https://github.com/persiyanov/herdr-reviewr) beside the agent:
+  `u`/`b`/`t` for uncommitted, branch or the agent's last turn, `v` and `c` to
+  comment on lines, `s` to send the comments to the agent, `?` for every key.
+- In Neovim, [CodeDiff](tilde/.config/nvim/lua/plugins/codediff.lua) is a VS
+  Code-style live diff where hunks can be staged or discarded: `<leader>gd` for
+  uncommitted changes, `<leader>gD` for the branch against the default branch,
+  `<leader>gH` for history.
 
 ## Local customizations
 
