@@ -71,7 +71,7 @@ echo
 title "🫖 Setting up Homebrew..."
 ./setup/brew.sh
 # brew.sh runs in its own process, so a fresh Homebrew install isn't on this PATH yet
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv 2> /dev/null || /usr/local/bin/brew shellenv)"
 echo
 
 # Install dotfiles symlinks (misc.sh reads the linked mise, bat and tmux configs)

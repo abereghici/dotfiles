@@ -21,8 +21,12 @@ if ! command -v brew &> /dev/null; then
   title "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/opt/homebrew/bin/brew shellenv 2> /dev/null || /usr/local/bin/brew shellenv)"
 fi
+
+# Homebrew's settings from env.zsh (forbidden formulae, no analytics...): setup runs in bash,
+# before the zsh config is linked
+eval "$(grep '^export HOMEBREW_' tilde/.config/zsh/env.zsh)"
 
 # Make sure we’re working with the latest version of Homebrew and its formulae
 brew update

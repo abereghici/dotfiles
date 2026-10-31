@@ -23,8 +23,8 @@ set -euo pipefail
 roots=()
 for base in "$HOME/Development" "$HOME/Code"; do
   for dir in "$base"/*/ "$base"/Work/*/; do
-    # Unmatched globs stay literal; -d drops them
-    [ -d "$dir" ] && roots+=("${dir%/}")
+    # Unmatched globs stay literal; -d drops them. Work holds client roots, it isn't one
+    [ -d "$dir" ] && [ "$dir" != "$base/Work/" ] && roots+=("${dir%/}")
   done
 done
 

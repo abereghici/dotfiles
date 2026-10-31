@@ -28,7 +28,11 @@ if $create; then
   [[ -n $folder ]] || exit 1
   dir="$parent/$folder"
   mkdir "$dir"
+  # A new folder has no workspace yet: never focus one that merely shares its name
   name=$folder
+  if jq -e --arg name "$name" 'any(.result.workspaces[]; .label == $name)' <<< "$workspaces" > /dev/null; then
+    name="$(basename "$parent")/$folder"
+  fi
 else
   # Label each project by its folder name, or parent/name when two roots share a name
   # (~/Code/api and ~/Code/Work/api); ● marks projects that already have a workspace.
