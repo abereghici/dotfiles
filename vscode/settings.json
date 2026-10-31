@@ -1,0 +1,73 @@
+{
+  // Appearance
+  // Rosé Pine main, like Ghostty, tmux and nvim; Dawn when macOS is in light mode
+  "workbench.colorTheme": "Rosé Pine",
+  "workbench.preferredDarkColorTheme": "Rosé Pine",
+  "workbench.preferredLightColorTheme": "Rosé Pine Dawn",
+  "workbench.iconTheme": "vscode-icons",
+  "window.autoDetectColorScheme": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "workbench.activityBar.location": "top",
+  "workbench.tips.enabled": false,
+  "breadcrumbs.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.lightbulb.enabled": "off",
+
+  // Editor
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+  },
+  // Font (the Brewfile's Nerd Font, as in Ghostty)
+  "editor.fontSize": 14,
+  "editor.fontFamily": "MesloLGS Nerd Font, Menlo, monospace",
+
+  "editor.lineNumbers": "relative",
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "editor.glyphMargin": false,
+  "editor.detectIndentation": true,
+  "editor.suggest.showKeywords": false,
+  "editor.snippetSuggestions": "inline",
+  "editor.wordBasedSuggestions": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.find.seedSearchStringFromSelection": "always",
+  // Rename the matching HTML/JSX tag (built in; replaces the Auto Rename Tag extension)
+  "editor.linkedEditing": true,
+  "diffEditor.renderSideBySide": false,
+  // Prettier can't format these
+  "[java]": { "editor.defaultFormatter": "redhat.java" },
+  "[go]": { "editor.defaultFormatter": "golang.go" },
+  "files.defaultLanguage": "{activeEditorLanguage}",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/coverage": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.build": true,
+    "**/.gh-pages": true,
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // Git
+  "git.terminalGitEditor": true,
+  "git.openRepositoryInParentFolders": "never",
+  "git.autofetch": true,
+
+  // Terminal
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.fontWeightBold": "normal",
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+
+  // Vim
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "chat.viewSessions.orientation": "stacked",
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4o-mini",
+}

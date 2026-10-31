@@ -1,0 +1,127 @@
+[
+  /*
+   * __________________________________________________________________________
+   * Editor
+   * __________________________________________________________________________
+   */
+
+  // Split vertically
+  {
+    "key": "ctrl+w+v",
+    "command": "workbench.action.splitEditor"
+  },
+  // Split horizontally
+  {
+    "key": "ctrl+w+h",
+    "command": "workbench.action.splitEditorOrthogonal"
+  },
+  // Close
+  {
+    "key": "ctrl+w+q",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  // Navigate up
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp"
+  },
+  // Navigate down
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown"
+  },
+  // Navigate left
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft"
+  },
+  // Navigate right
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight"
+  },
+  // Next buffer
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.nextEditor"
+  },
+  // Previous buffer
+  {
+    "key": "ctrl+[",
+    "command": "workbench.action.previousEditor"
+  },
+  // Save files
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.files.save"
+  },
+
+  {
+    "key": "alt+j",
+    // Move the line
+    "command": "editor.action.moveLinesDownAction"
+  },
+  {
+    "key": "alt+k",
+    "command": "editor.action.moveLinesUpAction"
+  },
+  /*
+   * __________________________________________________________________________
+   * Explorer
+   * __________________________________________________________________________
+   */
+
+  //Show remote explorer
+  {
+    "key": "ctrl+shift+s",
+    "command": "workbench.view.remote"
+  },
+  // Clear notifications
+  {
+    "key": "ctrl+shift+space",
+    "command": "notifications.clearAll"
+  },
+
+  /*
+   * __________________________________________________________________________
+   * Terminal
+   * __________________________________________________________________________
+   */
+
+  // Kill
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  // Navigate down (terminal)
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  // Navigate up (terminal)
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+
+  /*
+   * __________________________________________________________________________
+   * Extensions
+   * __________________________________________________________________________
+   */
+
+  // Toggle vim mode
+  {
+    "key": "ctrl+shift+v",
+    "command": "vscode-neovim.stop",
+    "when": "neovim.init"
+  },
+  {
+    "key": "ctrl+shift+v",
+    "command": "vscode-neovim.restart",
+    "when": "!neovim.init"
+  }
+]
