@@ -7,5 +7,10 @@ customCommands:
   - key: 'V'
     context: 'files'
     description: 'View file (image preview)'
-    command: 'nvim "{{.SelectedFile.Name}}"'
+    command: 'nvim {{.SelectedFile.Name | quote}}'
+    output: terminal
+  - key: 'V'
+    context: 'commitFiles'
+    description: 'View file (image preview)'
+    command: 'nvim {{.SelectedCommitFile.Name | quote}}'
     output: terminal
