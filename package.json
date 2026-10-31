@@ -10,13 +10,16 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky",
-    "format": "prettier --write \"**/*.{sh,zsh,bash}\"",
-    "format:check": "prettier --check \"**/*.{sh,zsh,bash}\"",
+    "format": "prettier --write \"**/*.{sh,zsh,bash}\" tilde/.zshrc tilde/.zprofile bin/*",
+    "format:check": "prettier --check \"**/*.{sh,zsh,bash}\" tilde/.zshrc tilde/.zprofile bin/*",
+    "lint:lua": "stylua tilde/.config/nvim",
+    "lint:lua:check": "stylua --check tilde/.config/nvim",
     "test": "bats tests/"
   },
   "devDependencies": {
+    "@johnnymorganz/stylua-bin": "2.6.0",
     "husky": "9.1.7",
-    "prettier": "3.4.2",
-    "prettier-plugin-sh": "0.14.0"
+    "prettier": "3.9.10",
+    "prettier-plugin-sh": "0.20.2"
   }
 }

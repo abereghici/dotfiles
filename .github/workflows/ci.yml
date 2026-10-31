@@ -9,11 +9,11 @@ jobs:
   static-checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: 'lts/*' # matches node = "lts" in .mise.toml
           cache: 'npm'
 
       - name: Install npm dependencies
@@ -22,10 +22,16 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      - name: Check Lua formatting
+        run: npm run lint:lua:check
+
       - name: Syntax-check shell scripts
         run: |
           set -e
-          scripts=(setup.sh setup/brew.sh setup/misc.sh setup/macos.sh setup/symlinks.sh)
+          scripts=()
+          for f in setup.sh setup/brew.sh setup/misc.sh setup/macos.sh setup/symlinks.sh; do
+            [ -f "$f" ] && scripts+=("$f")
+          done
           for f in bin/*; do
             head -1 "$f" | grep -qE '^#!.*(bash|sh)' && scripts+=("$f")
           done
