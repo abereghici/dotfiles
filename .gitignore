@@ -9,3 +9,4 @@ tilde/.config/tmux/plugins/*
 tilde/.config/mise/config.local.toml
 tilde/.config/herdr/*
 !tilde/.config/herdr/config.toml
+!tilde/.config/herdr/reviewr.toml

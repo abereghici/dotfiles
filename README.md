@@ -186,18 +186,19 @@ Rosé Pine look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the l
 naming where to; `prefix` + a key **does** something (create, close, rename,
 split, open a tool). `⇧` reverses or goes bigger. `prefix` `?` lists every key.
 
-| Keys                          | Moves to                                          |
-| ----------------------------- | ------------------------------------------------- |
-| `⌃⌥H` `J` `K` `L`             | the Neovim split, then the herdr pane, that way   |
-| `⌃Tab` / `⌃⇧Tab`              | the next / previous tab                           |
-| `⌃⌥1` … `⌃⌥9` / `⌃⌥O`         | that workspace / the other (last) one             |
-| `⌃⌥A` / `⌃⌥⇧A`                | the next / previous agent, in any workspace       |
-| `⌥1` … `⌥9`                   | the agent in that row of the Agents list          |
-| `prefix` `a`                  | the agent whose notification is showing           |
-| `prefix` `/`                  | a picker of every agent and terminal (`/` search) |
-| `⌃⌥P` or `prefix` `f`         | a project ([`projects`](bin/projects))            |
-| `⌃⌥G` or `prefix` `g`         | [lazygit](lazygit/config.yml), in the pane's repo |
-| `prefix` `⇧G` / `prefix` `⇧F` | a new / an existing Git worktree                  |
+| Keys                          | Moves to                                                                                            |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `⌃⌥H` `J` `K` `L`             | the Neovim split, then the herdr pane, that way                                                     |
+| `⌃Tab` / `⌃⇧Tab`              | the next / previous tab                                                                             |
+| `⌃⌥1` … `⌃⌥9` / `⌃⌥O`         | that workspace / the other (last) one                                                               |
+| `⌃⌥A` / `⌃⌥⇧A`                | the next / previous agent, in any workspace                                                         |
+| `⌥1` … `⌥9`                   | the agent in that row of the Agents list                                                            |
+| `prefix` `a`                  | the agent whose notification is showing                                                             |
+| `prefix` `/`                  | a picker of every agent and terminal (`/` search)                                                   |
+| `⌃⌥P` or `prefix` `f`         | a project ([`projects`](bin/projects))                                                              |
+| `⌃⌥G` or `prefix` `g`         | [lazygit](lazygit/config.yml), in the pane's repo                                                   |
+| `⌃⌥R`                         | [reviewr](https://github.com/persiyanov/herdr-reviewr): review the diff, comment, send to the agent |
+| `prefix` `⇧G` / `prefix` `⇧F` | a new / an existing Git worktree                                                                    |
 
 - `⌃⌥H` `J` `K` `L` come from the [pane-nav plugin](herdr/plugins/pane-nav/): in
   a pane running Neovim it hands the key to Neovim, which moves between its
@@ -205,6 +206,10 @@ split, open a tool). `⇧` reverses or goes bigger. `prefix` `?` lists every key
   ([keymaps.lua](tilde/.config/nvim/lua/config/keymaps.lua)). Other programs
   never see these keys, so `⌃L`, `⌃K`, `⌃J` keep working in zsh, Claude Code,
   lazygit and fzf.
+- `misc.sh` installs reviewr and writes its config from
+  [`reviewr.toml`](tilde/.config/herdr/reviewr.toml) plus an untracked
+  `reviewr.local.toml` (for a work `gitlab_host`): run `herdr-reviewr-config`
+  after editing either. It also opens on its own in new worktree workspaces.
 - Ghostty leaves `⌃Tab` to herdr; `⌘⇧[` `]` still switch Ghostty tabs.
 - `⌃⌥O` comes from the [last-workspace plugin](herdr/plugins/last-workspace/).
   `misc.sh` links every plugin in [`herdr/plugins`](herdr/plugins/).

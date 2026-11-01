@@ -113,6 +113,14 @@ description = "lazygit"
 width = "95%"
 height = "95%"
 
+# Review the agent's diff and send line comments back to it: herdr-reviewr, installed by
+# setup/misc.sh, configured in reviewr.toml. r = review, beside g = git
+[[keys.command]]
+key = "ctrl+alt+r"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "Review changes (reviewr)"
+
 [ui]
 # tmux-style splits: one divider between panes, no outer frame, gaps or scrollbars
 pane_outer_borders = false
