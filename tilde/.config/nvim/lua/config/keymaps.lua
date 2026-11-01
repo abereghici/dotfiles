@@ -30,3 +30,15 @@ map("n", "gldh", function()
   vim.cmd.split()
   vim.lsp.buf.definition()
 end, { desc = "Goto Definition (horizontal)" })
+
+-- Ctrl+Alt+h/j/k/l: next nvim split, or at the edge the next herdr pane. herdr sends these
+-- chords here only when nvim is focused (herdr/plugins/pane-nav). Ctrl+h/j/k/l stay nvim-only.
+for key, dir in pairs({ h = "left", j = "down", k = "up", l = "right" }) do
+  map({ "n", "i", "x", "t" }, "<C-M-" .. key .. ">", function()
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd.wincmd(key)
+    if vim.api.nvim_get_current_win() == win and vim.env.HERDR_PANE_ID then
+      vim.system({ "herdr", "pane", "focus", "--direction", dir, "--pane", vim.env.HERDR_PANE_ID })
+    end
+  end, { desc = "Window or herdr pane " .. dir })
+end

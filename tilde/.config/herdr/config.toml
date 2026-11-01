@@ -1,6 +1,8 @@
-# herdr as a drop-in for tmux.conf: same prefix, same keys, same look.
-# tmux session = herdr workspace, tmux window = herdr tab, pane = pane.
-# Only differences from `herdr --default-config` are listed here.
+# herdr: prefix Alt+Space, then one key, to DO something (create, close, rename, split, tools).
+# Ctrl+Alt chords, no prefix, to MOVE: h/j/k/l panes (nvim-aware), a agents, o other
+# workspace, p projects, g git, 1..9 workspace. Alt+1..9 = Agents row, Ctrl+Tab = tabs.
+# tmux session = herdr workspace, tmux window = herdr tab. Only changes from
+# `herdr --default-config` are listed. Check with `herdr config check` before reloading.
 
 onboarding = false
 
@@ -12,9 +14,10 @@ name = "rose-pine"
 panel_bg = "reset"
 
 [keys]
+# Never follow the prefix with an Alt chord: two quick Option taps open Claude's Quick Entry
 prefix = "alt+space"
 
-# tmux defaults
+# tmux habits
 detach = "prefix+d"
 settings = "prefix+colon"
 rename_tab = "prefix+comma"
@@ -23,45 +26,63 @@ rename_workspace = "prefix+$"
 previous_workspace = "prefix+("
 next_workspace = "prefix+)"
 last_pane = "prefix+semicolon"
-# Tab cycles panes, as herdr does by default; o is tmux's next pane
 cycle_pane_next = ["prefix+tab", "prefix+o"]
 cycle_pane_previous = "prefix+shift+tab"
-# a = jump to the agent asking for attention
-open_notification_target = "prefix+a"
-
-# tmux.conf bindings
 workspace_picker = ["prefix+w", "prefix+shift+s"]
-split_horizontal = "prefix+s"
-# prefix+g is lazygit below; / is search, as in vi and copy mode
+# vim's :split / :vsplit letters; v (split right) is herdr's default
+split_horizontal = ["prefix+s", "prefix+minus"]
+# / searches, as in vi; prefix+g is lazygit below
 goto = "prefix+slash"
 # prefix+N is "New project" below, which creates the folder and its workspace
 new_workspace = ""
 
-# Direct chords, no prefix: Ctrl+Alt is the multiplexer's modifier family.
-focus_pane_left = ["prefix+h", "ctrl+alt+h"]
-focus_pane_down = ["prefix+j", "ctrl+alt+j"]
-focus_pane_up = ["prefix+k", "ctrl+alt+k"]
-focus_pane_right = ["prefix+l", "ctrl+alt+l"]
-# Agents across every workspace: next / previous, or the Nth row of the Agents list
+# Tabs: browser keys (Ghostty's own ctrl+tab is unbound in ghostty/config)
+next_tab = ["prefix+n", "ctrl+tab"]
+previous_tab = ["prefix+p", "ctrl+shift+tab"]
+
+# Agents across every workspace; a = agent, Alt+N = Nth row of the Agents list
 next_agent = "ctrl+alt+a"
 previous_agent = "ctrl+alt+shift+a"
 focus_agent = "alt+1..9"
-# The Nth workspace (tabs are prefix+1..9)
+open_notification_target = "prefix+a"
+
+# The Nth workspace in the sidebar (tabs are prefix+1..9)
 switch_workspace = "ctrl+alt+1..9"
 
-# Already herdr's defaults, matching tmux.conf: c new named tab, v split right, r resize
-# mode, H/J/K/L swap panes, z zoom, x close pane, n/p tabs, 1..9 tab, [ copy mode (v, y)
+# Worktrees: G = new (herdr default), F = find an existing one
+open_worktree = "prefix+shift+f"
+
+# Already defaults: c new tab, v split right, h/j/k/l focus, H/J/K/L swap, z zoom, x close
+# pane, r resize, [ copy mode, e scrollback in $EDITOR, b sidebar, D close workspace, ? help
+
+# ctrl+alt+h/j/k/l: move between nvim splits, then herdr panes (herdr/plugins/pane-nav; nvim
+# maps the same chords). Not under focus_pane_*: a built-in action would disable these.
+[[keys.command]]
+key = "ctrl+alt+h"
+type = "plugin_action"
+command = "dotfiles.pane-nav.left"
+description = "Focus left (nvim split or pane)"
 
 [[keys.command]]
-key = "prefix+f"
-type = "popup"
-command = 'zsh -l -c "projects herdr"'
-description = "Project picker"
-width = "80%"
-height = "80%"
+key = "ctrl+alt+j"
+type = "plugin_action"
+command = "dotfiles.pane-nav.down"
+description = "Focus down (nvim split or pane)"
 
 [[keys.command]]
-key = "ctrl+alt+p"
+key = "ctrl+alt+k"
+type = "plugin_action"
+command = "dotfiles.pane-nav.up"
+description = "Focus up (nvim split or pane)"
+
+[[keys.command]]
+key = "ctrl+alt+l"
+type = "plugin_action"
+command = "dotfiles.pane-nav.right"
+description = "Focus right (nvim split or pane)"
+
+[[keys.command]]
+key = ["prefix+f", "ctrl+alt+p"]
 type = "popup"
 command = 'zsh -l -c "projects herdr"'
 description = "Project picker"
@@ -81,10 +102,9 @@ height = "80%"
 key = "ctrl+alt+o"
 type = "plugin_action"
 command = "dotfiles.last-workspace.switch"
-description = "Last (other) workspace"
+description = "Other (last) workspace"
 
-# lazygit over the current tab; popups start in the directory of the pane underneath, so it
-# opens that pane's repo. q closes it. prefix+G stays herdr's new worktree
+# lazygit over the current tab, in the focused pane's repo; q closes it
 [[keys.command]]
 key = ["prefix+g", "ctrl+alt+g"]
 type = "popup"

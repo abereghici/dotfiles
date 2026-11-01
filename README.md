@@ -180,35 +180,42 @@ folders need no config. `prefix` `⇧N` creates a project folder first. Run
 
 ### tmux or herdr
 
-[herdr](tilde/.config/herdr/config.toml) is set up as a drop-in for
-[tmux](tilde/.config/tmux/tmux.conf): the same `⌥Space` prefix, the same keys
-(tmux sessions are herdr workspaces, windows are tabs) and the same Rosé Pine
-look. `⌃⌥O` (last session) comes from the
-[last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
+[herdr](tilde/.config/herdr/config.toml) shares tmux's `⌥Space` prefix, its
+`prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
+Rosé Pine look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
+naming where to; `prefix` + a key **does** something (create, close, rename,
+split, open a tool). `⇧` reverses or goes bigger. `prefix` `?` lists every key.
 
-Moving around:
+| Keys                          | Moves to                                          |
+| ----------------------------- | ------------------------------------------------- |
+| `⌃⌥H` `J` `K` `L`             | the Neovim split, then the herdr pane, that way   |
+| `⌃Tab` / `⌃⇧Tab`              | the next / previous tab                           |
+| `⌃⌥1` … `⌃⌥9` / `⌃⌥O`         | that workspace / the other (last) one             |
+| `⌃⌥A` / `⌃⌥⇧A`                | the next / previous agent, in any workspace       |
+| `⌥1` … `⌥9`                   | the agent in that row of the Agents list          |
+| `prefix` `a`                  | the agent whose notification is showing           |
+| `prefix` `/`                  | a picker of every agent and terminal (`/` search) |
+| `⌃⌥P` or `prefix` `f`         | a project ([`projects`](bin/projects))            |
+| `⌃⌥G` or `prefix` `g`         | [lazygit](lazygit/config.yml), in the pane's repo |
+| `prefix` `⇧G` / `prefix` `⇧F` | a new / an existing Git worktree                  |
 
-| Keys                    | Moves to                                     |
-| ----------------------- | -------------------------------------------- |
-| `⌃⌥H` `J` `K` `L`       | the pane left, below, above, right           |
-| `prefix` `Tab` / `⇧Tab` | the next / previous pane                     |
-| `⌃⌥A` / `⌃⌥⇧A`          | the next / previous agent, in any workspace  |
-| `⌥1` … `⌥9`             | the agent in that row of the Agents list     |
-| `⌃⌥1` … `⌃⌥9`           | that workspace (tabs are `prefix` `1` … `9`) |
-| `⌃⌥O`                   | the last workspace                           |
-
-On top of tmux:
-
-- `prefix` `a` focuses the agent whose notification is showing.
-- `prefix` `/` lists every agent and terminal; type `/` there to search by name,
-  branch or path.
-- `prefix` `g` or `⌃⌥G` opens [lazygit](lazygit/config.yml) over the current
-  tab, in the repo of the pane underneath (`q` closes it; tmux has the same
-  `prefix` `g`, and Neovim `<leader>gg`). `prefix` `⇧G` is herdr's new worktree.
-- New projects open with nvim already running in their Editor tab.
-- After a restart herdr brings back every workspace, tab and directory, and the
+- `⌃⌥H` `J` `K` `L` come from the [pane-nav plugin](herdr/plugins/pane-nav/): in
+  a pane running Neovim it hands the key to Neovim, which moves between its
+  splits and on to the next herdr pane at its edge
+  ([keymaps.lua](tilde/.config/nvim/lua/config/keymaps.lua)). Other programs
+  never see these keys, so `⌃L`, `⌃K`, `⌃J` keep working in zsh, Claude Code,
+  lazygit and fzf.
+- Ghostty leaves `⌃Tab` to herdr; `⌘⇧[` `]` still switch Ghostty tabs.
+- `⌃⌥O` comes from the [last-workspace plugin](herdr/plugins/last-workspace/).
+  `misc.sh` links every plugin in [`herdr/plugins`](herdr/plugins/).
+- New projects open with nvim already running in their Editor tab. After a
+  restart herdr brings back every workspace, tab and directory, and the
   [editor-restore plugin](herdr/plugins/editor-restore/) starts nvim again in
   Editor tabs (tmux-resurrect's job in tmux).
+- Claude desktop opens its Quick Entry on a double tap of `⌥`, which two quick
+  prefix presses also are: set its shortcut to something else in its Settings.
+- On a keyboard with home-row mods, hold the modifiers with the hand that isn't
+  pressing the key (`⌃⌥H` with the left hand's mods, `⌃⌥A` with the right's).
 
 ## Local customizations
 

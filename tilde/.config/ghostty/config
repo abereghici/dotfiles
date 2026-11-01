@@ -27,3 +27,8 @@ keybind = alt+shift+q=text:Â
 keybind = alt+shift+i=text:Î
 keybind = alt+shift+s=text:Ș
 keybind = alt+shift+t=text:Ț
+
+# herdr is the multiplexer: let it have ctrl+tab for its tabs (cmd+shift+[ ] still switch
+# Ghostty tabs)
+keybind = ctrl+tab=unbind
+keybind = ctrl+shift+tab=unbind

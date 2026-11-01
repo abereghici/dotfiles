@@ -1,0 +1,32 @@
+# vim-tmux-navigator for herdr: ctrl+alt+h/j/k/l (config.toml) move between nvim splits,
+# then on to herdr panes. Linked by setup/misc.sh.
+id = "dotfiles.pane-nav"
+name = "Pane navigation"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Move between Neovim splits and herdr panes with the same keys"
+platforms = ["macos", "linux"]
+
+[[actions]]
+id = "left"
+title = "Focus left (nvim split or pane)"
+contexts = ["pane"]
+command = ["bash", "pane-nav.sh", "left"]
+
+[[actions]]
+id = "down"
+title = "Focus down (nvim split or pane)"
+contexts = ["pane"]
+command = ["bash", "pane-nav.sh", "down"]
+
+[[actions]]
+id = "up"
+title = "Focus up (nvim split or pane)"
+contexts = ["pane"]
+command = ["bash", "pane-nav.sh", "up"]
+
+[[actions]]
+id = "right"
+title = "Focus right (nvim split or pane)"
+contexts = ["pane"]
+command = ["bash", "pane-nav.sh", "right"]
