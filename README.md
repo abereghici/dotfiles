@@ -76,8 +76,8 @@ git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
 ```
 
 [`setup.sh`](setup.sh) moves an existing `~/.zshrc` to `~/.zshrc.backup`, lets
-Touch ID authorize `sudo`, then runs the three scripts below in order. Pass `-y`
-to skip its confirmation prompt.
+Touch ID authorize `sudo`, then runs the scripts below in order. Pass `-y` to
+skip its confirmation prompt and the `local.sh` questions.
 
 ### Manually
 
@@ -86,6 +86,7 @@ git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./setup/brew.sh
 ./setup/symlinks.sh
+./setup/local.sh
 ./setup/misc.sh
 ```
 
@@ -93,6 +94,9 @@ cd ~/dotfiles
   [Brewfile](setup/Brewfile).
 - [`symlinks.sh`](setup/symlinks.sh) links `tilde/` into your home directory and
   asks before replacing a file that is already there.
+- [`local.sh`](setup/local.sh) asks for this machine's private settings and
+  writes the [`*.local` files](#local-customizations). Leave any answer empty to
+  skip it; files that already exist are kept.
 - [`misc.sh`](setup/misc.sh) installs the tmux plugins, links the herdr plugins,
   installs the mise runtimes and builds the bat theme cache. It runs last
   because it reads the linked mise, bat, tmux and herdr configs.
@@ -195,7 +199,10 @@ On top of tmux:
 ## Local customizations
 
 These optional files extend the dotfiles for one machine. None of them are
-checked in.
+checked in. [`setup/local.sh`](setup/local.sh) writes them from your answers:
+Git identities, the Keychain secrets to export (it stores their values in the
+Keychain, never in a file), macOS names and locale, and extra mise tools. Run it
+again after deleting a file to be asked again.
 
 ### `~/.zsh.local`
 

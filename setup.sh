@@ -79,6 +79,15 @@ title "🍤 Setting up symlinks..."
 ./setup/symlinks.sh
 echo
 
+# This machine's private settings: the untracked *.local files (every answer is optional)
+title "🔑 Setting up local settings..."
+if [ "${1:-}" = "-y" ]; then
+  echo "Skipped with -y: run ./setup/local.sh to answer the questions"
+else
+  ./setup/local.sh
+fi
+echo
+
 # Install tpm, mise runtimes and global npm packages, and the bat theme cache
 title "🚀 Setting up extra tools..."
 ./setup/misc.sh
