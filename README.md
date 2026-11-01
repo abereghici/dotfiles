@@ -175,7 +175,7 @@ workspace, from tmux (`prefix` `f`, `⌃⌥P`), herdr (the same keys) or the she
 (`tmuxs`, `herdrs`). Projects are the folders inside each folder of
 `~/Development` and `~/Code` (and of their `Work/` folder), so
 `~/Development/Personal/dotfiles` is a project and machines with different
-folders need no config. `prefix` `g` creates a project folder first. Run
+folders need no config. `prefix` `⇧N` creates a project folder first. Run
 `projects` on its own to list the folders it searches.
 
 ### tmux or herdr
@@ -183,16 +183,28 @@ folders need no config. `prefix` `g` creates a project folder first. Run
 [herdr](tilde/.config/herdr/config.toml) is set up as a drop-in for
 [tmux](tilde/.config/tmux/tmux.conf): the same `⌥Space` prefix, the same keys
 (tmux sessions are herdr workspaces, windows are tabs) and the same Rosé Pine
-look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
+look. `⌃⌥O` (last session) comes from the
 [last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
+
+Moving around:
+
+| Keys                    | Moves to                                     |
+| ----------------------- | -------------------------------------------- |
+| `⌃⌥H` `J` `K` `L`       | the pane left, below, above, right           |
+| `prefix` `Tab` / `⇧Tab` | the next / previous pane                     |
+| `⌃⌥A` / `⌃⌥⇧A`          | the next / previous agent, in any workspace  |
+| `⌥1` … `⌥9`             | the agent in that row of the Agents list     |
+| `⌃⌥1` … `⌃⌥9`           | that workspace (tabs are `prefix` `1` … `9`) |
+| `⌃⌥O`                   | the last workspace                           |
 
 On top of tmux:
 
 - `prefix` `a` focuses the agent whose notification is showing.
 - `prefix` `/` lists every agent and terminal; type `/` there to search by name,
   branch or path.
-- `⌃⌥G` opens [lazygit](lazygit/config.yml) over the current tab, in the repo of
-  the pane underneath (`q` closes it; in Neovim it's `<leader>gg`).
+- `prefix` `g` or `⌃⌥G` opens [lazygit](lazygit/config.yml) over the current
+  tab, in the repo of the pane underneath (`q` closes it; tmux has the same
+  `prefix` `g`, and Neovim `<leader>gg`). `prefix` `⇧G` is herdr's new worktree.
 - New projects open with nvim already running in their Editor tab.
 - After a restart herdr brings back every workspace, tab and directory, and the
   [editor-restore plugin](herdr/plugins/editor-restore/) starts nvim again in

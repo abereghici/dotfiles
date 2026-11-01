@@ -23,21 +23,31 @@ rename_workspace = "prefix+$"
 previous_workspace = "prefix+("
 next_workspace = "prefix+)"
 last_pane = "prefix+semicolon"
-cycle_pane_next = "prefix+o"
-# prefix+o is tmux's next pane; a = jump to the agent asking for attention
+# Tab cycles panes, as herdr does by default; o is tmux's next pane
+cycle_pane_next = ["prefix+tab", "prefix+o"]
+cycle_pane_previous = "prefix+shift+tab"
+# a = jump to the agent asking for attention
 open_notification_target = "prefix+a"
 
 # tmux.conf bindings
 workspace_picker = ["prefix+w", "prefix+shift+s"]
 split_horizontal = "prefix+s"
-# prefix+g is "New project" below; / is search, as in vi and copy mode
+# prefix+g is lazygit below; / is search, as in vi and copy mode
 goto = "prefix+slash"
+# prefix+N is "New project" below, which creates the folder and its workspace
+new_workspace = ""
 
 # Direct chords, no prefix: Ctrl+Alt is the multiplexer's modifier family.
 focus_pane_left = ["prefix+h", "ctrl+alt+h"]
 focus_pane_down = ["prefix+j", "ctrl+alt+j"]
 focus_pane_up = ["prefix+k", "ctrl+alt+k"]
 focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+# Agents across every workspace: next / previous, or the Nth row of the Agents list
+next_agent = "ctrl+alt+a"
+previous_agent = "ctrl+alt+shift+a"
+focus_agent = "alt+1..9"
+# The Nth workspace (tabs are prefix+1..9)
+switch_workspace = "ctrl+alt+1..9"
 
 # Already herdr's defaults, matching tmux.conf: c new named tab, v split right, r resize
 # mode, H/J/K/L swap panes, z zoom, x close pane, n/p tabs, 1..9 tab, [ copy mode (v, y)
@@ -59,7 +69,7 @@ width = "80%"
 height = "80%"
 
 [[keys.command]]
-key = "prefix+g"
+key = "prefix+shift+n"
 type = "popup"
 command = 'zsh -l -c "projects herdr -c"'
 description = "New project"
@@ -68,21 +78,15 @@ height = "80%"
 
 # tmux's `switch-client -l`, from the plugin in herdr/plugins/last-workspace
 [[keys.command]]
-key = "prefix+tab"
-type = "plugin_action"
-command = "dotfiles.last-workspace.switch"
-description = "Last workspace"
-
-[[keys.command]]
 key = "ctrl+alt+o"
 type = "plugin_action"
 command = "dotfiles.last-workspace.switch"
 description = "Last (other) workspace"
 
 # lazygit over the current tab; popups start in the directory of the pane underneath, so it
-# opens that pane's repo. q closes it
+# opens that pane's repo. q closes it. prefix+G stays herdr's new worktree
 [[keys.command]]
-key = "ctrl+alt+g"
+key = ["prefix+g", "ctrl+alt+g"]
 type = "popup"
 command = 'zsh -l -c lazygit'
 description = "lazygit"

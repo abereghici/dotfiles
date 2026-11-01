@@ -1,5 +1,5 @@
 # tmux's `switch-client -l` for herdr: remembers the previously focused workspace and
-# switches back to it (prefix Tab and ctrl+alt+o in config.toml). Linked by setup/misc.sh.
+# switches back to it (ctrl+alt+o in config.toml). Linked by setup/misc.sh.
 id = "dotfiles.last-workspace"
 name = "Last workspace"
 version = "0.1.0"
