@@ -1,40 +1,49 @@
 # ~abereghici 💻
 
-My personal dotfiles for configuring macOS with Zsh and Homebrew.
+[![CI](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![macOS](https://img.shields.io/badge/macOS-Apple%20silicon%20%7C%20Intel-black?logo=apple)
 
-<!-- prettier-ignore -->
-> [!IMPORTANT]
-> Please only open pull requests that fix bugs or add improvements without any
-> breaking changes.
+My macOS dotfiles: Zsh, Homebrew, Neovim (LazyVim), Ghostty, tmux and herdr for
+coding agents, lazygit, mise and AeroSpace, all in Rosé Pine. One script sets up
+a new Mac; every config is a symlink back into this repository.
 
 ![abereghici terminal](screenshot.webp)
 
 <!-- prettier-ignore -->
 > [!WARNING]
-> I recommend forking this repository to create your own set of dotfiles.
+> These are my personal settings. Fork the repository and review the code
+> before running it, rather than installing it as is.
+
+## Contents
+
+- [What's inside](#whats-inside)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Extras](#extras)
+- [Local customizations](#local-customizations)
+- [Updating](#updating)
+- [Contributing](#contributing)
+- [License](#license)
+
+## What's inside
+
+| Area     | Tools                                                                                                                                                                                        |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shell    | [Zsh](tilde/.zshrc) with [aliases](tilde/.config/zsh/aliases.zsh), [fzf](tilde/.config/zsh/fzf.zsh), zoxide, direnv and a [Starship prompt](tilde/.starship.toml) that starts in about 70 ms |
+| Terminal | [Ghostty](tilde/.config/ghostty/config), [tmux](tilde/.config/tmux/tmux.conf) and [herdr](tilde/.config/herdr/config.toml), tmux and herdr sharing the same keys                             |
+| Editor   | [Neovim](tilde/.config/nvim/) on LazyVim; [VS Code](vscode/) settings and snippets with default keybindings                                                                                  |
+| Git      | [Git aliases](tilde/.gitconfig), delta diffs and [lazygit](lazygit/config.yml)                                                                                                               |
+| Runtimes | Node, Python, Go, Rust, Java and Bun via [mise](tilde/.config/mise/config.toml)                                                                                                              |
+| macOS    | [Sensible defaults](setup/macos.sh), [AeroSpace](tilde/.config/aerospace/aerospace.toml) tiling and a [Romanian keyboard layout](keyboard/ABC-Romanian.keylayout)                            |
+| Apps     | Everything in the [Brewfile](setup/Brewfile), VS Code extensions included                                                                                                                    |
+| Scripts  | [`bin/`](bin/), including the [`projects`](bin/projects) picker for tmux and herdr and [`keychain`](bin/keychain) for secrets                                                                |
 
 ## Requirements
 
-- macOS
-- Homebrew (the install script will install Homebrew)
-- Zsh (the default shell on modern macOS)
-
-## What's in there?
-
-- Handy [binary scripts](bin/).
-- Project pickers for tmux and herdr ([`projects`](bin/projects)).
-- [Custom zsh theme](tilde/.starship.toml) with Git branch, etc. using
-  [Starship](https://starship.rs/).
-- [Git aliases](tilde/.gitconfig).
-- [Shell aliases](tilde/.config/zsh/aliases.zsh).
-- zsh / [fzf](tilde/.config/zsh/fzf.zsh).
-- git / delta syntax-highlighting diff tool.
-- Language runtimes via [mise](tilde/.config/mise/config.toml).
-- Sensible [macOS defaults](setup/macos.sh).
-- [Neovim](tilde/.config/nvim/)
-- [VS Code](vscode/) settings and snippets (default keybindings); extensions are
-  the `vscode` entries in the [Brewfile](setup/Brewfile).
-- [macOS apps](setup/Brewfile) I use.
+- macOS on Apple silicon or Intel
+- Zsh (the default shell on macOS)
+- Homebrew (the setup script installs it)
 
 ## Installation
 
@@ -45,7 +54,6 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
    - `2606:4700:4700::1111`
    - `2606:4700:4700::1001`
 1. Configure Git and GitHub SSH
-
    1. [Generate SSH key and add it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
    1. [Add your public SSH key to GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
    1. Test your authentication with:
@@ -54,7 +62,22 @@ My personal dotfiles for configuring macOS with Zsh and Homebrew.
       ssh -T git@github.com
       ```
 
-1. Choose _manual_ or _automatic_ dotfiles installation below
+1. Choose _automatic_ or _manual_ installation below
+
+### Automatically
+
+<!-- prettier-ignore -->
+> [!CAUTION]
+> Use at your own risk!
+
+```shell
+git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
+~/dotfiles/setup.sh
+```
+
+[`setup.sh`](setup.sh) moves an existing `~/.zshrc` to `~/.zshrc.backup`, lets
+Touch ID authorize `sudo`, then runs the three scripts below in order. Pass `-y`
+to skip its confirmation prompt.
 
 ### Manually
 
@@ -66,25 +89,15 @@ cd ~/dotfiles
 ./setup/misc.sh
 ```
 
-`misc.sh` runs after `symlinks.sh` because it reads the linked mise, bat and
-tmux configs.
+- [`brew.sh`](setup/brew.sh) installs Homebrew and the
+  [Brewfile](setup/Brewfile).
+- [`symlinks.sh`](setup/symlinks.sh) links `tilde/` into your home directory and
+  asks before replacing a file that is already there.
+- [`misc.sh`](setup/misc.sh) installs the tmux plugins, links the herdr plugins,
+  installs the mise runtimes and builds the bat theme cache. It runs last
+  because it reads the linked mise, bat, tmux and herdr configs.
 
-### Automatically
-
-To automate the setup of your dotfiles on a new machine, use the
-[setup](./setup.sh) script.
-
-<!-- prettier-ignore -->
-> [!CAUTION]
-> Use at your own risk!
-
-```shell
-git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
-~/dotfiles/setup.sh
-```
-
-This will install all required dotfiles in your home directory as symlinks.
-Everything is then configured via modifying files in `~/dotfiles`.
+Everything is then configured by editing files in `~/dotfiles`.
 
 ## Extras
 
@@ -96,8 +109,12 @@ Everything is then configured via modifying files in `~/dotfiles`.
 
 #### Keyboard conflicts
 
-- Turn off the Mission Control "Move left/right a space" shortcuts (`Ctrl` +
-  `←`/`→`): Neovim uses them to resize windows.
+Turn off these Mission Control shortcuts under **System Settings** →
+**Keyboard** → **Keyboard Shortcuts…** → **Mission Control**: Neovim uses
+`Ctrl` + arrows to resize windows.
+
+- **Mission Control** (`⌃↑`) and **Application windows** (`⌃↓`)
+- **Move left a space** (`⌃←`) and **Move right a space** (`⌃→`)
 
 ### Raycast
 
@@ -149,10 +166,11 @@ then `A` for ă, `⌥` `6` then `A`/`I` for â/î, `⌥` `P` then `S`/`T` for ș
 
 [`projects`](bin/projects) opens a project as a tmux session or a herdr
 workspace, from tmux (`prefix` `f`, `⌃⌥P`), herdr (the same keys) or the shell
-(`tmuxs`, `herdrs`). It picks from the folders inside `~/Development` and
-`~/Code` and inside their `Work/` folder, whichever exist, so machines with
-different folders need no config. `prefix` `g` creates a project folder first.
-Run `projects` on its own to list the roots it found.
+(`tmuxs`, `herdrs`). Projects are the folders inside each folder of
+`~/Development` and `~/Code` (and of their `Work/` folder), so
+`~/Development/Personal/dotfiles` is a project and machines with different
+folders need no config. `prefix` `g` creates a project folder first. Run
+`projects` on its own to list the folders it searches.
 
 ### tmux or herdr
 
@@ -161,20 +179,23 @@ Run `projects` on its own to list the roots it found.
 (tmux sessions are herdr workspaces, windows are tabs) and the same Rosé Pine
 look. `prefix` `Tab` / `⌃⌥O` (last session) comes from the
 [last-workspace plugin](herdr/plugins/last-workspace/), which `misc.sh` links.
-On top of tmux, `prefix` `a` jumps to the agent that needs attention, `prefix`
-`/` searches every pane, and `⌃⌥G` opens [lazygit](lazygit/config.yml) over the
-current tab, in the repo of the pane underneath (`q` closes it; in Neovim it's
-`<leader>gg`). New projects open with nvim already running in their Editor tab,
-and after a restart herdr brings back every workspace, tab and directory, with
-the [editor-restore plugin](herdr/plugins/editor-restore/) starting nvim again
-in Editor tabs (tmux-resurrect's job in tmux).
+
+On top of tmux:
+
+- `prefix` `a` focuses the agent whose notification is showing.
+- `prefix` `/` lists every agent and terminal; type `/` there to search by name,
+  branch or path.
+- `⌃⌥G` opens [lazygit](lazygit/config.yml) over the current tab, in the repo of
+  the pane underneath (`q` closes it; in Neovim it's `<leader>gg`).
+- New projects open with nvim already running in their Editor tab.
+- After a restart herdr brings back every workspace, tab and directory, and the
+  [editor-restore plugin](herdr/plugins/editor-restore/) starts nvim again in
+  Editor tabs (tmux-resurrect's job in tmux).
 
 ## Local customizations
 
-The dotfiles can be extended to suit additional local requirements by using the
-following files:
-
-None of them are checked in.
+These optional files extend the dotfiles for one machine. None of them are
+checked in.
 
 ### `~/.zsh.local`
 
@@ -248,9 +269,15 @@ git pull
 ./setup.sh
 ```
 
+## Contributing
+
+Pull requests that fix bugs or add improvements without breaking changes are
+welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the checks to run, and
+[SECURITY.md](SECURITY.md) to report a vulnerability privately.
+
 ## License
 
-MIT License.
+[MIT](LICENSE) © Alexandru Bereghici
 
 ## Inspiration
 

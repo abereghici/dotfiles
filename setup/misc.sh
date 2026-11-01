@@ -16,7 +16,11 @@ info() {
   echo "[ ${BLUE}..${RESET} ] $1" | indent
 }
 
-# Runs after symlinks.sh, so ~/.config/mise, ~/.config/bat and ~/.config/tmux point into this repo
+# Runs after symlinks.sh, so ~/.config/mise, ~/.config/bat, ~/.config/tmux and ~/.config/herdr
+# point into this repo
+
+# Run on its own (the manual install), Homebrew isn't on PATH yet in a fresh shell
+eval "$(/opt/homebrew/bin/brew shellenv 2> /dev/null || /usr/local/bin/brew shellenv)"
 
 # TPM: tmux plugin manager (loaded from ~/.config/tmux/plugins/tpm by tmux.conf)
 if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
