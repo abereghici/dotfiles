@@ -49,11 +49,14 @@ open_notification_target = "prefix+a"
 # The Nth workspace in the sidebar (tabs are prefix+1..9)
 switch_workspace = "ctrl+alt+1..9"
 
+# prefix+r is reviewr below; = sizes panes (h/l width, j/k height, esc)
+resize_mode = "prefix+="
+
 # Worktrees: G = new (herdr default), F = find an existing one
 open_worktree = "prefix+shift+f"
 
 # Already defaults: c new tab, v split right, h/j/k/l focus, H/J/K/L swap, z zoom, x close
-# pane, r resize, [ copy mode, e scrollback in $EDITOR, b sidebar, D close workspace, ? help
+# pane, [ copy mode, e scrollback in $EDITOR, b sidebar, D close workspace, ? help
 
 # ctrl+alt+h/j/k/l: move between nvim splits, then herdr panes (herdr/plugins/pane-nav; nvim
 # maps the same chords). Not under focus_pane_*: a built-in action would disable these.
@@ -116,7 +119,7 @@ height = "95%"
 # Review the agent's diff and send line comments back to it: herdr-reviewr, installed by
 # setup/misc.sh, configured in reviewr.toml. r = review, beside g = git
 [[keys.command]]
-key = "ctrl+alt+r"
+key = ["prefix+r", "ctrl+alt+r"]
 type = "plugin_action"
 command = "persiyanov.reviewr.toggle"
 description = "Review changes (reviewr)"

@@ -184,7 +184,8 @@ folders need no config. `prefix` `⇧N` creates a project folder first. Run
 `prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
 Rosé Pine look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
 naming where to; `prefix` + a key **does** something (create, close, rename,
-split, open a tool). `⇧` reverses or goes bigger. `prefix` `?` lists every key.
+split, open a tool). `⇧` reverses or goes bigger. `prefix` `=` resizes panes
+(`prefix` `r` is reviewr). `prefix` `?` lists every key.
 
 | Keys                          | Moves to                                                                                            |
 | ----------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -197,7 +198,7 @@ split, open a tool). `⇧` reverses or goes bigger. `prefix` `?` lists every key
 | `prefix` `/`                  | a picker of every agent and terminal (`/` search)                                                   |
 | `⌃⌥P` or `prefix` `f`         | a project ([`projects`](bin/projects))                                                              |
 | `⌃⌥G` or `prefix` `g`         | [lazygit](lazygit/config.yml), in the pane's repo                                                   |
-| `⌃⌥R`                         | [reviewr](https://github.com/persiyanov/herdr-reviewr): review the diff, comment, send to the agent |
+| `⌃⌥R` or `prefix` `r`         | [reviewr](https://github.com/persiyanov/herdr-reviewr): review the diff, comment, send to the agent |
 | `prefix` `⇧G` / `prefix` `⇧F` | a new / an existing Git worktree                                                                    |
 
 - `⌃⌥H` `J` `K` `L` come from the [pane-nav plugin](herdr/plugins/pane-nav/): in
