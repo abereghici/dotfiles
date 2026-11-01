@@ -26,6 +26,18 @@ if !keyboardLayouts().contains(where: { id($0) == layoutID }) {
   TISRegisterInputSource(layoutURL as CFURL)
 }
 
+func isEnabled(_ source: TISInputSource) -> Bool {
+  property(source, kTISPropertyInputSourceIsEnabled) as? Bool == true
+}
+
+// Already the only, selected layout: change nothing, since every enable, select or disable
+// makes macOS open System Settings → Keyboard
+let enabled = keyboardLayouts().filter(isEnabled)
+let current = TISCopyCurrentKeyboardLayoutInputSource().takeRetainedValue()
+if enabled.count == 1 && id(enabled[0]) == layoutID && id(current) == layoutID {
+  exit(0)
+}
+
 let targets = keyboardLayouts().filter { id($0) == layoutID }
 guard !targets.isEmpty else {
   print("ABC – Romanian isn't registered yet: log out and back in, then run setup/symlinks.sh again")
@@ -40,8 +52,6 @@ guard TISSelectInputSource(targets[0]) == noErr else {
   exit(1)
 }
 
-for source in keyboardLayouts() where id(source) != layoutID {
-  if property(source, kTISPropertyInputSourceIsEnabled) as? Bool == true {
-    TISDisableInputSource(source)
-  }
+for source in keyboardLayouts() where id(source) != layoutID && isEnabled(source) {
+  TISDisableInputSource(source)
 }
