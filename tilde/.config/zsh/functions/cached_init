@@ -5,8 +5,10 @@
 # cache is rebuilt when COMMAND is upgraded (Homebrew relinks it, so the link's mtime is
 # checked: the binary keeps its build date) or when the file calling cached_init changes.
 # `rm -rf ~/.cache/zsh` forces a rebuild. Returns 1 if COMMAND is missing.
+#
+# No `emulate -L zsh`: that restores options on return, undoing the ones the sourced setup
+# turns on (starship's `setopt promptsubst`, which leaves the prompt unexpanded).
 
-emulate -L zsh
 zmodload -F zsh/stat b:zstat
 
 local name=$1 cmd=$2
@@ -17,18 +19,18 @@ local bin=${commands[$cmd]:-$cmd}
 local cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/$name.zsh
 local -a built linked caller
 if [[ -s $cache ]]; then
-  zstat -A built +mtime -- $cache
-  zstat -L -A linked +mtime -- $bin
-  zstat -A caller +mtime -- ${funcfiletrace[1]%:*} 2> /dev/null
+  zstat -A built +mtime -- "$cache"
+  zstat -L -A linked +mtime -- "$bin"
+  zstat -A caller +mtime -- "${funcfiletrace[1]%:*}" 2> /dev/null
 fi
 
 if (( ! $#built || linked[1] > built[1] || ${caller[1]:-0} > built[1] )); then
-  mkdir -p ${cache:h}
-  if ! { $bin "$@" >| $cache.$$ && mv -f $cache.$$ $cache && zcompile -R $cache }; then
-    rm -f $cache.$$
+  mkdir -p "${cache:h}"
+  if ! { "$bin" "$@" >| "$cache.$$" && mv -f "$cache.$$" "$cache" && zcompile -R "$cache" }; then
+    rm -f "$cache.$$"
     return 1
   fi
 fi
 
 # source picks up the compiled $cache.zwc
-source $cache
+source "$cache"

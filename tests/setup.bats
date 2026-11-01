@@ -24,6 +24,14 @@
   [ "$output" = "" ]
 }
 
+@test "an interactive shell expands the starship prompt" {
+  # Options the cached tool setup turns on (starship's promptsubst) must outlive cached_init
+  # No terminal here, so zsh warns that it can't enable zle; drop that stderr
+  run zsh -il -c '[[ -o promptsubst ]] && print -rP -- "$PROMPT"' 2> /dev/null < /dev/null
+  [ "$status" -eq 0 ]
+  [[ $output != *'$(/'* ]]
+}
+
 @test "node and python3 resolve to mise shims in a login shell" {
   [ "$(zsh -l -c 'whence -p node')" = "$HOME/.local/share/mise/shims/node" ]
   [ "$(zsh -l -c 'whence -p python3')" = "$HOME/.local/share/mise/shims/python3" ]
