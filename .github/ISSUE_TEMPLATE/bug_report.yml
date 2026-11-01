@@ -1,0 +1,36 @@
+name: Bug report
+description: Something in the setup or a config doesn't work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. For a security issue, use the private report form in SECURITY.md instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what happened instead. Paste errors as text.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ./setup.sh on a fresh Mac
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and chip
+      placeholder: macOS 26.1, Apple M1 Pro
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: Output of `git -C ~/dotfiles rev-parse --short HEAD`

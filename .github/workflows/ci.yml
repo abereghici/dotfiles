@@ -32,6 +32,9 @@ jobs:
           for f in setup.sh setup/brew.sh setup/misc.sh setup/macos.sh setup/symlinks.sh; do
             [ -f "$f" ] && scripts+=("$f")
           done
+          for f in herdr/plugins/*/*.sh; do
+            scripts+=("$f")
+          done
           for f in bin/*; do
             head -1 "$f" | grep -qE '^#!.*(bash|sh)' && scripts+=("$f")
           done

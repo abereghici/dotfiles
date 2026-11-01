@@ -1,0 +1,20 @@
+# https://editorconfig.org — matches prettier.config.cjs and stylua.toml
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.lua]
+max_line_length = 120
+
+[*.md]
+max_line_length = 80
+
+# VS Code writes snippets with tabs
+[*.code-snippets]
+indent_style = tab

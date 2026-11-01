@@ -1,0 +1,17 @@
+# Keep CI actions and the formatting tools (package.json) current, one grouped PR each per week
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-dependencies:
+        patterns: ['*']
