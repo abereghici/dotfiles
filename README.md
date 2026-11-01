@@ -1,3 +1,5 @@
+![dotfiles: zsh, starship, git, delta, fzf, neovim and homebrew for macOS](.github/cover.png)
+
 # ~abereghici 💻
 
 [![CI](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml)
