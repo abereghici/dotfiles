@@ -75,7 +75,8 @@ Configured in [`tilde/.config/tmux/tmux.conf`](../tilde/.config/tmux/tmux.conf).
   quick prefix presses also are: set its shortcut to something else in its
   Settings.
 - **Home-row mods.** Hold the modifiers with the hand that isn't pressing the
-  key (`⌃⌥H` with the left hand's mods, `⌃⌥A` with the right's).
+  key (`⌃⌥H` with the left hand's mods, `⌃⌥A` with the right's); see the
+  [Voyager notes](../keyboard/README.md#zsa-voyager).
 - **macOS** keeps `⌃Space` and `⌃⌥Space` for input sources, and
   [AeroSpace](../tilde/.config/aerospace/aerospace.toml) owns `⌥⌘` chords, which
   is why neither multiplexer uses them.

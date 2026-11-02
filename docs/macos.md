@@ -42,7 +42,8 @@ dotfiles binds it.
 1. **System Settings** → **Keyboard** → **Keyboard Shortcuts…** → **Modifier
    Keys**: leave Caps Lock as **Caps Lock**, otherwise Raycast can't use it.
 1. **Raycast Settings** → **Keyboard** → **Hyper Key**: **Caps Lock**, with
-   **Include Shift** on (to match the ZSA Voyager's Hyper) and **Quick Press**
+   **Include Shift** on (to match the
+   [ZSA Voyager](../keyboard/README.md#zsa-voyager)'s Hyper) and **Quick Press**
    set to **Trigger Escape**.
 1. Record each hotkey below under **Raycast Settings** → **Shortcuts**.
 

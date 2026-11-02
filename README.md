@@ -34,17 +34,17 @@ editing them live.
 
 ## What's inside
 
-| Area     | Tools                                                                                                                                                                     |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Shell    | [Zsh](tilde/.zshrc) with [aliases](tilde/.config/zsh/aliases.zsh), [fzf](tilde/.config/zsh/fzf.zsh), zoxide, direnv and a [Starship prompt](tilde/.starship.toml)         |
-| Terminal | [Ghostty](tilde/.config/ghostty/config), [tmux](tilde/.config/tmux/tmux.conf) and [herdr](tilde/.config/herdr/config.toml) on one prefix ([keys](docs/herdr-and-tmux.md)) |
-| Editor   | [Neovim](tilde/.config/nvim/) on LazyVim; [VS Code](vscode/) settings and snippets with default keybindings                                                               |
-| Git      | [Git aliases](tilde/.gitconfig), delta diffs and [lazygit](lazygit/config.yml)                                                                                            |
-| Runtimes | Node, Python, Go, Rust, Java, Bun, Maven and uv via [mise](tilde/.config/mise/config.toml)                                                                                |
-| Theme    | Bereghici Dark/Light from [abereghici/themes](https://github.com/abereghici/themes), switched by [`appearance`](bin/appearance) ([how](docs/appearance.md))               |
-| macOS    | [Defaults](setup/macos.sh) ([notes](docs/macos.md)), [AeroSpace](tilde/.config/aerospace/aerospace.toml) tiling and a [Romanian keyboard layout](keyboard/README.md)      |
-| Apps     | Everything in the [Brewfile](setup/Brewfile), VS Code extensions included                                                                                                 |
-| Scripts  | [`bin/`](bin/), including the [`projects`](bin/projects) picker for tmux and herdr and [`keychain`](bin/keychain) for secrets                                             |
+| Area     | Tools                                                                                                                                                                                   |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shell    | [Zsh](tilde/.zshrc) with [aliases](tilde/.config/zsh/aliases.zsh), [fzf](tilde/.config/zsh/fzf.zsh), zoxide, direnv and a [Starship prompt](tilde/.starship.toml)                       |
+| Terminal | [Ghostty](tilde/.config/ghostty/config), [tmux](tilde/.config/tmux/tmux.conf) and [herdr](tilde/.config/herdr/config.toml) on one prefix ([keys](docs/herdr-and-tmux.md))               |
+| Editor   | [Neovim](tilde/.config/nvim/) on LazyVim; [VS Code](vscode/) settings and snippets with default keybindings                                                                             |
+| Git      | [Git aliases](tilde/.gitconfig), delta diffs and [lazygit](lazygit/config.yml)                                                                                                          |
+| Runtimes | Node, Python, Go, Rust, Java, Bun, Maven and uv via [mise](tilde/.config/mise/config.toml)                                                                                              |
+| Theme    | Bereghici Dark/Light from [abereghici/themes](https://github.com/abereghici/themes), switched by [`appearance`](bin/appearance) ([how](docs/appearance.md))                             |
+| macOS    | [Defaults](setup/macos.sh) ([notes](docs/macos.md)), [AeroSpace](tilde/.config/aerospace/aerospace.toml) tiling and [keyboard](keyboard/README.md) notes (ZSA Voyager, Romanian layout) |
+| Apps     | Everything in the [Brewfile](setup/Brewfile), VS Code extensions included                                                                                                               |
+| Scripts  | [`bin/`](bin/), including the [`projects`](bin/projects) picker for tmux and herdr and [`keychain`](bin/keychain) for secrets                                                           |
 
 The repository is laid out by where things go: [`tilde/`](tilde/) is linked into
 `~`, [`bin/`](bin/) into `~/.local/bin`, and the rest by
@@ -224,7 +224,7 @@ themes clone, the `*.local` files and any macOS defaults stay.
 - [herdr and tmux keys](docs/herdr-and-tmux.md)
 - [Theme and appearance](docs/appearance.md)
 - [macOS defaults, shortcut conflicts and Raycast](docs/macos.md)
-- [Romanian keyboard layout](keyboard/README.md)
+- [Keyboard: the ZSA Voyager layout and the Romanian layout](keyboard/README.md)
 - [Chrome theme and extensions](chrome/README.md)
 - [New Mac checklist](docs/new-mac.md)
 - [The setup scripts](setup/README.md)
