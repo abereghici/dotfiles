@@ -10,7 +10,8 @@ with it, though none of them needs it.
 
 To use it, open the link in Oryx (ZSA's configurator), make your own copy of the
 layout to edit, then download the firmware and flash it with
-[Keymapp](https://www.zsa.io/flash) (`brew install --cask keymapp`).
+[Keymapp](https://www.zsa.io/flash), which the [Brewfile](../setup/Brewfile)
+installs.
 
 | Layer | Hold              | Has                                                                                  |
 | ----- | ----------------- | ------------------------------------------------------------------------------------ |

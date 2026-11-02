@@ -83,6 +83,7 @@ cask "claude-code@latest" # Terminal-based AI coding assistant (latest release c
 cask "codex" # OpenAI's coding agent that runs in your terminal
 cask "docker-desktop" # App to build and share containerised applications and microservices
 cask "ghostty" # Terminal emulator that uses platform-native UI and GPU acceleration
+cask "keymapp" # ZSA keyboard firmware flasher (the Voyager, keyboard/README.md)
 cask "ollama-app" # Get up and running with large language models locally
 cask "raycast" # Control your tools with a few keystrokes
 cask "utm" # Virtual machines UI using QEMU
