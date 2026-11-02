@@ -7,6 +7,7 @@ tilde/.ssh/*
 node_modules
 tilde/.config/tmux/plugins/*
 tilde/.config/mise/config.local.toml
+tilde/.config/mise/mise.lock
 tilde/.config/herdr/*
 !tilde/.config/herdr/config.toml
 !tilde/.config/herdr/reviewr.toml
