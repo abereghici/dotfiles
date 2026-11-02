@@ -33,7 +33,7 @@ targets=("$DOTFILES_DIR/*" "$THEMES/*")
 [ -L "$THEMES" ] && targets+=("$(cd "$THEMES" && pwd -P)/*")
 dirs=(
   "$HOME" "$HOME/.config" "$HOME/.local/bin" "$HOME/.claude/themes" "$HOME/.codex/themes"
-  "$HOME/.config/eza" "$HOME/.config/yazi/flavors"
+  "$HOME/.config/yazi/flavors" "$HOME/Library/Application Support/eza"
   "$HOME/Library/Application Support/lazygit" "$HOME/Library/Application Support/lazydocker"
   "$HOME/Library/Application Support/Code/User" "$HOME/Library/Keyboard Layouts"
 )

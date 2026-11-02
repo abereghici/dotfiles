@@ -24,7 +24,7 @@ bereghici="$themes/ports"
   [ "$(readlink "$HOME/.config/ghostty/themes")" -ef "$bereghici/ghostty/themes" ]
   [ "$(readlink "$HOME/.config/bat/themes")" -ef "$bereghici/bat/themes" ]
   [ "$(readlink "$HOME/.config/yazi/flavors/bereghici-light.yazi")" -ef "$bereghici/yazi/themes/bereghici-light.yazi" ]
-  [ "$(readlink "$HOME/.config/eza/theme.yml")" -ef "$bereghici/eza/themes/bereghici-terminal.yml" ]
+  [ "$(readlink "$HOME/Library/Application Support/eza/theme.yml")" -ef "$bereghici/eza/themes/bereghici-terminal.yml" ]
   [ "$(readlink "$HOME/.claude/themes/bereghici.json")" -ef "$bereghici/claude-code/themes/bereghici-$(appearance).json" ]
   [ "$(readlink "$HOME/.codex/themes/bereghici.tmTheme")" -ef "$bereghici/codex/themes/bereghici-$(appearance).tmTheme" ]
   cmp -s "$HOME/Library/Fonts/BereghiciSymbols.otf" "$bereghici/font/themes/BereghiciSymbols.otf"
