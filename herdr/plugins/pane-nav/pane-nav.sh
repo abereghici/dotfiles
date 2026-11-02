@@ -9,16 +9,20 @@
 set -euo pipefail
 
 herdr=${HERDR_BIN_PATH:-herdr}
-pane=$HERDR_PANE_ID
-case $1 in
+case ${1:-} in
   left) key=h ;;
   down) key=j ;;
   up) key=k ;;
   right) key=l ;;
-  *) exit 64 ;;
+  *)
+    echo "usage: pane-nav.sh left|down|up|right" >&2
+    exit 2
+    ;;
 esac
+pane=$HERDR_PANE_ID
 
-if "$herdr" pane process-info --pane "$pane" | grep -Eq '"name":"n?vim"'; then
+nvim='.result.process_info.foreground_processes | any(.name | test("^n?vim$"))'
+if "$herdr" pane process-info --pane "$pane" | jq -e "$nvim" > /dev/null; then
   exec "$herdr" pane send-keys "$pane" "ctrl+alt+$key" > /dev/null
 fi
 exec "$herdr" pane focus --direction "$1" --pane "$pane" > /dev/null

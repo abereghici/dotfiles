@@ -30,28 +30,26 @@ func isEnabled(_ source: TISInputSource) -> Bool {
   property(source, kTISPropertyInputSourceIsEnabled) as? Bool == true
 }
 
-// Already the only, selected layout: change nothing, since every enable, select or disable
-// makes macOS open System Settings → Keyboard
-let enabled = keyboardLayouts().filter(isEnabled)
-let current = TISCopyCurrentKeyboardLayoutInputSource().takeRetainedValue()
-if enabled.count == 1 && id(enabled[0]) == layoutID && id(current) == layoutID {
-  exit(0)
-}
-
-let targets = keyboardLayouts().filter { id($0) == layoutID }
+// Every enable, select or disable makes macOS open System Settings → Keyboard, so change
+// only what isn't already so (a set-up Mac gets no calls at all)
+let layouts = keyboardLayouts()
+let targets = layouts.filter { id($0) == layoutID }
 guard !targets.isEmpty else {
   print("ABC – Romanian isn't registered yet: log out and back in, then run setup/symlinks.sh again")
   exit(1)
 }
 
-for source in targets {
-  TISEnableInputSource(source)
+// The same layout can be registered twice (one copy disabled): use the enabled one
+let target = targets.first(where: isEnabled) ?? targets[0]
+if !isEnabled(target) {
+  TISEnableInputSource(target)
 }
-guard TISSelectInputSource(targets[0]) == noErr else {
+let current = TISCopyCurrentKeyboardLayoutInputSource().takeRetainedValue()
+if id(current) != layoutID && TISSelectInputSource(target) != noErr {
   print("Couldn't select ABC – Romanian")
   exit(1)
 }
 
-for source in keyboardLayouts() where id(source) != layoutID && isEnabled(source) {
+for source in layouts where id(source) != layoutID && isEnabled(source) {
   TISDisableInputSource(source)
 }

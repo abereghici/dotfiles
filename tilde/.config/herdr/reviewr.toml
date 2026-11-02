@@ -1,5 +1,5 @@
 # herdr-reviewr (https://github.com/persiyanov/herdr-reviewr), installed by setup/misc.sh.
-# ctrl+alt+r toggles it beside the agent (herdr config.toml); it also opens on its own in
+# Its toggle key is the reviewr binding in herdr config.toml; it also opens on its own in
 # new worktree workspaces.
 #
 # reviewr reads one config.toml with no includes, so `herdr-reviewr-config` writes it from

@@ -160,6 +160,18 @@ if ! exists "$file"; then
   } | write_private "$file"
 fi
 
+# ----- ~/.config/herdr/reviewr.local.toml -----
+info "herdr-reviewr's work GitLab (~/.config/herdr/reviewr.local.toml)"
+file="$HOME/.config/herdr/reviewr.local.toml" # git-ignored; misc.sh merges it into reviewr's config
+if ! exists "$file"; then
+  ask gitlab_host 'GitLab host whose merge requests reviewr shows' "e.g. ${work_host:-git.example.com}"
+  if [[ -n $gitlab_host ]]; then
+    echo "gitlab_host = $(git_quote "$gitlab_host")" | write_private "$file"
+  else
+    echo '    nothing to add'
+  fi
+fi
+
 # ----- ~/.config/mise/config.local.toml -----
 info 'Extra runtimes for this machine (~/.config/mise/config.local.toml)'
 file="tilde/.config/mise/config.local.toml" # ~/.config/mise links here; git-ignored

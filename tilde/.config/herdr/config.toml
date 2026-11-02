@@ -1,6 +1,5 @@
-# herdr: prefix Alt+Space, then one key, to DO something (create, close, rename, split, tools).
-# Ctrl+Alt chords, no prefix, to MOVE: h/j/k/l panes (nvim-aware), a agents, o other
-# workspace, p projects, g git, 1..9 workspace. Alt+1..9 = Agents row, Ctrl+Tab = tabs.
+# herdr: prefix Alt+Space, then one key, to DO something (create, close, rename, split, tools);
+# Ctrl+Alt chords, no prefix, to MOVE. The letter names the target. prefix+? lists every key.
 # tmux session = herdr workspace, tmux window = herdr tab. Only changes from
 # `herdr --default-config` are listed. Check with `herdr config check` before reloading.
 

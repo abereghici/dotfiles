@@ -280,6 +280,17 @@ git-ignored.
 terraform = "latest"
 ```
 
+### `~/.config/herdr/reviewr.local.toml`
+
+[`herdr-reviewr-config`](bin/herdr-reviewr-config) writes reviewr's config from
+[`reviewr.toml`](tilde/.config/herdr/reviewr.toml) plus this file (`misc.sh`
+runs it; run it again after editing either), for settings such as a work
+GitLab host:
+
+```toml
+gitlab_host = "git.example.com"
+```
+
 ### `~/.macos.local`
 
 [`setup/macos.sh`](setup/macos.sh) sources it for personal settings; each one is
