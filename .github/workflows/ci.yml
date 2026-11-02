@@ -29,7 +29,7 @@ jobs:
         run: |
           set -e
           scripts=()
-          for f in setup.sh setup/brew.sh setup/local.sh setup/misc.sh setup/macos.sh setup/symlinks.sh; do
+          for f in setup.sh setup/*.sh; do
             [ -f "$f" ] && scripts+=("$f")
           done
           for f in herdr/plugins/*/*.sh; do

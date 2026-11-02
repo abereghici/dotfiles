@@ -23,6 +23,13 @@ These dotfiles run with your user's privileges and, in a few places, with
   install software and change system settings
 - secrets handling ([`bin/keychain`](bin/keychain)) or anything that could leak
   a secret into the repository, shell history or logs
-- configs that load code from outside this repository (plugins, installers)
+- code fetched from outside this repository at setup time: the Homebrew
+  installer, tpm and the tmux plugins, herdr-reviewr, the mise tools and
+  [abereghici/themes](https://github.com/abereghici/themes), whose `install.sh`
+  `setup/misc.sh` runs. These track their latest version rather than a pinned
+  commit; the GitHub Actions in CI are pinned by commit SHA and updated by
+  Dependabot.
+- `/etc/pam.d/sudo_local`, which `setup.sh` creates for Touch ID, and the weaker
+  defaults in `setup/macos.sh` documented in [docs/macos.md](docs/macos.md)
 
 Issues in the tools themselves (Homebrew, Neovim, herdr…) belong upstream.

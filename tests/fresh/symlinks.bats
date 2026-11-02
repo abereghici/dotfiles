@@ -2,7 +2,8 @@
 
 # setup/symlinks.sh on a fresh machine: an empty HOME with a few files already in the way, linked
 # without a terminal (as `setup.sh -y` runs it), then again. Changes nothing outside that HOME:
-# launchctl is a stub. CI runs it on macOS; locally: `bats tests/fresh`.
+# launchctl and herdr are stubs. Then setup/uninstall.sh. CI runs it on macOS; locally:
+# `bats tests/fresh`.
 
 setup_file() {
   export REPO="$BATS_TEST_DIRNAME/../.."
@@ -10,7 +11,9 @@ setup_file() {
   export HOME="$FAKE/home"
   mkdir -p "$HOME/.config/nvim" "$FAKE/stub"
   printf '#!/bin/sh\necho "$*" >> "%s/launchctl.log"\n' "$FAKE" > "$FAKE/stub/launchctl"
-  chmod +x "$FAKE/stub/launchctl"
+  # herdr too: the fake ~/.config/herdr links into this repo, like the real one
+  printf '#!/bin/sh\necho "$*" >> "%s/herdr.log"\n' "$FAKE" > "$FAKE/stub/herdr"
+  chmod +x "$FAKE/stub/launchctl" "$FAKE/stub/herdr"
 
   echo mine > "$HOME/.config/nvim/init.lua"
   echo current > "$HOME/.gitconfig"
@@ -54,4 +57,11 @@ setup_file() {
 
 @test "a second run changes nothing" {
   ! grep -Eq 'linked|moved|removed' "$FAKE/run2.log"
+}
+
+@test "setup/uninstall.sh removes every link it made" {
+  PATH="$FAKE/stub:$PATH" "$REPO/setup/uninstall.sh" < /dev/null > "$FAKE/uninstall.log" 2>&1
+  [ -z "$(find "$HOME" "$HOME/.config" "$HOME/.local/bin" -maxdepth 1 -type l)" ]
+  [ ! -e "$HOME/Library/LaunchAgents/dotfiles.appearance-sync.plist" ]
+  grep -q '.gitconfig.backup' "$FAKE/uninstall.log"
 }

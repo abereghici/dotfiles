@@ -4,273 +4,150 @@
 
 [![CI](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![macOS](https://img.shields.io/badge/macOS-Apple%20silicon%20%7C%20Intel-black?logo=apple)
+![macOS](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)
 
 My macOS dotfiles: Zsh, Homebrew, Neovim (LazyVim), Ghostty, tmux and herdr for
-coding agents, lazygit, mise and AeroSpace, all in Bereghici Dark and Light, which
-follow the macOS appearance (`⌥⇧⌘D` switches it). One script sets up a new Mac;
-every config is a symlink back into this repository.
+coding agents, lazygit, mise and AeroSpace. Every themed tool uses Bereghici
+Dark or Light and follows the macOS appearance. One script sets up a new Mac;
+the configs are symlinks back into this repository, so editing them here is
+editing them live.
 
 <!-- prettier-ignore -->
 > [!WARNING]
-> These are my personal settings. Fork the repository and review the code
-> before running it, rather than installing it as is.
+> These are my personal settings, and `setup.sh` changes your system (see
+> [what it changes](#what-setupsh-changes)). Fork the repository and review the
+> code before running it, rather than installing it as is.
 
 ## Contents
 
 - [What's inside](#whats-inside)
 - [Requirements](#requirements)
-- [Installation](#installation)
-- [Extras](#extras)
+- [Install](#install)
 - [Local customizations](#local-customizations)
 - [Updating](#updating)
+- [Uninstalling](#uninstalling)
+- [Troubleshooting](#troubleshooting)
+- [More docs](#more-docs)
 - [Contributing](#contributing)
 - [License](#license)
+- [Credits](#credits)
 
 ## What's inside
 
-| Area     | Tools                                                                                                                                                                                        |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Shell    | [Zsh](tilde/.zshrc) with [aliases](tilde/.config/zsh/aliases.zsh), [fzf](tilde/.config/zsh/fzf.zsh), zoxide, direnv and a [Starship prompt](tilde/.starship.toml) that starts in about 70 ms |
-| Terminal | [Ghostty](tilde/.config/ghostty/config), [tmux](tilde/.config/tmux/tmux.conf) and [herdr](tilde/.config/herdr/config.toml), tmux and herdr sharing the same keys                             |
-| Editor   | [Neovim](tilde/.config/nvim/) on LazyVim; [VS Code](vscode/) settings and snippets with default keybindings                                                                                  |
-| Git      | [Git aliases](tilde/.gitconfig), delta diffs and [lazygit](lazygit/config.yml)                                                                                                               |
-| Runtimes | Node, Python, Go, Rust, Java and Bun via [mise](tilde/.config/mise/config.toml)                                                                                                              |
-| macOS    | [Sensible defaults](setup/macos.sh), [AeroSpace](tilde/.config/aerospace/aerospace.toml) tiling and a [Romanian keyboard layout](keyboard/ABC-Romanian.keylayout)                            |
-| Apps     | Everything in the [Brewfile](setup/Brewfile), VS Code extensions included                                                                                                                    |
-| Scripts  | [`bin/`](bin/), including the [`projects`](bin/projects) picker for tmux and herdr and [`keychain`](bin/keychain) for secrets                                                                |
+| Area     | Tools                                                                                                                                                                     |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shell    | [Zsh](tilde/.zshrc) with [aliases](tilde/.config/zsh/aliases.zsh), [fzf](tilde/.config/zsh/fzf.zsh), zoxide, direnv and a [Starship prompt](tilde/.starship.toml)         |
+| Terminal | [Ghostty](tilde/.config/ghostty/config), [tmux](tilde/.config/tmux/tmux.conf) and [herdr](tilde/.config/herdr/config.toml) on one prefix ([keys](docs/herdr-and-tmux.md)) |
+| Editor   | [Neovim](tilde/.config/nvim/) on LazyVim; [VS Code](vscode/) settings and snippets with default keybindings                                                               |
+| Git      | [Git aliases](tilde/.gitconfig), delta diffs and [lazygit](lazygit/config.yml)                                                                                            |
+| Runtimes | Node, Python, Go, Rust, Java, Bun, Maven and uv via [mise](tilde/.config/mise/config.toml)                                                                                |
+| Theme    | Bereghici Dark/Light from [abereghici/themes](https://github.com/abereghici/themes), switched by [`appearance`](bin/appearance) ([how](docs/appearance.md))               |
+| macOS    | [Defaults](setup/macos.sh) ([notes](docs/macos.md)), [AeroSpace](tilde/.config/aerospace/aerospace.toml) tiling and a [Romanian keyboard layout](keyboard/README.md)      |
+| Apps     | Everything in the [Brewfile](setup/Brewfile), VS Code extensions included                                                                                                 |
+| Scripts  | [`bin/`](bin/), including the [`projects`](bin/projects) picker for tmux and herdr and [`keychain`](bin/keychain) for secrets                                             |
+
+The repository is laid out by where things go: [`tilde/`](tilde/) is linked into
+`~`, [`bin/`](bin/) into `~/.local/bin`, and the rest by
+[`setup/`](setup/README.md) ([`herdr/plugins/`](herdr/plugins/),
+[`keyboard/`](keyboard/), [`lazygit/`](lazygit/), [`vscode/`](vscode/),
+[`launchd/`](launchd/)). [`tests/`](tests/) checks the result.
 
 ## Requirements
 
-- macOS on Apple silicon or Intel
-- Zsh (the default shell on macOS)
-- Homebrew (the setup script installs it)
+- macOS 14 (Sonoma) or later; tested on macOS 26 on Apple silicon. The Homebrew
+  paths for Intel Macs are handled but not tested.
+- An administrator account (`setup.sh` uses `sudo`).
+- Git, from the Xcode Command Line Tools (`xcode-select --install`); the
+  Homebrew installer also offers them.
 
-## Installation
-
-1. Enable **Firewall** under **System Settings** → **Network**
-1. Point the DNS Servers to [Cloudflare DNS](https://one.one.one.one/dns/)
-   - `1.1.1.1`
-   - `1.0.0.1`
-   - `2606:4700:4700::1111`
-   - `2606:4700:4700::1001`
-1. Configure Git and GitHub SSH
-   1. [Generate SSH key and add it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-   1. [Add your public SSH key to GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-   1. Test your authentication with:
-
-      ```bash
-      ssh -T git@github.com
-      ```
-
-1. Choose _automatic_ or _manual_ installation below
-
-### Automatically
-
-<!-- prettier-ignore -->
-> [!CAUTION]
-> Use at your own risk!
+## Install
 
 ```shell
-git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
+git clone https://github.com/abereghici/dotfiles.git ~/dotfiles
 ~/dotfiles/setup.sh
 ```
 
-[`setup.sh`](setup.sh) moves an existing `~/.zshrc` to `~/.zshrc.backup`, lets
-Touch ID authorize `sudo`, then runs the scripts below in order. Pass `-y` to
-skip its confirmation prompt and the `local.sh` questions.
+It asks you to press Enter and for your password, then what to do with any file
+in the way and the local settings questions. Pass `-y` for no questions at all:
+every file in the way is backed up, and the
+[local settings](#local-customizations) are skipped (run `setup/local.sh`
+later). Open a new terminal when it's done. Setting up a new Mac? See the
+[checklist](docs/new-mac.md) for what to do around it.
 
-### Manually
+### What `setup.sh` changes
 
-```shell
-git clone git@github.com:abereghici/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./setup/brew.sh
-./setup/symlinks.sh
-./setup/local.sh
-./setup/misc.sh
-```
+In order, each step a script you can also run on its own:
 
-- [`brew.sh`](setup/brew.sh) installs Homebrew and the
-  [Brewfile](setup/Brewfile).
-- [`symlinks.sh`](setup/symlinks.sh) links `tilde/` into your home directory and
-  asks before replacing a file that is already there.
-- [`local.sh`](setup/local.sh) asks for this machine's private settings and
-  writes the [`*.local` files](#local-customizations). Leave any answer empty to
-  skip it; files that already exist are kept.
-- [`misc.sh`](setup/misc.sh) installs the tmux plugins, links the herdr plugins,
-  installs the mise runtimes and builds the bat theme cache. It runs last
-  because it reads the linked mise, bat, tmux and herdr configs.
+1. **`~/.zshrc`**: moved to `~/.zshrc.backup` if it's a real file (a timestamp
+   is added when that backup exists).
+1. **`/etc/pam.d/sudo_local`**: created, if missing, so Touch ID can authorize
+   `sudo`.
+1. [`setup/brew.sh`](setup/brew.sh): installs Homebrew if needed, runs
+   `brew update` and `brew upgrade`, installs the [Brewfile](setup/Brewfile) and
+   runs `brew cleanup`.
+1. [`setup/symlinks.sh`](setup/symlinks.sh): links `tilde/`, `bin/`, the
+   lazygit, lazydocker and VS Code configs and the keyboard layout. A file in
+   the way is skipped, overwritten or backed up, as you choose (backed up with
+   `-y`), and links left pointing at removed files are deleted. It also installs
+   the [appearance agent](docs/appearance.md) in `~/Library/LaunchAgents`.
+1. [`setup/local.sh`](setup/local.sh): asks for this machine's private settings
+   and writes the [`*.local` files](#local-customizations), mode 600. Skipped
+   with `-y`.
+1. [`setup/misc.sh`](setup/misc.sh): installs tpm and the tmux plugins, links
+   the [herdr plugins](herdr/plugins/) and installs
+   [herdr-reviewr](https://github.com/persiyanov/herdr-reviewr), installs the
+   mise runtimes and npm packages, clones (or updates)
+   [abereghici/themes](https://github.com/abereghici/themes) into
+   `~/.local/share/bereghici` and runs its `install.sh`, then `appearance sync`.
 
-Everything is then configured by editing files in `~/dotfiles`.
-
-## Extras
-
-### Set macOS defaults
-
-```shell
-./setup/macos.sh
-```
-
-#### Keyboard conflicts
-
-Turn off these Mission Control shortcuts under **System Settings** →
-**Keyboard** → **Keyboard Shortcuts…** → **Mission Control**: Neovim uses
-`Ctrl` + arrows to resize windows.
-
-- **Mission Control** (`⌃↑`) and **Application windows** (`⌃↓`)
-- **Move left a space** (`⌃←`) and **Move right a space** (`⌃→`)
-
-### Raycast
-
-Raycast keeps its hotkeys in an encrypted database, so they are set by hand and
-recorded here. Hyper (`⌃⌥⇧⌘`) is reserved for Raycast: nothing else in these
-dotfiles binds it.
-
-1. **System Settings** → **Keyboard** → **Keyboard Shortcuts…** → **Modifier
-   Keys**: leave Caps Lock as **Caps Lock**, otherwise Raycast can't use it.
-1. **Raycast Settings** → **Keyboard** → **Hyper Key**: **Caps Lock**, with
-   **Include Shift** on (to match the Voyager's Hyper) and **Quick Press** set
-   to **Trigger Escape**.
-1. Record each hotkey below under **Raycast Settings** → **Shortcuts**.
-
-| Hotkey      | Command                         |
-| ----------- | ------------------------------- |
-| `⌘ Space`   | Raycast                         |
-| `Hyper` `V` | Clipboard History               |
-| `Hyper` `W` | Improve Writing (Claude Writer) |
-
-To move the settings to another Mac, run **Export Settings & Data**, then
-**Import Settings & Data** on the new one. Keep the encrypted `.rayconfig` out
-of this repository: it can include clipboard history, notes and AI chats.
-
-### Romanian
-
-[`keyboard/ABC-Romanian.keylayout`](keyboard/ABC-Romanian.keylayout) is the
-macOS ABC layout with the Romanian Programmers keys (SR 13392:2004) on Option.
-`symlinks.sh` links it into `~/Library/Keyboard Layouts`; after the next login,
-add **ABC – Romanian** in System Settings → Keyboard → Text Input → Edit (and
-remove ABC if you like). Edits to the layout take effect after the next login.
-
-| Keys          | Types   |
-| ------------- | ------- |
-| `⌥` `A` / `Q` | ă / â   |
-| `⌥` `I`       | î       |
-| `⌥` `S` / `T` | ș / ț   |
-| add `⇧`       | capital |
-
-Ghostty uses the left Option as Alt, so its config types the same letters on
-those keys; zsh's Alt bindings on them don't fire there.
-
-On a Mac without these dotfiles, pick the built-in **ABC – Extended**: `⌥` `B`
-then `A` for ă, `⌥` `6` then `A`/`I` for â/î, `⌥` `P` then `S`/`T` for ș/ț.
-
-### Project pickers
-
-[`projects`](bin/projects) opens a project as a tmux session or a herdr
-workspace, from tmux (`prefix` `f`, `⌃⌥P`), herdr (the same keys) or the shell
-(`tmuxs`, `herdrs`). Projects are the folders inside each folder of
-`~/Development` and `~/Code` (and of their `Work/` folder), so
-`~/Development/Personal/dotfiles` is a project and machines with different
-folders need no config. `prefix` `⇧N` creates a project folder first. Run
-`projects` on its own to list the folders it searches.
-
-### tmux or herdr
-
-[herdr](tilde/.config/herdr/config.toml) shares tmux's `⌥Space` prefix, most of
-its `prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
-Bereghici look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
-naming where to; `prefix` + a key **does** something (create, close, rename,
-split, open a tool). `⇧` reverses or goes bigger. `prefix` `=` resizes panes
-(`prefix` `r` is reviewr). `prefix` `?` lists every key.
-
-| Keys                          | Moves to                                                                                            |
-| ----------------------------- | --------------------------------------------------------------------------------------------------- |
-| `⌃⌥H` `J` `K` `L`             | the Neovim split, then the herdr pane, that way                                                     |
-| `⌃Tab` / `⌃⇧Tab`              | the next / previous tab                                                                             |
-| `⌃⌥1` … `⌃⌥9` / `⌃⌥O`         | that workspace / the other (last) one                                                               |
-| `⌃⌥A` / `⌃⌥⇧A`                | the next / previous agent, in any workspace                                                         |
-| `⌥1` … `⌥9`                   | the agent in that row of the Agents list                                                            |
-| `prefix` `a`                  | the agent whose notification is showing                                                             |
-| `prefix` `/`                  | a picker of every agent and terminal (`/` search)                                                   |
-| `⌃⌥P` or `prefix` `f`         | a project ([`projects`](bin/projects))                                                              |
-| `⌃⌥G` or `prefix` `g`         | [lazygit](lazygit/config.yml), in the pane's repo                                                   |
-| `⌃⌥R` or `prefix` `r`         | [reviewr](https://github.com/persiyanov/herdr-reviewr): review the diff, comment, send to the agent |
-| `prefix` `⇧G` / `prefix` `⇧F` | a new / an existing Git worktree                                                                    |
-
-- `⌃⌥H` `J` `K` `L` come from the [pane-nav plugin](herdr/plugins/pane-nav/): in
-  a pane running Neovim it hands the key to Neovim, which moves between its
-  splits and on to the next herdr pane at its edge
-  ([keymaps.lua](tilde/.config/nvim/lua/config/keymaps.lua)). Other programs
-  never see these keys, so `⌃L`, `⌃K`, `⌃J` keep working in zsh, Claude Code,
-  lazygit and fzf.
-- `misc.sh` installs reviewr and writes its config from
-  [`reviewr.toml`](tilde/.config/herdr/reviewr.toml) plus an untracked
-  `reviewr.local.toml` (for a work `gitlab_host`): run `herdr-reviewr-config`
-  after editing either. It also opens on its own in new worktree workspaces.
-- Ghostty leaves `⌃Tab` to herdr; `⌘⇧[` `]` still switch Ghostty tabs.
-- `⌃⌥O` comes from the [last-workspace plugin](herdr/plugins/last-workspace/).
-  `misc.sh` links every plugin in [`herdr/plugins`](herdr/plugins/).
-- New projects open with nvim already running in their Editor tab. After a
-  restart herdr brings back every workspace, tab and directory, and the
-  [editor-restore plugin](herdr/plugins/editor-restore/) starts nvim again in
-  Editor tabs (tmux-resurrect's job in tmux).
-- Claude desktop opens its Quick Entry on a double tap of `⌥`, which two quick
-  prefix presses also are: set its shortcut to something else in its Settings.
-- On a keyboard with home-row mods, hold the modifiers with the hand that isn't
-  pressing the key (`⌃⌥H` with the left hand's mods, `⌃⌥A` with the right's).
+[`setup/README.md`](setup/README.md) describes each script in detail. A step
+that fails, such as one Brewfile entry or an offline clone, is reported and the
+rest goes on; re-running `setup.sh` is safe. The optional
+[`setup/macos.sh`](docs/macos.md) writes macOS defaults and is not part of
+`setup.sh`.
 
 ## Local customizations
 
-These optional files extend the dotfiles for one machine. None of them are
-checked in. [`setup/local.sh`](setup/local.sh) writes them from your answers:
-Git identities, the Keychain secrets to export (it stores their values in the
-Keychain, never in a file), macOS names and locale, and extra mise tools. Run it
-again after deleting a file to be asked again.
+These optional files extend the dotfiles for one machine and are never checked
+in. [`setup/local.sh`](setup/local.sh) writes them from your answers; every
+question can be left empty, and a file that exists is kept (delete it to be
+asked again).
 
 ### `~/.zsh.local`
 
-If this file exists, `.zshrc` sources it after the path, env, aliases,
-keybindings and completion setup, and before the plugins and the prompt. Its
-content can add to or overwrite the existing aliases, settings, PATH, etc.
+Sourced by `.zshrc` after the path, env, aliases, keybindings and completion
+setup, and before the plugins and the prompt, so it can add to or override any
+of them. `local.sh` writes the Keychain secrets you name into it, storing their
+values in the Keychain, never in a file.
 
 ```zsh
 # Extra binaries for this machine only
 [ -d "$HOME/.acme/bin" ] && PATH="$HOME/.acme/bin:$PATH"
 
 # Secrets from the macOS Keychain (stored with `keychain set ACME_API_KEY`)
-eval "$(keychain export ACME_API_KEY)"
+eval "$(keychain export ACME_API_KEY GITHUB_TOKEN)"
 ```
 
 ### `~/.gitconfig.local`
 
-If this file exists, it is included at the end of `~/.gitconfig`, so its content
-can overwrite or add to the existing `git` configurations.
-
-<!-- prettier-ignore -->
-> [!TIP]
-> Use `~/.gitconfig.local` to store sensitive information such as the `git` user
-> credentials for individual repositories.
-
-```ini
-# A different identity for every repository under ~/Code/Work/
-[includeIf "gitdir:~/Code/Work/"]
-  path = ~/.gitconfig.work
-```
-
-with `~/.gitconfig.work`:
+Included at the end of `~/.gitconfig`, so it can override or add to any setting.
+`local.sh` writes your name, email and GitHub username, the optional
+HTTPS-to-SSH rewrite for GitHub, and a separate identity for a work Git host:
+any repository whose remote is on that host includes `~/.gitconfig.work`.
 
 ```ini
 [user]
-  email = you@example.com
+  name = "Your Name"
+  email = "you@example.com"
+[includeIf "hasconfig:remote.*.url:https://git.example.com/**"]
+  path = ~/.gitconfig.work
 ```
 
 ### `~/.config/mise/config.local.toml`
 
 [mise](https://mise.jdx.dev/) loads it alongside `config.toml` (see
-`mise config ls`), for runtimes and tools you only need on this machine. Since
-`~/.config/mise` links to `tilde/.config/mise`, the file lives there and is
-git-ignored.
+`mise config ls`), for tools you only need on this machine. `~/.config/mise`
+links to `tilde/.config/mise`, so the file lives there, git-ignored.
 
 ```toml
 [tools]
@@ -279,10 +156,10 @@ terraform = "latest"
 
 ### `~/.config/herdr/reviewr.local.toml`
 
-[`herdr-reviewr-config`](bin/herdr-reviewr-config) writes reviewr's config from
-[`reviewr.toml`](tilde/.config/herdr/reviewr.toml) plus this file (`misc.sh`
-runs it; run it again after editing either), for settings such as a work GitLab
-host:
+Settings for [herdr-reviewr](https://github.com/persiyanov/herdr-reviewr), such
+as a work GitLab host. [`herdr-reviewr-config`](bin/herdr-reviewr-config) merges
+it with [`reviewr.toml`](tilde/.config/herdr/reviewr.toml) into reviewr's
+config; run it again after editing either.
 
 ```toml
 gitlab_host = "git.example.com"
@@ -290,8 +167,8 @@ gitlab_host = "git.example.com"
 
 ### `~/.macos.local`
 
-[`setup/macos.sh`](setup/macos.sh) sources it for personal settings; each one is
-skipped when unset.
+Personal settings for [`setup/macos.sh`](setup/macos.sh); each one is skipped
+when unset.
 
 ```bash
 COMPUTERNAME='my-mac'
@@ -303,13 +180,54 @@ TIMEZONE='Europe/London' # list: sudo systemsetup -listtimezones
 
 ## Updating
 
-To update an existing install:
-
 ```shell
 cd ~/dotfiles
 git pull
-./setup.sh
+./setup.sh -y
 ```
+
+`-y` skips the questions, which an update doesn't need. Every step is safe to
+run again: links already in place are skipped, and the Homebrew packages, mise
+tools and themes are brought up to date. Plugins already installed keep their
+version: update them with `herdr plugin update` and tpm's `prefix` `U`.
+
+## Uninstalling
+
+```shell
+~/dotfiles/setup/uninstall.sh -n # print what it would remove
+~/dotfiles/setup/uninstall.sh
+```
+
+[`setup/uninstall.sh`](setup/uninstall.sh) removes the links into this
+repository and into the themes, the appearance agent and the herdr plugins
+linked from here, lists the backups `setup.sh` made (restore them with `mv`),
+and asks before removing `/etc/pam.d/sudo_local`. Homebrew and its packages, the
+themes clone, the `*.local` files and any macOS defaults stay.
+
+## Troubleshooting
+
+- **A command or setting is missing after setup**: open a new terminal; the
+  running one predates the links.
+- **`brew` isn't found after installing Homebrew by hand**: run
+  `eval "$(/opt/homebrew/bin/brew shellenv)"`, or open a new terminal.
+- **Two quick `⌥Space` presses open Claude's Quick Entry**: Claude desktop opens
+  it on a double tap of `⌥`; set its shortcut to something else in its Settings.
+- **`⌃` + arrows switch Spaces instead of resizing Neovim splits**: turn off the
+  [Mission Control shortcuts](docs/macos.md#keyboard-shortcut-conflicts).
+- **A tool didn't switch theme with the appearance**: run `appearance sync`
+  ([details](docs/appearance.md)).
+- **Is everything in place?** `npm test` runs the [bats tests](tests/) against
+  this machine; they change nothing.
+
+## More docs
+
+- [herdr and tmux keys](docs/herdr-and-tmux.md)
+- [Theme and appearance](docs/appearance.md)
+- [macOS defaults, shortcut conflicts and Raycast](docs/macos.md)
+- [Romanian keyboard layout](keyboard/README.md)
+- [Chrome theme and extensions](chrome/README.md)
+- [New Mac checklist](docs/new-mac.md)
+- [The setup scripts](setup/README.md)
 
 ## Contributing
 
@@ -321,11 +239,14 @@ welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the checks to run, and
 
 [MIT](LICENSE) © Alexandru Bereghici
 
-## Inspiration
+## Credits
+
+Ideas and structure from these repositories and articles:
 
 - [nicksp/dotfiles](https://github.com/nicksp/dotfiles)
 - [holman/dotfiles](https://github.com/holman/dotfiles)
-- [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
+- [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles), the base
+  of [`setup/macos.sh`](setup/macos.sh)
 - [sapegin/dotfiles](https://github.com/sapegin/dotfiles)
 - <https://remysharp.com/2018/08/23/cli-improved>
 - <https://evanhahn.com/a-decade-of-dotfiles>
