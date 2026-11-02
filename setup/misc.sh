@@ -45,8 +45,8 @@ if ! herdr plugin list | grep -q '^- persiyanov.reviewr '; then
   info 'Installing herdr-reviewr...'
   herdr plugin install persiyanov/herdr-reviewr --yes | tail -1 | indent
 fi
-# Its config.toml, from ~/.config/herdr/reviewr.toml and the untracked reviewr.local.toml
-bin/herdr-reviewr-config | indent
+# Its config.toml (from ~/.config/herdr/reviewr.toml and the untracked reviewr.local.toml) is
+# written by `appearance sync` below, with the theme for the current appearance
 
 # Runtimes and global npm packages from ~/.config/mise/config.toml
 info 'Installing mise tools...'
@@ -66,5 +66,5 @@ fi
 if [ -x "$themes/install.sh" ]; then
   "$themes/install.sh" | indent || info "the color schemes stopped partway: run $themes/install.sh"
 fi
-# delta's feature for the current appearance (and the rest `appearance sync` points)
+# delta's feature, Claude Code's and Codex's themes and reviewr's config for the current appearance
 bin/appearance sync

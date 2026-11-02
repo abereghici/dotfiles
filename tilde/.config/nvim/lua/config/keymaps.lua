@@ -37,8 +37,9 @@ for key, dir in pairs({ h = "left", j = "down", k = "up", l = "right" }) do
   map({ "n", "i", "x", "t" }, "<C-M-" .. key .. ">", function()
     local win = vim.api.nvim_get_current_win()
     vim.cmd.wincmd(key)
-    if vim.api.nvim_get_current_win() == win and vim.env.HERDR_PANE_ID then
-      vim.system({ "herdr", "pane", "focus", "--direction", dir, "--pane", vim.env.HERDR_PANE_ID })
+    local herdr = vim.env.HERDR_BIN_PATH or "herdr"
+    if vim.api.nvim_get_current_win() == win and vim.env.HERDR_PANE_ID and vim.fn.executable(herdr) == 1 then
+      vim.system({ herdr, "pane", "focus", "--direction", dir, "--pane", vim.env.HERDR_PANE_ID })
     end
   end, { desc = "Window or herdr pane " .. dir })
 end

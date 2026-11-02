@@ -45,22 +45,30 @@ sync() {
   local feature="[delta]
   features = bereghici-$1"
 
+  local tmp failed=false
+
   if [ "${2:-}" = --if-changed ] && [ "$(cat "$delta" 2> /dev/null)" = "$feature" ]; then
     return
   fi
 
+  # Each step on its own: one failing doesn't keep the others from switching
   if [ -x "$install" ]; then
-    "$install" sync "$1" > /dev/null
+    "$install" sync "$1" > /dev/null || failed=true
   fi
-  if command -v herdr > /dev/null; then
-    "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null
+  # Only once reviewr is installed (setup/misc.sh)
+  if herdr plugin list 2> /dev/null | grep -q '^- persiyanov.reviewr '; then
+    "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null || failed=true
   fi
 
-  # Written last, so a failed step above is retried by the next --if-changed; whole, so git
-  # never reads it half-written
+  # delta's include, swapped in whole so git never reads it half-written
   mkdir -p "$(dirname "$delta")"
-  echo "$feature" > "$delta.tmp"
-  mv "$delta.tmp" "$delta"
+  tmp=$(mktemp "$delta.XXXXXX")
+  echo "$feature" > "$tmp"
+  if $failed; then
+    # Recorded as not yet synced, so the next --if-changed tries the failed step again
+    echo "# incomplete" >> "$tmp"
+  fi
+  mv "$tmp" "$delta"
 }
 
 set_appearance() {
@@ -68,8 +76,15 @@ set_appearance() {
   [ "$1" = dark ] && dark_mode=true
 
   osascript -e "tell application \"System Events\" to tell appearance preferences to set dark mode to $dark_mode"
-  sync "$1"
+  sync "$(current)"
 }
+
+# One at a time: a toggle's own sync and the launchd agent's start together, and a quick second
+# toggle must not be undone by the first one finishing last
+lock="${TMPDIR:-/tmp}/appearance.lock"
+if [ -n "${1:-}" ] && [ -z "${APPEARANCE_LOCKED:-}" ]; then
+  APPEARANCE_LOCKED=1 exec lockf -k "$lock" "$0" "$@"
+fi
 
 case "${1:-}" in
   "") current ;;

@@ -32,15 +32,13 @@ export FZF_DEFAULT_OPTS="--gutter=' '" # the default ▌ gutter bar would show o
 
 # Bereghici for the tools that take their colors from the environment, from abereghici/themes
 # (installed by setup/misc.sh). Each is the terminal flavor, in the terminal's ANSI colors, so
-# it switches between Dark and Light with Ghostty. Only when installed: lazygit refuses to
-# start on a missing file. (theme.zsh has the zsh highlighting, for interactive shells.)
+# it switches between Dark and Light with Ghostty. Each only when its file is there: lazygit
+# refuses to start on a missing one. (theme.zsh has the zsh highlighting, for interactive shells.)
 bereghici="$HOME/.local/share/bereghici/ports"
-if [ -d "$bereghici" ]; then
-  LG_CONFIG_FILE+=",$bereghici/lazygit/themes/bereghici.yml"
-  source "$bereghici/fzf/themes/bereghici-terminal.sh"
-  source "$bereghici/jq/themes/bereghici-terminal.sh"
-  source "$bereghici/ls-colors/themes/bereghici-terminal.sh"
-  # gh, glab and glow render Markdown with it
-  export GLAMOUR_STYLE="$bereghici/glamour/themes/bereghici-terminal.json"
-fi
-unset bereghici
+[ -e "$bereghici/lazygit/themes/bereghici.yml" ] && LG_CONFIG_FILE+=",$bereghici/lazygit/themes/bereghici.yml"
+for port in fzf jq ls-colors; do
+  [ -e "$bereghici/$port/themes/bereghici-terminal.sh" ] && source "$bereghici/$port/themes/bereghici-terminal.sh"
+done
+# gh, glab and glow render Markdown with it
+[ -e "$bereghici/glamour/themes/bereghici-terminal.json" ] && export GLAMOUR_STYLE="$bereghici/glamour/themes/bereghici-terminal.json"
+unset bereghici port

@@ -19,7 +19,7 @@ case ${1:-} in
     exit 2
     ;;
 esac
-pane=$HERDR_PANE_ID
+pane=${HERDR_PANE_ID:?pane-nav.sh runs as a herdr plugin action, which sets HERDR_PANE_ID}
 
 nvim='.result.process_info.foreground_processes | any(.name | . == "nvim")'
 if "$herdr" pane process-info --pane "$pane" | jq -e "$nvim" > /dev/null; then

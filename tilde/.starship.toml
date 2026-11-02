@@ -28,15 +28,15 @@ palette = "bereghici_terminal"
 # In the terminal's ANSI colors: with a Bereghici terminal theme it switches with it between
 # Dark and Light.
 # Paste this table into starship.toml, under `palette = "bereghici_terminal"`.
-# surface and surfaceRaised are the terminal's own background, so they aren't in it.
+# surface and surface_raised are the terminal's own background, so they aren't in it.
 [palettes.bereghici_terminal]
-overlay = "0"
-muted = "8"
-subtle = "7"
+surface_nested = "0"
+text_subtlest = "8"
+text_subtle = "7"
 text = "15"
-highlight_low = "0"
-highlight_med = "0"
-highlight_high = "8"
+line_highlight = "0"
+selection = "0"
+border = "8"
 accent = "2"
 red = "1"
 yellow = "3"
@@ -52,8 +52,8 @@ blue_bright = "12"
 magenta_bright = "13"
 
 [directory]
-format = "[](fg:overlay)[ $path ]($style)[](fg:overlay)"
-style = "bg:overlay fg:green"
+format = "[](fg:surface_nested)[ $path ]($style)[](fg:surface_nested)"
+style = "bg:surface_nested fg:green"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -64,102 +64,102 @@ Music = " "
 Pictures = " "
 
 [fill]
-style = "fg:overlay"
+style = "fg:surface_nested"
 symbol = " "
 
 [git_branch]
-format = "[](fg:overlay)[ $symbol $branch ]($style)[](fg:overlay)"
-style = "bg:overlay fg:blue"
+format = "[](fg:surface_nested)[ $symbol $branch ]($style)[](fg:surface_nested)"
+style = "bg:surface_nested fg:blue"
 symbol = ""
 
 [time]
 disabled = false
-format = "[](fg:overlay)[ $time 󰴈 ]($style)[](fg:overlay)"
-style = "bg:overlay fg:cyan"
+format = "[](fg:surface_nested)[ $time 󰴈 ]($style)[](fg:surface_nested)"
+style = "bg:surface_nested fg:cyan"
 time_format = "%I:%M%P"
 
 [username]
 disabled = false
-format = "[](fg:overlay)[ \U00100000 $user ]($style)[](fg:overlay)"
+format = "[](fg:surface_nested)[ \U00100000 $user ]($style)[](fg:surface_nested)"
 show_always = true
-style_root = "bg:overlay fg:magenta"
-style_user = "bg:overlay fg:magenta"
+style_root = "bg:surface_nested fg:magenta"
+style_user = "bg:surface_nested fg:magenta"
 
 # Languages
 
 [c]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [elixir]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [elm]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [golang]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [haskell]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [java]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [julia]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [nodejs]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = "󰎙 "
 
 [nim]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = "󰆥 "
 
 [rust]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = ""
 
 [scala]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [python]
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$version]($style)[](fg:surface_nested) "
 disabled = false
 symbol = " "
 
 [docker_context]
 symbol = ""
-style = "bg:overlay fg:green"
-format = "[](fg:overlay)[$symbol$context]($style)[](fg:overlay) "
+style = "bg:surface_nested fg:green"
+format = "[](fg:surface_nested)[$symbol$context]($style)[](fg:surface_nested) "
