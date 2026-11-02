@@ -12,7 +12,7 @@
 #   del <KEY>            Delete key
 #   list                 List all keys
 #   copy <KEY>           Copy key to clipboard
-#   export <KEY>         Output shell export statement
+#   export <KEY>...      Output shell export statements
 #   check <KEY>          Check if key exists (exit code only)
 #   help [command]       Show help
 #
@@ -47,12 +47,14 @@ get_service_name() {
 }
 
 key_exists() {
-  local service=$(get_service_name "$1")
+  local service
+  service=$(get_service_name "$1")
   security find-generic-password -a "$USER" -s "$service" &> /dev/null
 }
 
 get_key_value() {
-  local service=$(get_service_name "$1")
+  local service
+  service=$(get_service_name "$1")
   security find-generic-password -a "$USER" -s "$service" -w 2> /dev/null
 }
 
@@ -73,7 +75,7 @@ COMMANDS:
     del <KEY>            Delete key
     list                 List all keys
     copy <KEY>           Copy to clipboard
-    export <KEY>         Output shell export statement
+    export <KEY>...      Output shell export statements
     check <KEY>          Check if exists (exit code)
     help [command]       Show help
 
@@ -177,14 +179,14 @@ EOF
 
 show_help_export() {
   cat << 'EOF'
-keychain export - Output key as shell export statement
+keychain export - Output keys as shell export statements
 
 USAGE:
-    keychain export <KEY>
+    keychain export <KEY>...
 
 BEHAVIOR:
-    If key exists: prints export KEY="value"
-    If key doesn't exist: prints nothing (silent)
+    For each key that exists: prints export KEY="value"
+    Keys that don't exist print nothing (silent)
 
 EXAMPLES:
     keychain export OPENAI_API_KEY
@@ -192,6 +194,8 @@ EXAMPLES:
 
     eval "$(keychain export OPENAI_API_KEY)"
     echo $OPENAI_API_KEY  # sk-xxxx
+
+    eval "$(keychain export OPENAI_API_KEY GITHUB_TOKEN)"
 
     # Safe to use even if key doesn't exist
     eval "$(keychain export NONEXISTENT_KEY)"  # No error
@@ -232,7 +236,8 @@ cmd_set() {
 
   local key="$1"
   local value="${2:-}"
-  local service=$(get_service_name "$key")
+  local service
+  service=$(get_service_name "$key")
 
   if [[ -z "$value" ]]; then
     read -r -s -p "Password: " value
@@ -346,20 +351,19 @@ cmd_copy() {
 cmd_export() {
   if [[ $# -lt 1 ]]; then
     err "Missing required argument: KEY"
-    echo "Usage: keychain export <KEY>" >&2
+    echo "Usage: keychain export <KEY>..." >&2
     echo "Run 'keychain help export' for more information" >&2
     exit 1
   fi
 
-  local key="$1"
-  local value
+  local key value
 
-  if ! key_exists "$key"; then
-    return 0
-  fi
-
-  value=$(get_key_value "$key")
-  printf 'export %s=%q\n' "$key" "$value"
+  for key in "$@"; do
+    if key_exists "$key"; then
+      value=$(get_key_value "$key")
+      printf 'export %s=%q\n' "$key" "$value"
+    fi
+  done
 }
 
 cmd_check() {

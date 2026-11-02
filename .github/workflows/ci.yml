@@ -9,9 +9,9 @@ jobs:
   static-checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 'lts/*' # matches node = "lts" in .mise.toml
           cache: 'npm'
@@ -25,7 +25,7 @@ jobs:
       - name: Check Lua formatting
         run: npm run lint:lua:check
 
-      - name: Syntax-check shell scripts
+      - name: Syntax-check and lint shell scripts
         run: |
           set -e
           scripts=()
@@ -42,6 +42,20 @@ jobs:
             echo "checking $f"
             bash -n "$f"
           done
+          # Warnings and errors (the runner ships shellcheck); notes are style
+          shellcheck -S warning "${scripts[@]}"
 
       - name: Validate Brewfile parses as Ruby
         run: ruby -c setup/Brewfile
+
+  # setup/symlinks.sh into an empty HOME on macOS, with files in the way, twice (tests/fresh)
+  fresh-home:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install bats
+        run: brew install bats-core
+
+      - name: Link into a fresh HOME
+        run: bats tests/fresh

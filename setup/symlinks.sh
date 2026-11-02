@@ -19,17 +19,21 @@ indent() {
 }
 
 info() {
-  printf "[ \033[00;34m..\033[0m ] $1" | indent
-  echo
+  printf "[ \033[00;34m..\033[0m ] %s\n" "$1" | indent
 }
 
 user() {
-  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+  printf "\r  [ \033[0;33m?\033[0m ] %b " "$1"
 }
 
 success() {
-  printf "\r\033[2K  [ \033[00;32m✔\033[0m ] $1\n"
+  printf "\r\033[2K  [ \033[00;32m✔\033[0m ] %s\n" "$1"
 }
+
+# Without anyone to ask (setup.sh -y, no terminal), every conflict is backed up
+if [ -n "${DOTFILES_YES:-}" ] || [ ! -t 0 ]; then
+  backup_all=true
+fi
 
 symlink_file() {
   local src=$1 dst=$2
@@ -70,6 +74,11 @@ symlink_file() {
 
   # "false" or empty
   if [ "$skip" != "true" ]; then
+    # ln -sfn into a real directory would link inside it
+    if [ -d "$dst" ] && [ ! -L "$dst" ]; then
+      info "left $dst alone: it's a directory"
+      return
+    fi
     ln -sfn "$1" "$2"
     success "linked $1 to $2"
   else
@@ -79,9 +88,14 @@ symlink_file() {
 
 handle_existing_file() {
   if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
-    user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+    # Asked again until the answer is one of these: anything else used to overwrite
+    while [ -z "$action" ]; do
+      user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
     [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-    read -n 1 action
+      read -r -n 1 action || action=b # no more input: back it up
+      echo
+      [[ $action == [sSoObB] ]] || action=""
+    done
 
     case "$action" in
       o)
@@ -102,8 +116,6 @@ handle_existing_file() {
       S)
         skip_all=true
         ;;
-      *) ;;
-
     esac
   fi
 
@@ -117,8 +129,11 @@ handle_existing_file() {
   fi
 
   if [ "$backup" == "true" ]; then
-    mv "$dst" "${dst}.backup"
-    success "moved $dst to ${dst}.backup"
+    # Never over an earlier backup
+    local backup_path="${dst}.backup"
+    [ -e "$backup_path" ] || [ -L "$backup_path" ] && backup_path="$backup_path.$(date +%Y%m%d%H%M%S)"
+    mv "$dst" "$backup_path"
+    success "moved $dst to $backup_path"
   fi
 }
 
@@ -216,7 +231,10 @@ install_appearance_agent() {
   local agent
 
   agent=$(sed "s|~/|$HOME/|" "$DOTFILES_DIR/launchd/dotfiles.appearance-sync.plist")
-  [ "$agent" = "$(cat "$plist" 2> /dev/null)" ] && return
+  if [ "$agent" = "$(cat "$plist" 2> /dev/null)" ] \
+    && launchctl print "gui/$UID/dotfiles.appearance-sync" > /dev/null 2>&1; then
+    return
+  fi
   mkdir -p "$(dirname "$plist")"
   echo "$agent" > "$plist"
   launchctl bootout "gui/$UID" "$plist" 2> /dev/null || true

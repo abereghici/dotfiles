@@ -36,9 +36,10 @@ done 2> /dev/null &
 # Computer / host names
 if [ -n "${COMPUTERNAME:-}" ]; then
   sudo scutil --set ComputerName "$COMPUTERNAME"
-  sudo scutil --set HostName "$COMPUTERNAME"
 fi
+# HostName too: unlike ComputerName it must be a valid host name (no spaces or apostrophes)
 if [ -n "${LOCALHOSTNAME:-}" ]; then
+  sudo scutil --set HostName "$LOCALHOSTNAME"
   sudo scutil --set LocalHostName "$LOCALHOSTNAME"
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$LOCALHOSTNAME"
 fi

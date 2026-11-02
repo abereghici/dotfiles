@@ -1,4 +1,6 @@
 #!/bin/bash
+# ask() assigns each answer to the variable named in its call
+# shellcheck disable=SC2154
 #
 # Ask for this machine's private settings and write the untracked *.local files the dotfiles
 # read (see "Local customizations" in the README). Every question can be left empty: that
@@ -11,9 +13,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-BLUE=$(tput setaf 4)
-DIM=$(tput dim)
-RESET=$(tput sgr0)
+BLUE=$(tput setaf 4 2> /dev/null || true)
+DIM=$(tput dim 2> /dev/null || true)
+RESET=$(tput sgr0 2> /dev/null || true)
 
 info() {
   echo
@@ -167,6 +169,10 @@ if ! exists "$file"; then
   ask gitlab_host 'GitLab host whose merge requests reviewr shows' "e.g. ${work_host:-git.example.com}"
   if [[ -n $gitlab_host ]]; then
     echo "gitlab_host = $(git_quote "$gitlab_host")" | write_private "$file"
+    # reviewr reads only the config written from it (misc.sh writes it on a first setup)
+    if grep -q '^- persiyanov.reviewr ' <<< "$(herdr plugin list 2> /dev/null)"; then
+      bin/herdr-reviewr-config | sed 's/^/    /' || echo '    run herdr-reviewr-config once reviewr is set up'
+    fi
   else
     echo '    nothing to add'
   fi

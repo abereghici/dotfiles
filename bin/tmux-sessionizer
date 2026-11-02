@@ -1,4 +1,6 @@
 #!/bin/bash
+# Directory lists are space-separated strings, split on purpose (paths have no spaces)
+# shellcheck disable=SC2048,SC2155
 
 ################################################################################
 #                           TMUX Sessionizer
@@ -84,9 +86,8 @@ done
 # Shift the options after getopts
 shift $(($OPTIND - 1))
 
-dirs="$@"
+dirs="$*"
 sub_dirs=""
-session_dirs=""
 selected_dir=""
 
 if [[ "$help" = true ]]; then
@@ -264,7 +265,7 @@ get_name() {
 }
 
 create_new_folder_session() {
-  local parent_dirs="$@"
+  local parent_dirs="$*"
   local selected_parent=""
   local folder_name=""
   local new_dir=""

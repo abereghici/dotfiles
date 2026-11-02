@@ -7,12 +7,14 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-yellow=$(tput setaf 3)
-light_red=$(tput setaf 9)
-bold=$(tput bold)
-reset=$(tput sgr0)
+# Colors only when tput knows the terminal (no TERM in CI, cron or ssh -T)
+color() { tput "$@" 2> /dev/null || true; }
+red=$(color setaf 1)
+green=$(color setaf 2)
+yellow=$(color setaf 3)
+light_red=$(color setaf 9)
+bold=$(color bold)
+reset=$(color sgr0)
 
 title() {
   echo "${bold}==> $1${reset}"
@@ -20,9 +22,7 @@ title() {
 }
 
 warning() {
-  tput setaf 1
-  echo "/!\\ $1 /!\\"
-  tput sgr0
+  echo "${red}/!\\ $1 /!\\${reset}"
 }
 
 echo -e "
@@ -42,18 +42,36 @@ ${yellow}
 "
 echo
 echo -e "${yellow}!!! ${red}WARNING${yellow} !!!"
-echo -e "${light_red}This script moves ~/.zshrc to ~/.zshrc.backup and links your dotfiles"
-echo -e "${light_red}(symlinks.sh asks before replacing any other existing file)."
+echo -e "${light_red}This script moves ~/.zshrc aside, links your dotfiles (asking before replacing"
+echo -e "${light_red}any other file), installs Homebrew packages and changes /etc/pam.d/sudo_local."
 echo -e "${light_red}Use it at your own risk."
 
-if [ $# -ne 1 ] || [ "$1" != "-y" ]; then
+# -y: no questions. Homebrew's installer, symlinks.sh (backs up every conflict) and local.sh
+# (skipped) all follow it
+case "$*" in
+  "") ;;
+  -y) export DOTFILES_YES=1 NONINTERACTIVE=1 ;;
+  *)
+    echo "Usage: $0 [-y]"
+    exit 64
+    ;;
+esac
+if [ -z "${DOTFILES_YES:-}" ]; then
+  if [ ! -t 0 ]; then
+    echo "${red}No terminal to ask in: run it with -y${reset}"
+    exit 1
+  fi
   echo -e "${yellow}Press Enter key to continue...${reset}\n"
-  read key
+  read -r
 fi
 
-# Backup an existing zsh file (not our symlink, so re-runs keep the first backup)
+# Move an existing zsh file aside (not our symlink, so re-runs never touch the backup); an
+# earlier backup is kept, the new one gets a timestamp
 if [[ -e "$HOME/.zshrc" && ! -L "$HOME/.zshrc" ]]; then
-  mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
+  backup="$HOME/.zshrc.backup"
+  [ -e "$backup" ] && backup="$backup.$(date +%Y%m%d%H%M%S)"
+  mv "$HOME/.zshrc" "$backup"
+  echo "Moved ~/.zshrc to $backup"
 fi
 
 # Use Touch ID to authorize sudo (the line /etc/pam.d/sudo_local.template ships commented out)
@@ -62,9 +80,16 @@ if [ ! -f /etc/pam.d/sudo_local ]; then
   echo "auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local
 fi
 
-# Ask for the administrator password upfront
+# Ask for the administrator password upfront, and keep sudo alive until setup finishes: casks
+# that need it would otherwise stop a long `brew bundle` for the password
 warning "Activate sudo"
-sudo echo "Sudo activated!"
+sudo -v
+while true; do
+  sudo -n true
+  sleep 60
+  kill -0 "$$" || exit
+done 2> /dev/null &
+echo "Sudo activated!"
 echo
 
 # Install Homebrew and packages/apps
@@ -81,14 +106,14 @@ echo
 
 # This machine's private settings: the untracked *.local files (every answer is optional)
 title "🔑 Setting up local settings..."
-if [ "${1:-}" = "-y" ]; then
+if [ -n "${DOTFILES_YES:-}" ]; then
   echo "Skipped with -y: run ./setup/local.sh to answer the questions"
 else
   ./setup/local.sh
 fi
 echo
 
-# Install tpm, mise runtimes and global npm packages, and the bat theme cache
+# tmux and herdr plugins, mise runtimes, the Bereghici themes and `appearance sync`
 title "🚀 Setting up extra tools..."
 ./setup/misc.sh
 

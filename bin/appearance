@@ -56,7 +56,7 @@ sync() {
     "$install" sync "$1" > /dev/null || failed=true
   fi
   # Only once reviewr is installed (setup/misc.sh)
-  if herdr plugin list 2> /dev/null | grep -q '^- persiyanov.reviewr '; then
+  if grep -q '^- persiyanov.reviewr ' <<< "$(herdr plugin list 2> /dev/null)"; then
     "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null || failed=true
   fi
 
