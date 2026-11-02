@@ -149,11 +149,9 @@ of this repository: it can include clipboard history, notes and AI chats.
 
 [`keyboard/ABC-Romanian.keylayout`](keyboard/ABC-Romanian.keylayout) is the
 macOS ABC layout with the Romanian Programmers keys (SR 13392:2004) on Option.
-`symlinks.sh` links it into `~/Library/Keyboard Layouts` and runs
-[`setup/input-source.swift`](setup/input-source.swift), which makes **ABC –
-Romanian** the only keyboard layout (ABC is disabled). If it reports that the
-layout isn't registered yet, log out and back in and run `setup/symlinks.sh`
-again. Edits to the layout take effect after the next login.
+`symlinks.sh` links it into `~/Library/Keyboard Layouts`; after the next login,
+add **ABC – Romanian** in System Settings → Keyboard → Text Input → Edit (and
+remove ABC if you like). Edits to the layout take effect after the next login.
 
 | Keys          | Types   |
 | ------------- | ------- |
@@ -284,8 +282,8 @@ terraform = "latest"
 
 [`herdr-reviewr-config`](bin/herdr-reviewr-config) writes reviewr's config from
 [`reviewr.toml`](tilde/.config/herdr/reviewr.toml) plus this file (`misc.sh`
-runs it; run it again after editing either), for settings such as a work
-GitLab host:
+runs it; run it again after editing either), for settings such as a work GitLab
+host:
 
 ```toml
 gitlab_host = "git.example.com"

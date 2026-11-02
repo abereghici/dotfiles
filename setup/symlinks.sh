@@ -190,8 +190,6 @@ install_extras() {
 
   # Keyboard layout
   symlink_file "$DOTFILES_DIR/keyboard/ABC-Romanian.keylayout" "$HOME/Library/Keyboard Layouts/ABC-Romanian.keylayout"
-  # Make it the only keyboard layout (replaces the System Settings → Text Input steps)
-  swift "$DOTFILES_DIR/setup/input-source.swift" 2>&1 | indent || true
 }
 
 install_custom_bin() {
