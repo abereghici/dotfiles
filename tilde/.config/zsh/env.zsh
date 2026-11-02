@@ -23,13 +23,16 @@ export HOMEBREW_NO_ENV_HINTS=1
 # any formula that needs them at runtime
 export HOMEBREW_FORBIDDEN_FORMULAE="go openjdk openjdk@21 maven rust"
 
-# fzf: fd as the file walker, Rosé Pine (main) theme
+# lazygit merges these in order: the dotfiles config, then the Bereghici theme (abereghici/themes,
+# installed by setup/misc.sh). It refuses to start on a missing file, so the theme is added
+# when installed.
+export LG_CONFIG_FILE="$HOME/Library/Application Support/lazygit/config.yml"
+lazygit_theme="$HOME/.local/share/bereghici/ports/lazygit/themes/bereghici.yml"
+if [ -e "$lazygit_theme" ]; then
+  LG_CONFIG_FILE+=",$lazygit_theme"
+fi
+unset lazygit_theme
+
+# fzf: fd as the file walker (theme.zsh adds the Bereghici colors)
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_DEFAULT_OPTS="
-	--color=fg:#908caa,bg:-1,hl:#ebbcba
-	--color=fg+:#e0def4,bg+:-1,hl+:#ebbcba
-	--color=border:#403d52,header:#31748f,gutter:-1
-	--color=spinner:#f6c177,info:#9ccfd8
-	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa
-	--color=label:#908caa
-	--gutter=' '" # gutter:-1 would draw its ▌ bar in the default text color on every row
+export FZF_DEFAULT_OPTS="--gutter=' '" # the default ▌ gutter bar would show on every row

@@ -118,6 +118,9 @@ alt-cmd-shift-l = 'move right'
 # z = zoom, like tmux and herdr
 alt-cmd-z = 'fullscreen'
 
+# shift-d = dark/light (⌥⌘D alone is macOS's Dock hiding): flips the macOS appearance, which every Bereghici theme follows (bin/appearance)
+alt-cmd-shift-d = 'exec-and-forget ~/.local/bin/appearance toggle'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor

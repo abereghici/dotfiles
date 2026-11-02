@@ -56,9 +56,10 @@ Examples
 #-------------------------------Global-Definitions------------------------------
 
 # Text Colors
-red='\033[38;5;168m'    # rose pine love
-green='\033[38;5;24m'   # rose pine pine
-yellow='\033[38;5;222m' # rose pine gold
+# ANSI colors, so they follow the terminal's Bereghici Dark or Light
+red='\033[31m'
+green='\033[32m'
+yellow='\033[33m'
 clear='\033[0m'
 
 recursive='false' # -r: pick from subdirectories

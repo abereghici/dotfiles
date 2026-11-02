@@ -5,6 +5,7 @@
 # reviewr reads one config.toml with no includes, so `herdr-reviewr-config` writes it from
 # this file plus the untracked ~/.config/herdr/reviewr.local.toml (work hosts such as
 # gitlab_host). Add keys there, don't repeat these: TOML rejects a key set twice.
-theme = "rose-pine"
+# No theme: reviewr has no Bereghici or terminal one, so herdr-reviewr-config adds the closest
+# for the current appearance, and `appearance sync` runs it again when that changes.
 # Prefixed to every send, so the agent knows what the comments are
 review_prefix = "Code review comments on your changes. Address each one, then run the checks."

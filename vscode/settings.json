@@ -1,9 +1,10 @@
 {
   // Appearance
-  // Rosé Pine main, like Ghostty, tmux and nvim; Dawn when macOS is in light mode
-  "workbench.colorTheme": "Rosé Pine",
-  "workbench.preferredDarkColorTheme": "Rosé Pine",
-  "workbench.preferredLightColorTheme": "Rosé Pine Dawn",
+  // Bereghici Dark/Light (abereghici/themes ports/vscode), like Ghostty, tmux and nvim, following
+  // the macOS appearance
+  "workbench.colorTheme": "Bereghici Dark",
+  "workbench.preferredDarkColorTheme": "Bereghici Dark",
+  "workbench.preferredLightColorTheme": "Bereghici Light",
   "workbench.iconTheme": "vscode-icons",
   "window.autoDetectColorScheme": true,
   "vsicons.dontShowNewVersionMessage": true,

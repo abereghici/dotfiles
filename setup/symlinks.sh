@@ -208,8 +208,25 @@ install_custom_bin() {
 
 }
 
+# Runs `appearance sync` whenever macOS changes appearance by itself (Auto at sunset, Control
+# Center), for the tools with one theme setting. A copy with ~ spelled out, not a link: launchd
+# wants a real file and full paths
+install_appearance_agent() {
+  local plist="$HOME/Library/LaunchAgents/dotfiles.appearance-sync.plist"
+  local agent
+
+  agent=$(sed "s|~/|$HOME/|" "$DOTFILES_DIR/launchd/dotfiles.appearance-sync.plist")
+  [ "$agent" = "$(cat "$plist" 2> /dev/null)" ] && return
+  mkdir -p "$(dirname "$plist")"
+  echo "$agent" > "$plist"
+  launchctl bootout "gui/$UID" "$plist" 2> /dev/null || true
+  launchctl bootstrap "gui/$UID" "$plist"
+  echo "loaded $plist" | indent
+}
+
 install_dotfiles
 install_extras
 install_custom_bin
+install_appearance_agent
 echo
 echo 'Done!' | indent

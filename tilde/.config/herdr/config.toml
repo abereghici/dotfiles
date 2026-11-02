@@ -5,12 +5,58 @@
 
 onboarding = false
 
+# Pasted from abereghici/themes ports/herdr/themes/bereghici.toml (herdr can't include files):
+# re-paste after rebuilding the themes (tests/setup.bats notices). Follows the terminal's appearance live.
 [theme]
-name = "rose-pine"
+name = "terminal"
+auto_switch = true
+dark_name = "terminal"
+light_name = "terminal"
 
 [theme.custom]
-# Let Ghostty's translucent background through, as tmux does (@rose_pine_bar_bg_disable)
+# The terminal's own (translucent) background shows through the panes
 panel_bg = "reset"
+
+[theme.custom.dark]
+accent = "#eceac9"
+sidebar_bg = "reset"
+active_row_bg = "#1e221a"
+selection_bg = "#4b4f45"
+surface_dim = "#181b14"
+surface0 = "#1e221a"
+surface1 = "#4b4f45"
+overlay0 = "#858a81"
+overlay1 = "#a2a69d"
+subtext0 = "#a2a69d"
+text = "#eeefe9"
+red = "#e99989"
+peach = "#ffd8ac"
+yellow = "#fabc86"
+green = "#a6d1b0"
+teal = "#87c8cb"
+blue = "#97bfe6"
+mauve = "#d4acca"
+
+[theme.custom.light]
+accent = "#263316"
+sidebar_bg = "reset"
+active_row_bg = "#eaebe3"
+selection_bg = "#c1c3bc"
+surface_dim = "#eaebe3"
+surface0 = "#e1e3dc"
+surface1 = "#c1c3bc"
+overlay0 = "#686a64"
+overlay1 = "#535750"
+subtext0 = "#535750"
+text = "#2e3229"
+red = "#a84837"
+peach = "#925613"
+yellow = "#c3720f"
+green = "#1f7c44"
+teal = "#007a80"
+blue = "#2f6da4"
+mauve = "#8b537f"
+# End of the pasted Bereghici theme
 
 [keys]
 # Never follow the prefix with an Alt chord: two quick Option taps open Claude's Quick Entry

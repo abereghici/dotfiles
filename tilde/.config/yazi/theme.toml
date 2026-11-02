@@ -1,0 +1,5 @@
+# Bereghici Dark/Light flavors from ./flavors (abereghici/themes, installed by setup/misc.sh),
+# picked by the terminal's appearance when yazi starts
+[flavor]
+dark = "bereghici-dark"
+light = "bereghici-light"

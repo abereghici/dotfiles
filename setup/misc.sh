@@ -52,6 +52,17 @@ bin/herdr-reviewr-config | indent
 info 'Installing mise tools...'
 mise install
 
-# bat loads custom themes (rose-pine) only from its cache
-info 'Building bat theme cache...'
-bat cache --build | indent
+# Bereghici Dark/Light for every tool, from github.com/abereghici/themes: cloned on the first
+# run and updated after, then its install.sh puts each theme where its tool looks (its ports.yml
+# says where) and builds bat's theme cache. After mise: packaging the VS Code theme needs npx.
+info 'Installing color schemes...'
+themes="$HOME/.local/share/bereghici"
+if [ ! -e "$themes" ]; then
+  git clone --quiet https://github.com/abereghici/themes "$themes" \
+    || info "skipped the color schemes: couldn't clone github.com/abereghici/themes"
+elif [ ! -L "$themes" ]; then # a link is a local checkout of the themes: left to you
+  git -C "$themes" pull --quiet --ff-only || info "couldn't update $themes"
+fi
+if [ -x "$themes/install.sh" ]; then
+  "$themes/install.sh" | indent || info "the color schemes stopped partway: run $themes/install.sh"
+fi

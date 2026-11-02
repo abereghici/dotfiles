@@ -4,7 +4,12 @@
 
 ### Installation
 
-- Install [Rose Pine theme](https://chromewebstore.google.com/detail/ros%C3%A9-pine/noimedcjdohhokijigpfcbjcfcaaahej)
+- Use Chrome's own color, which follows the macOS appearance: New Tab → Customize Chrome →
+  Appearance → custom color `#263316` (Bereghici moss), and Mode → Device. Chrome derives the
+  light and dark palettes from it.
+- For Bereghici's exact colors instead, load a theme from abereghici/themes (`chrome://extensions` →
+  Developer mode → Load unpacked → `~/.local/share/bereghici/ports/chrome/themes/bereghici-dark` or
+  `bereghici-light`). A Chrome theme has one set of colors, so it stays put when macOS switches.
 
 ## Install extensions
 

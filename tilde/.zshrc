@@ -7,6 +7,7 @@ autoload -Uz cached_init
 # Load path, env, aliases and keybindings
 source $HOME/.config/zsh/path.zsh
 source $HOME/.config/zsh/env.zsh
+source $HOME/.config/zsh/theme.zsh
 source $HOME/.config/zsh/aliases.zsh
 source $HOME/.config/zsh/keybindings.zsh
 

@@ -1,3 +1,15 @@
 gui:
   sidePanelWidth: 0.25
   expandFocusedSidePanel: true
+  # Bereghici, from abereghici/themes ports/lazydocker/themes/bereghici-terminal.yml: the terminal's
+  # ANSI colors (tests/setup.bats notices when it changes)
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - white
+    selectedLineBgColor:
+      - black
+    optionsTextColor:
+      - blue

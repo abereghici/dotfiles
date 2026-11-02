@@ -10,8 +10,47 @@
   command -v mise
 }
 
-@test "bat has the rose-pine theme from its cache" {
-  bat --list-themes --color=never | grep -qx "rose-pine"
+@test "bat has the Bereghici themes from its cache" {
+  bat --list-themes --color=never | grep -qx "bereghici-dark"
+  bat --list-themes --color=never | grep -qx "bereghici-light"
+}
+
+@test "abereghici/themes' install.sh put the Bereghici themes in place (misc.sh)" {
+  local ports="$HOME/.local/share/bereghici/ports"
+  [ -x "$HOME/.local/share/bereghici/install.sh" ]
+  [ "$(readlink "$HOME/.config/ghostty/themes")" -ef "$ports/ghostty/themes" ]
+  [ "$(readlink "$HOME/.config/bat/themes")" -ef "$ports/bat/themes" ]
+  [ "$(readlink "$HOME/.config/yazi/flavors/bereghici-light.yazi")" -ef "$ports/yazi/themes/bereghici-light.yazi" ]
+  [ "$(readlink "$HOME/.config/eza/theme.yml")" -ef "$ports/eza/themes/bereghici-terminal.yml" ]
+  [ "$(readlink "$HOME/.claude/themes/bereghici.json")" -ef "$ports/claude-code/themes/bereghici-$(appearance).json" ]
+  [ "$(readlink "$HOME/.codex/themes/bereghici.tmTheme")" -ef "$ports/codex/themes/bereghici-$(appearance).tmTheme" ]
+  cmp -s "$HOME/Library/Fonts/BereghiciSymbols.otf" "$ports/font/themes/BereghiciSymbols.otf"
+}
+
+@test "the appearance agent is loaded" {
+  launchctl print "gui/$UID/dotfiles.appearance-sync" > /dev/null
+}
+
+# Tools that can't include a file hold a pasted copy of their Bereghici theme
+bereghici="$HOME/.local/share/bereghici/ports"
+
+@test "herdr's theme matches the generated Bereghici block (paste it again when it differs)" {
+  # From [theme] to the end marker, without the marker
+  diff <(sed -n '/^\[theme\]$/,$p' "$bereghici/herdr/themes/bereghici.toml") \
+    <(sed -n '/^\[theme\]$/,/^# End of the pasted Bereghici theme$/p' "$HOME/.config/herdr/config.toml" | sed '$d')
+}
+
+@test "starship's palette matches the generated Bereghici one (paste it again when it differs)" {
+  [[ "$(cat "$HOME/.starship.toml")" == *"$(cat "$bereghici/starship/themes/bereghici-terminal.toml")"* ]]
+}
+
+@test "ripgrep's colors match the generated Bereghici ones (paste them again when they differ)" {
+  [[ "$(cat "$HOME/.ripgreprc")" == *"$(cat "$bereghici/ripgrep/themes/bereghici-terminal.ripgreprc")"* ]]
+}
+
+@test "lazydocker's theme matches the generated Bereghici one (paste it again when it differs)" {
+  ruby -ryaml -e 'exit YAML.load_file(ARGV[0])["gui"]["theme"] == YAML.load_file(ARGV[1])["gui"]["theme"]' \
+    "$bereghici/lazydocker/themes/bereghici-terminal.yml" "$HOME/Library/Application Support/lazydocker/config.yml"
 }
 
 @test "dotfiles do not set BAT_THEME (bat's config file picks the theme)" {

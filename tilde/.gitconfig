@@ -27,11 +27,12 @@
   trustctime = false
   # Convert CRLF to LF on commit, never the other way
   autocrlf = input
-  # Route diffs through delta (styling in [delta] + ~/.themes.gitconfig)
-  pager = delta
+  # Route diffs through delta, in the Bereghici Dark or Light feature for the current macOS
+  # appearance (bin/delta-themed, by path: ~/.local/bin is only on zsh's PATH; the features are in the bereghici.gitconfig included below)
+  pager = ~/.local/bin/delta-themed
 
 [interactive]
-  diffFilter = delta --color-only
+  diffFilter = ~/.local/bin/delta-themed --color-only
 
 # Git LFS (git-lfs is in the Brewfile); what `git lfs install` would write here
 [filter "lfs"]
@@ -240,15 +241,26 @@
   colorMovedWS = allow-indentation-change
 
 [delta]
-  features = rosepine
+  # For delta run directly; git's pager and lazygit pick the appearance's feature
+  # (delta-themed), and a --features flag replaces this one
+  features = bereghici-dark
+  file-added-label = [●]
+  file-copied-label = [C]
+  file-modified-label = [+]
+  file-removed-label = [⛌]
+  file-renamed-label = [→]
+  line-numbers = true
+  line-numbers-left-format = "{nm:>1}┊"
+  line-numbers-right-format = " {np:>1}┊"
+  blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
   navigate = true # Use n and N to move between diff sections
   side-by-side = false # Enables the side-by-side view
   true-color = always
   tabs = 2
-  hunk-header-style = omit
   hyperlinks = true
 
-# Include the delta theme and local/private config, if present
+# Include the delta theme (abereghici/themes, installed by setup/misc.sh) and local/private
+# config, if present
 [include]
-  path = ~/.themes.gitconfig
+  path = ~/.local/share/bereghici/ports/delta/themes/bereghici.gitconfig
   path = ~/.gitconfig.local

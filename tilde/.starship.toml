@@ -17,23 +17,43 @@ $scala \
 $python \
 $docker_context \
 $time\n  \
-[󱞪 ](fg:iris)
+[󱞪 ](fg:magenta)
 """
 
-palette = "rose-pine"
+palette = "bereghici_terminal"
 
-[palettes.rose-pine]
-overlay = "#26233a"
-love = "#eb6f92"
-gold = "#f6c177"
-rose = "#ebbcba"
-pine = "#31748f"
-foam = "#9ccfd8"
-iris = "#c4a7e7"
+# From abereghici/themes ports/starship/themes/bereghici-terminal.toml: paste it again when it changes
+# (tests/setup.bats notices)
+# Bereghici Terminal for Starship. Generated from abereghici/themes; do not edit.
+# In the terminal's ANSI colors: with a Bereghici terminal theme it switches with it between
+# Dark and Light.
+# Paste this table into starship.toml, under `palette = "bereghici_terminal"`.
+# Base and surface are the terminal's own background, so they aren't in it.
+[palettes.bereghici_terminal]
+overlay = "0"
+muted = "8"
+subtle = "7"
+text = "15"
+highlight_low = "0"
+highlight_med = "0"
+highlight_high = "8"
+accent = "2"
+red = "1"
+yellow = "3"
+green = "2"
+cyan = "6"
+blue = "4"
+magenta = "5"
+red_bright = "9"
+yellow_bright = "11"
+green_bright = "10"
+cyan_bright = "14"
+blue_bright = "12"
+magenta_bright = "13"
 
 [directory]
 format = "[](fg:overlay)[ $path ]($style)[](fg:overlay)"
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -49,97 +69,97 @@ symbol = " "
 
 [git_branch]
 format = "[](fg:overlay)[ $symbol $branch ]($style)[](fg:overlay)"
-style = "bg:overlay fg:foam"
+style = "bg:overlay fg:blue"
 symbol = ""
 
 [time]
 disabled = false
 format = "[](fg:overlay)[ $time 󰴈 ]($style)[](fg:overlay)"
-style = "bg:overlay fg:rose"
+style = "bg:overlay fg:cyan"
 time_format = "%I:%M%P"
 
 [username]
 disabled = false
-format = "[](fg:overlay)[ 󰧱 $user ]($style)[](fg:overlay)"
+format = "[](fg:overlay)[ \U00100000 $user ]($style)[](fg:overlay)"
 show_always = true
-style_root = "bg:overlay fg:iris"
-style_user = "bg:overlay fg:iris"
+style_root = "bg:overlay fg:magenta"
+style_user = "bg:overlay fg:magenta"
 
 # Languages
 
 [c]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [elixir]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [elm]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [golang]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [haskell]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [java]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [julia]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [nodejs]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = "󰎙 "
 
 [nim]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = "󰆥 "
 
 [rust]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = ""
 
 [scala]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [python]
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
 [docker_context]
 symbol = ""
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:green"
 format = "[](fg:overlay)[$symbol$context]($style)[](fg:overlay) "

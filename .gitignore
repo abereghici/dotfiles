@@ -10,3 +10,7 @@ tilde/.config/mise/config.local.toml
 tilde/.config/herdr/*
 !tilde/.config/herdr/config.toml
 !tilde/.config/herdr/reviewr.toml
+# Linked from abereghici/themes by its install.sh (setup/misc.sh runs it)
+tilde/.config/ghostty/themes
+tilde/.config/bat/themes
+tilde/.config/yazi/flavors/

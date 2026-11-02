@@ -45,11 +45,6 @@ TILDE_DIR="$DOTFILES_DIR/tilde"
   [ "$(readlink "$HOME/.starship.toml")" = "$TILDE_DIR/.starship.toml" ]
 }
 
-@test ".themes.gitconfig is symlinked to tilde/.themes.gitconfig" {
-  [ -L "$HOME/.themes.gitconfig" ]
-  [ "$(readlink "$HOME/.themes.gitconfig")" = "$TILDE_DIR/.themes.gitconfig" ]
-}
-
 @test ".zshrc is symlinked to tilde/.zshrc" {
   [ -L "$HOME/.zshrc" ]
   [ "$(readlink "$HOME/.zshrc")" = "$TILDE_DIR/.zshrc" ]

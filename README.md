@@ -7,8 +7,9 @@
 ![macOS](https://img.shields.io/badge/macOS-Apple%20silicon%20%7C%20Intel-black?logo=apple)
 
 My macOS dotfiles: Zsh, Homebrew, Neovim (LazyVim), Ghostty, tmux and herdr for
-coding agents, lazygit, mise and AeroSpace, all in Rosé Pine. One script sets up
-a new Mac; every config is a symlink back into this repository.
+coding agents, lazygit, mise and AeroSpace, all in Bereghici Dark and Light, which
+follow the macOS appearance (`⌥⇧⌘D` switches it). One script sets up a new Mac;
+every config is a symlink back into this repository.
 
 <!-- prettier-ignore -->
 > [!WARNING]
@@ -178,7 +179,7 @@ folders need no config. `prefix` `⇧N` creates a project folder first. Run
 
 [herdr](tilde/.config/herdr/config.toml) shares tmux's `⌥Space` prefix, most of
 its `prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
-Rosé Pine look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
+Bereghici look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
 naming where to; `prefix` + a key **does** something (create, close, rename,
 split, open a tool). `⇧` reverses or goes bigger. `prefix` `=` resizes panes
 (`prefix` `r` is reviewr). `prefix` `?` lists every key.

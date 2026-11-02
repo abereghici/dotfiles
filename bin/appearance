@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# Print or change the macOS appearance, which every Bereghici theme follows (Ghostty, nvim,
+# tmux, herdr, VS Code...). AeroSpace runs `appearance toggle` on alt-cmd-shift-d.
+#
+# - Print the current appearance (`dark` or `light`), e.g. for `delta --features`:
+#
+# `appearance`
+#
+# - Switch between dark and light, or set one:
+#
+# `appearance toggle`
+# `appearance dark`
+# `appearance light`
+#
+# - Point the tools that can't follow it by themselves at the current appearance (setup runs it):
+#
+# `appearance sync`
+#
+# ---
+
+set -euo pipefail
+
+current() {
+  # The key only exists in dark mode
+  if [ "$(defaults read -g AppleInterfaceStyle 2> /dev/null)" = "Dark" ]; then
+    echo dark
+  else
+    echo light
+  fi
+}
+
+# Repoints the themes of tools with one theme setting rather than one per appearance (Claude Code,
+# Codex: abereghici/themes' install.sh knows which; herdr-reviewr) at the appearance's. Also run
+# by launchd/dotfiles.appearance-sync.plist when macOS changes the appearance by itself.
+sync() {
+  local install="$HOME/.local/share/bereghici/install.sh"
+
+  if [ -x "$install" ]; then
+    "$install" sync "$1" > /dev/null
+  fi
+  if command -v herdr > /dev/null; then
+    "$(dirname "$0")/herdr-reviewr-config" > /dev/null || true
+  fi
+}
+
+set_appearance() {
+  local dark_mode=false
+  [ "$1" = dark ] && dark_mode=true
+
+  osascript -e "tell application \"System Events\" to tell appearance preferences to set dark mode to $dark_mode"
+  sync "$1"
+}
+
+case "${1:-}" in
+  "") current ;;
+  toggle)
+    if [ "$(current)" = dark ]; then
+      set_appearance light
+    else
+      set_appearance dark
+    fi
+    ;;
+  dark | light) set_appearance "$1" ;;
+  sync) sync "$(current)" ;;
+  *)
+    echo "Usage: $(basename "$0") [toggle | dark | light | sync]"
+    exit 1
+    ;;
+esac

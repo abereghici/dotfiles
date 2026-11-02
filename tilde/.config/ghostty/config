@@ -1,8 +1,12 @@
-theme = Rose Pine
+# Bereghici Dark/Light from ~/.config/ghostty/themes (abereghici/themes, installed by setup/misc.sh),
+# switched live with the macOS appearance
+theme = light:bereghici-light,dark:bereghici-dark
 background-opacity = .85
 background-opacity-cells = true
 
 font-family = MesloLGS Nerd Font
+# The Bereghici logo at U+100000, for the prompt (abereghici/themes ports/font, installed by setup)
+font-codepoint-map = U+100000=Bereghici Symbols
 font-size = 16.0
 
 macos-titlebar-style = hidden

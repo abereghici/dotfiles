@@ -7,42 +7,15 @@ gui:
   expandFocusedSidePanel: true
   nerdFontsVersion: '3'
   showRandomTip: false
-  # Rosé Pine (rose-pine/lazygit): main on a dark background, Dawn on a light one
-  colorScheme: auto
-  darkTheme:
-    activeBorderColor: ['#31748f', bold]
-    inactiveBorderColor: ['#6e6a86']
-    searchingActiveBorderColor: ['#ebbcba', bold]
-    optionsTextColor: ['#9ccfd8']
-    selectedLineBgColor: ['#31748f']
-    inactiveViewSelectedLineBgColor: ['#26233a', bold]
-    cherryPickedCommitFgColor: ['#1f1d2e']
-    cherryPickedCommitBgColor: ['#ebbcba']
-    markedBaseCommitFgColor: ['#9ccfd8']
-    markedBaseCommitBgColor: ['#f6c177']
-    unstagedChangesColor: ['#eb6f92']
-    defaultFgColor: ['#e0def4']
-  lightTheme:
-    activeBorderColor: ['#286983', bold]
-    inactiveBorderColor: ['#9893a5']
-    searchingActiveBorderColor: ['#d7827e', bold]
-    optionsTextColor: ['#56949f']
-    selectedLineBgColor: ['#286983']
-    inactiveViewSelectedLineBgColor: ['#f2e9e1', bold]
-    cherryPickedCommitFgColor: ['#fffaf3']
-    cherryPickedCommitBgColor: ['#d7827e']
-    markedBaseCommitFgColor: ['#56949f']
-    markedBaseCommitBgColor: ['#ea9d34']
-    unstagedChangesColor: ['#b4637a']
-    defaultFgColor: ['#575279']
+  # Colors: Bereghici Dark/Light, merged after this file through LG_CONFIG_FILE (zsh/env.zsh)
 
 git:
-  # delta with the Rosé Pine feature from ~/.themes.gitconfig, side by side when there is room.
+  # delta with the Bereghici feature for the current appearance, side by side when there is room.
   # Line numbers are links: click one to open that line in the editor. | cycles to git's own diff.
   diffRenderers:
     - name: delta
       command: >-
-        delta --paging=never {{if gt .width 160}}--side-by-side{{end}} --hyperlinks
+        delta-themed --paging=never {{if gt .width 160}}--side-by-side{{end}} --hyperlinks
         --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
     - type: rawGit
       name: git
