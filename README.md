@@ -10,8 +10,6 @@ My macOS dotfiles: Zsh, Homebrew, Neovim (LazyVim), Ghostty, tmux and herdr for
 coding agents, lazygit, mise and AeroSpace, all in Rosé Pine. One script sets up
 a new Mac; every config is a symlink back into this repository.
 
-![abereghici terminal](screenshot.webp)
-
 <!-- prettier-ignore -->
 > [!WARNING]
 > These are my personal settings. Fork the repository and review the code
