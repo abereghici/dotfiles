@@ -22,6 +22,9 @@
 
 set -euo pipefail
 
+# AeroSpace and launchd run it with the bare system PATH: herdr and friends live in Homebrew
+PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
 current() {
   # The key only exists in dark mode
   if [ "$(defaults read -g AppleInterfaceStyle 2> /dev/null)" = "Dark" ]; then
@@ -45,15 +48,19 @@ sync() {
   if [ "${2:-}" = --if-changed ] && [ "$(cat "$delta" 2> /dev/null)" = "$feature" ]; then
     return
   fi
-  mkdir -p "$(dirname "$delta")"
-  echo "$feature" > "$delta"
 
   if [ -x "$install" ]; then
     "$install" sync "$1" > /dev/null
   fi
   if command -v herdr > /dev/null; then
-    "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null || true
+    "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null
   fi
+
+  # Written last, so a failed step above is retried by the next --if-changed; whole, so git
+  # never reads it half-written
+  mkdir -p "$(dirname "$delta")"
+  echo "$feature" > "$delta.tmp"
+  mv "$delta.tmp" "$delta"
 }
 
 set_appearance() {

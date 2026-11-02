@@ -60,7 +60,7 @@
   // Terminal
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.fontWeightBold": "normal",
-  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font, Bereghici Symbols", // the prompt's logo glyph
 
 
   // AI

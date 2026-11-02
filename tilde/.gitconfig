@@ -242,6 +242,7 @@
 [delta]
   # Until the first `appearance sync`, whose include below sets the current appearance's
   features = bereghici-dark
+  hunk-header-style = omit # set here, it beats the feature's
   file-added-label = [●]
   file-copied-label = [C]
   file-modified-label = [+]

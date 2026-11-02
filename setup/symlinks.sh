@@ -220,8 +220,14 @@ install_appearance_agent() {
   mkdir -p "$(dirname "$plist")"
   echo "$agent" > "$plist"
   launchctl bootout "gui/$UID" "$plist" 2> /dev/null || true
-  launchctl bootstrap "gui/$UID" "$plist"
-  success "loaded $plist"
+  # bootout returns before launchd is done with the old job, so a bootstrap right after can fail
+  if launchctl bootstrap "gui/$UID" "$plist" 2> /dev/null \
+    || { sleep 1 && launchctl bootstrap "gui/$UID" "$plist"; }; then
+    success "loaded $plist"
+  else
+    command rm -f "$plist" # so the next run tries again
+    info "couldn't load $plist: run setup/symlinks.sh again"
+  fi
 }
 
 install_dotfiles
