@@ -23,16 +23,24 @@ export HOMEBREW_NO_ENV_HINTS=1
 # any formula that needs them at runtime
 export HOMEBREW_FORBIDDEN_FORMULAE="go openjdk openjdk@21 maven rust"
 
-# lazygit merges these in order: the dotfiles config, then the Bereghici theme (abereghici/themes,
-# installed by setup/misc.sh). It refuses to start on a missing file, so the theme is added
-# when installed.
+# lazygit merges these in order: the dotfiles config, then the Bereghici theme (added below)
 export LG_CONFIG_FILE="$HOME/Library/Application Support/lazygit/config.yml"
-lazygit_theme="$HOME/.local/share/bereghici/ports/lazygit/themes/bereghici.yml"
-if [ -e "$lazygit_theme" ]; then
-  LG_CONFIG_FILE+=",$lazygit_theme"
-fi
-unset lazygit_theme
 
-# fzf: fd as the file walker (theme.zsh adds the Bereghici colors)
+# fzf: fd as the file walker (the Bereghici colors are added below)
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_DEFAULT_OPTS="--gutter=' '" # the default ▌ gutter bar would show on every row
+
+# Bereghici for the tools that take their colors from the environment, from abereghici/themes
+# (installed by setup/misc.sh). Each is the terminal flavor, in the terminal's ANSI colors, so
+# it switches between Dark and Light with Ghostty. Only when installed: lazygit refuses to
+# start on a missing file. (theme.zsh has the zsh highlighting, for interactive shells.)
+bereghici="$HOME/.local/share/bereghici/ports"
+if [ -d "$bereghici" ]; then
+  LG_CONFIG_FILE+=",$bereghici/lazygit/themes/bereghici.yml"
+  source "$bereghici/fzf/themes/bereghici-terminal.sh"
+  source "$bereghici/jq/themes/bereghici-terminal.sh"
+  source "$bereghici/ls-colors/themes/bereghici-terminal.sh"
+  # gh, glab and glow render Markdown with it
+  export GLAMOUR_STYLE="$bereghici/glamour/themes/bereghici-terminal.json"
+fi
+unset bereghici

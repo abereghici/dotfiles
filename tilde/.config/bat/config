@@ -1,6 +1,6 @@
 # Bereghici Dark/Light from ./themes (abereghici/themes, installed by setup/misc.sh), picked
 # from the macOS appearance: `auto` asks the terminal, which fails when bat is piped (fzf previews, delta).
-# Run `bat cache --build` after the themes change
+# Run ~/.local/share/bereghici/install.sh after the themes change (it rebuilds bat's cache)
 --theme=auto:system
 --theme-dark="bereghici-dark"
 --theme-light="bereghici-light"

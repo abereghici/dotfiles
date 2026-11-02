@@ -7,10 +7,9 @@ fpath=("$HOME/.config/zsh/functions" $fpath)
 autoload -Uz cached_init
 cached_init brew-shellenv /opt/homebrew/bin/brew shellenv || cached_init brew-shellenv /usr/local/bin/brew shellenv
 cached_init mise mise activate zsh --shims
-# Environment and theme (editor, fzf colors...) for those `zsh -l -c` popups; .zshrc sources
-# them again, so a long-running tmux or herdr server never hands them stale values
+# Environment (editor, fzf colors...) for those `zsh -l -c` popups; .zshrc sources it again,
+# so a long-running tmux or herdr server never hands them stale values
 source "$HOME/.config/zsh/env.zsh"
-source "$HOME/.config/zsh/theme.zsh"
 
 # The following lines were added by Docker Desktop to add commands to your PATH.
 export PATH="$PATH:$HOME/.docker/bin"

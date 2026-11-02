@@ -28,7 +28,7 @@ palette = "bereghici_terminal"
 # In the terminal's ANSI colors: with a Bereghici terminal theme it switches with it between
 # Dark and Light.
 # Paste this table into starship.toml, under `palette = "bereghici_terminal"`.
-# Base and surface are the terminal's own background, so they aren't in it.
+# surface and surfaceRaised are the terminal's own background, so they aren't in it.
 [palettes.bereghici_terminal]
 overlay = "0"
 muted = "8"

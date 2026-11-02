@@ -9,12 +9,9 @@ return {
     dir = dir,
     name = "bereghici",
     cond = installed,
-    lazy = false,
     priority = 1000,
     opts = {
-      styles = {
-        transparency = true,
-      },
+      transparent = true,
     },
   },
   {

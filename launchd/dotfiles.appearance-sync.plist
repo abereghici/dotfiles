@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!-- Runs `appearance sync` when the global preferences change, which includes every switch
-     between dark and light. Installed by setup/symlinks.sh. -->
+     between dark and light (--if-changed: nothing for the other writes). Installed by
+     setup/symlinks.sh. -->
 <plist version="1.0">
 <dict>
   <key>Label</key>
@@ -10,7 +11,7 @@
   <array>
     <string>/bin/sh</string>
     <string>-c</string>
-    <string>PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH" exec appearance sync</string>
+    <string>PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH" exec appearance sync --if-changed</string>
   </array>
   <key>WatchPaths</key>
   <array>

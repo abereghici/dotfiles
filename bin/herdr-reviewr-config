@@ -2,8 +2,8 @@
 #
 # Write herdr-reviewr's config.toml from ~/.config/herdr/reviewr.toml (tracked) and
 # ~/.config/herdr/reviewr.local.toml (untracked, optional), plus the theme for the current macOS
-# appearance. Run it after editing either (`appearance sync` runs it when the appearance
-# changes); reviewr picks up the new file at once.
+# appearance (or the one given: dark|light). Run it after editing either (`appearance sync` runs
+# it when the appearance changes); reviewr picks up the new file at once.
 #
 # ---
 
@@ -15,7 +15,7 @@ tmp=$(mktemp "$config.XXXXXX") # written whole, then swapped in: reviewr reloads
 trap 'command rm -f "$tmp"' EXIT
 
 # reviewr's closest built-ins to Bereghici Dark and Light
-if [ "$("$(dirname "$0")/appearance")" = dark ]; then
+if [ "${1:-$("$(dirname "$0")/appearance")}" = dark ]; then
   theme=everforest
 else
   theme=github-light

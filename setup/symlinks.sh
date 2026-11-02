@@ -221,7 +221,7 @@ install_appearance_agent() {
   echo "$agent" > "$plist"
   launchctl bootout "gui/$UID" "$plist" 2> /dev/null || true
   launchctl bootstrap "gui/$UID" "$plist"
-  echo "loaded $plist" | indent
+  success "loaded $plist"
 }
 
 install_dotfiles

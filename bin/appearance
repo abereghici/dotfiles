@@ -13,7 +13,8 @@
 # `appearance dark`
 # `appearance light`
 #
-# - Point the tools that can't follow it by themselves at the current appearance (setup runs it):
+# - Point the tools that can't follow it by themselves at the current appearance (setup runs it;
+#   the launchd agent runs it with --if-changed whenever macOS changes appearance by itself):
 #
 # `appearance sync`
 #
@@ -30,17 +31,28 @@ current() {
   fi
 }
 
-# Repoints the themes of tools with one theme setting rather than one per appearance (Claude Code,
-# Codex: abereghici/themes' install.sh knows which; herdr-reviewr) at the appearance's. Also run
-# by launchd/dotfiles.appearance-sync.plist when macOS changes the appearance by itself.
+# Repoints the tools with one theme setting rather than one per appearance at the appearance's:
+# delta (git and lazygit) through a git include, Claude Code and Codex through abereghici/themes'
+# install.sh, and herdr-reviewr. The include doubles as the record of the last sync: with
+# --if-changed (the launchd agent, on every global preferences write) nothing else runs when it
+# already matches.
 sync() {
   local install="$HOME/.local/share/bereghici/install.sh"
+  local delta="$HOME/.local/state/dotfiles/delta.gitconfig"
+  local feature="[delta]
+  features = bereghici-$1"
+
+  if [ "${2:-}" = --if-changed ] && [ "$(cat "$delta" 2> /dev/null)" = "$feature" ]; then
+    return
+  fi
+  mkdir -p "$(dirname "$delta")"
+  echo "$feature" > "$delta"
 
   if [ -x "$install" ]; then
     "$install" sync "$1" > /dev/null
   fi
   if command -v herdr > /dev/null; then
-    "$(dirname "$0")/herdr-reviewr-config" > /dev/null || true
+    "$(dirname "$0")/herdr-reviewr-config" "$1" > /dev/null || true
   fi
 }
 
@@ -62,9 +74,9 @@ case "${1:-}" in
     fi
     ;;
   dark | light) set_appearance "$1" ;;
-  sync) sync "$(current)" ;;
+  sync) sync "$(current)" "${2:-}" ;;
   *)
-    echo "Usage: $(basename "$0") [toggle | dark | light | sync]"
+    echo "Usage: $(basename "$0") [toggle | dark | light | sync [--if-changed]]"
     exit 1
     ;;
 esac

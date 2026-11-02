@@ -66,3 +66,5 @@ fi
 if [ -x "$themes/install.sh" ]; then
   "$themes/install.sh" | indent || info "the color schemes stopped partway: run $themes/install.sh"
 fi
+# delta's feature for the current appearance (and the rest `appearance sync` points)
+bin/appearance sync

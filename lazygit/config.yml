@@ -15,7 +15,7 @@ git:
   diffRenderers:
     - name: delta
       command: >-
-        delta-themed --paging=never {{if gt .width 160}}--side-by-side{{end}} --hyperlinks
+        delta --paging=never {{if gt .width 160}}--side-by-side{{end}} --hyperlinks
         --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
     - type: rawGit
       name: git
