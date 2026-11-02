@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# pane-nav.sh DIRECTION: in a pane running (n)vim, hand the key to nvim, which moves between
+# pane-nav.sh DIRECTION: in a pane running nvim, hand the key to nvim, which moves between
 # its splits and calls `herdr pane focus` at its edge (nvim/lua/config/keymaps.lua).
 # Anywhere else, move herdr's focus.
 #
@@ -21,7 +21,7 @@ case ${1:-} in
 esac
 pane=$HERDR_PANE_ID
 
-nvim='.result.process_info.foreground_processes | any(.name | test("^n?vim$"))'
+nvim='.result.process_info.foreground_processes | any(.name | . == "nvim")'
 if "$herdr" pane process-info --pane "$pane" | jq -e "$nvim" > /dev/null; then
   exec "$herdr" pane send-keys "$pane" "ctrl+alt+$key" > /dev/null
 fi

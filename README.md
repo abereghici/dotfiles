@@ -178,8 +178,8 @@ folders need no config. `prefix` `⇧N` creates a project folder first. Run
 
 ### tmux or herdr
 
-[herdr](tilde/.config/herdr/config.toml) shares tmux's `⌥Space` prefix, its
-`prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
+[herdr](tilde/.config/herdr/config.toml) shares tmux's `⌥Space` prefix, most of
+its `prefix` keys (tmux sessions are herdr workspaces, windows are tabs) and its
 Rosé Pine look. Its keys follow one rule: `⌃⌥` + a key **moves** you, the letter
 naming where to; `prefix` + a key **does** something (create, close, rename,
 split, open a tool). `⇧` reverses or goes bigger. `prefix` `=` resizes panes
