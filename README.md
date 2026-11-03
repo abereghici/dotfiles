@@ -1,10 +1,10 @@
 ![dotfiles: zsh, starship, git, delta, fzf, neovim and homebrew for macOS](.github/cover.png)
 
-# ~abereghici 💻
+# ~abereghici
 
 [![CI](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/abereghici/dotfiles/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![macOS](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)
+[![License: MIT](https://img.shields.io/badge/license-MIT-263316)](LICENSE)
+![macOS](https://img.shields.io/badge/macOS-14%2B-263316?logo=apple)
 
 My macOS dotfiles: Zsh, Homebrew, Neovim (LazyVim), Ghostty, tmux and herdr for
 coding agents, lazygit, mise and AeroSpace. Every themed tool uses Bereghici
