@@ -23,5 +23,5 @@
 --colors=path:fg:5
 --colors=line:fg:2
 --colors=column:fg:2
---colors=match:fg:1
+--colors=match:fg:3
 --colors=match:style:bold

@@ -50,6 +50,9 @@ green_bright = "10"
 cyan_bright = "14"
 blue_bright = "12"
 magenta_bright = "13"
+# Starship's default module styles name purple and white, which the hues above don't override
+purple = "5"
+white = "15"
 
 [directory]
 format = "[](fg:surface_nested)[ $path ]($style)[](fg:surface_nested)"
