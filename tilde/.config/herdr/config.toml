@@ -14,7 +14,9 @@ dark_name = "terminal"
 light_name = "terminal"
 
 [theme.custom]
-# The terminal's own (translucent) background shows through the panes
+# The terminal's own (translucent) background shows through the panes. With panel_bg reset,
+# herdr draws the focused tab's text in surface_dim on accent, as well as the sidebar separator,
+# pane dividers and scrollbar track: selection is the step readable on accent and visible on the canvas
 panel_bg = "reset"
 
 [theme.custom.dark]
@@ -22,7 +24,7 @@ accent = "#a6d1b0"
 sidebar_bg = "reset"
 active_row_bg = "#2e3229"
 selection_bg = "#4b4f45"
-surface_dim = "#696d63"
+surface_dim = "#4b4f45"
 surface0 = "#2e3229"
 surface1 = "#4b4f45"
 overlay0 = "#a2a69d"
@@ -42,7 +44,7 @@ accent = "#4e5c40"
 sidebar_bg = "reset"
 active_row_bg = "#e1e3dc"
 selection_bg = "#c1c3bc"
-surface_dim = "#858680"
+surface_dim = "#c1c3bc"
 surface0 = "#e1e3dc"
 surface1 = "#c1c3bc"
 overlay0 = "#535750"
